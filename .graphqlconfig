@@ -1,0 +1,11 @@
+{
+  "schemaPath": "./graphql.schema.json",
+  "extensions": {
+    "endpoints": {
+      "GraphQL Endpoint": {
+        "url": "http://orgzdrav.loc/graphql",
+        "introspect": true
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "trailingComma": "es5",
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["*.tsx", "*.ts"],
+      "options": {
+        "semi": true,
+        "tabWidth": 4,
+        "singleQuote": true
+      }
+    },
+    {
+      "files": ["*.styled.tsx", "*.styled.ts"],
+      "options": {
+        "semi": true,
+        "tabWidth": 2,
+        "singleQuote": true
+      }
+    }
+  ]
+}

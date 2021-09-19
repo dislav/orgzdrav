@@ -1,0 +1,11 @@
+query GetVideos {
+  videos {
+    nodes {
+      slug
+      title
+      videosMain {
+        link
+      }
+    }
+  }
+}
