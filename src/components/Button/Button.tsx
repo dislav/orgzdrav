@@ -6,12 +6,14 @@ import { Container, Icon, Inner, IStyledButton } from './Button.styled';
 interface IButton
     extends IStyledButton,
         React.HtmlHTMLAttributes<HTMLButtonElement> {
+    className?: string;
     icon?: React.ReactNode;
     href?: string;
     onClick?: () => void;
 }
 
 const Button: React.FC<IButton> = ({
+    className,
     children,
     icon,
     href,
@@ -31,7 +33,7 @@ const Button: React.FC<IButton> = ({
     };
 
     return (
-        <Container {...props} onClick={onClickHandle}>
+        <Container className={className} onClick={onClickHandle} {...props}>
             {icon && <Icon>{icon}</Icon>}
             {children && <Inner>{children}</Inner>}
         </Container>

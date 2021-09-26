@@ -17,6 +17,8 @@ declare module 'styled-components' {
             facebook: string;
             vk: string;
             text: string;
+            red: string;
+            blue: string;
         },
         breakpoints: {
             [key: string]: string | number;

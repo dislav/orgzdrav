@@ -3,26 +3,27 @@ import { InferGetStaticPropsType } from 'next';
 import Image from 'next/image';
 import { useTheme } from 'styled-components';
 
+import { NextPageWithLayout } from '@pages/_app';
 import client from '@graphql/client';
 import {
-    GetPartnersDocument,
     GetPartnersQuery,
-    GetReviewsDocument,
+    GetPartnersQueryProps,
     GetReviewsQuery,
-    Review,
-    Partner,
-} from '@graphql/graphql';
+    GetReviewsQueryProps,
+} from '@graphql/types';
+
+import Layout from '@components/Layout/Layout';
 import HomeLayout from '@layouts/HomeLayout/HomeLayout';
 import ReviewsSection from '@layouts/HomeLayout/ReviewsSection/ReviewsSection';
+import PartnersSection from '@layouts/HomeLayout/PartnersSection/PartnersSection';
+import SocialsSection from '@layouts/HomeLayout/SocialsSection/SocialsSection';
+import QuestionsSection from '@layouts/HomeLayout/QuestionsSection/QuestionsSection';
 
 import Button from '@components/Button/Button';
 import TextSection from '@components/TextSection/TextSection';
 import GradientLine from '@components/GradientLine/GradientLine';
 
 import { ArrowsDown, Telegram } from '@icons/icons';
-import PartnersSection from '@layouts/HomeLayout/PartnersSection/PartnersSection';
-import SocialsSection from '@layouts/HomeLayout/SocialsSection/SocialsSection';
-import QuestionsSection from '@layouts/HomeLayout/QuestionsSection/QuestionsSection';
 
 const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     reviews,
@@ -109,13 +110,13 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 <ArrowsDown />
             </GradientLine>
 
-            <ReviewsSection reviews={reviews as Review[]} />
+            <ReviewsSection reviews={reviews} />
 
             <GradientLine>
                 <ArrowsDown />
             </GradientLine>
 
-            <PartnersSection partners={partners as Partner[]} />
+            <PartnersSection partners={partners} />
 
             <TextSection color={white} textAlign="center" margin="20px 0 40px">
                 <p>
@@ -140,19 +141,23 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     );
 };
 
+(Index as NextPageWithLayout).getLayout = (page: React.ReactElement) => {
+    return <Layout>{page}</Layout>;
+};
+
 export const getStaticProps = async () => {
-    const { data: reviews } = await client.query<GetReviewsQuery>({
-        query: GetReviewsDocument,
+    const { data: reviews } = await client.query<GetReviewsQueryProps>({
+        query: GetReviewsQuery,
     });
 
-    const { data: partners } = await client.query<GetPartnersQuery>({
-        query: GetPartnersDocument,
+    const { data: partners } = await client.query<GetPartnersQueryProps>({
+        query: GetPartnersQuery,
     });
 
     return {
         props: {
-            reviews: reviews.reviews?.nodes,
-            partners: partners.partners?.nodes,
+            partners: partners.partners.nodes,
+            reviews: reviews.peopleReviews.nodes,
         },
     };
 };

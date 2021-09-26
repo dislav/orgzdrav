@@ -7,5 +7,5 @@ export const Container = styled.div`
   max-width: 820px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 120px 20px 0;
 `;

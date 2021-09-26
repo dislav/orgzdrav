@@ -981,11 +981,9 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   Partners = 'PARTNERS',
   /** The Type of Content object */
+  Peoplereviews = 'PEOPLEREVIEWS',
+  /** The Type of Content object */
   Post = 'POST',
-  /** The Type of Content object */
-  Products = 'PRODUCTS',
-  /** The Type of Content object */
-  Reviews = 'REVIEWS',
   /** The Type of Content object */
   Videos = 'VIDEOS'
 }
@@ -1088,12 +1086,6 @@ export enum ContentTypesOfCategoryEnum {
 export enum ContentTypesOfPostFormatEnum {
   /** The Type of Content object */
   Post = 'POST'
-}
-
-/** Allowed Content Types of the ProductType taxonomy. */
-export enum ContentTypesOfProductTypeEnum {
-  /** The Type of Content object */
-  Products = 'PRODUCTS'
 }
 
 /** Allowed Content Types of the Tag taxonomy. */
@@ -1265,6 +1257,33 @@ export type CreatePartnerPayload = {
   partner?: Maybe<Partner>;
 };
 
+/** Input for the createPeopleReview mutation */
+export type CreatePeopleReviewInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: Maybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: Maybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: Maybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: Maybe<Scalars['String']>;
+  /** The status of the object */
+  status?: Maybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** The payload for the createPeopleReview mutation */
+export type CreatePeopleReviewPayload = {
+  __typename?: 'CreatePeopleReviewPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  peopleReview?: Maybe<PeopleReview>;
+};
+
 /** Input for the createPostFormat mutation */
 export type CreatePostFormatInput = {
   /** The slug that the post_format will be an alias of */
@@ -1327,35 +1346,6 @@ export type CreatePostPayload = {
   post?: Maybe<Post>;
 };
 
-/** Input for the createProduct mutation */
-export type CreateProductInput = {
-  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: Maybe<Scalars['String']>;
-  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
-  /** The password used to protect the content of the object */
-  password?: Maybe<Scalars['String']>;
-  /** Set connections between the Product and ProductTypes */
-  productTypes?: Maybe<ProductProductTypesInput>;
-  /** The slug of the object */
-  slug?: Maybe<Scalars['String']>;
-  /** The status of the object */
-  status?: Maybe<PostStatusEnum>;
-  /** The title of the object */
-  title?: Maybe<Scalars['String']>;
-};
-
-/** The payload for the createProduct mutation */
-export type CreateProductPayload = {
-  __typename?: 'CreateProductPayload';
-  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The Post object mutation type. */
-  product?: Maybe<Product>;
-};
-
 /** Input for the createProductType mutation */
 export type CreateProductTypeInput = {
   /** The slug that the product_type will be an alias of */
@@ -1377,33 +1367,6 @@ export type CreateProductTypePayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The created product_type */
   productType?: Maybe<ProductType>;
-};
-
-/** Input for the createReview mutation */
-export type CreateReviewInput = {
-  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: Maybe<Scalars['String']>;
-  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
-  /** The password used to protect the content of the object */
-  password?: Maybe<Scalars['String']>;
-  /** The slug of the object */
-  slug?: Maybe<Scalars['String']>;
-  /** The status of the object */
-  status?: Maybe<PostStatusEnum>;
-  /** The title of the object */
-  title?: Maybe<Scalars['String']>;
-};
-
-/** The payload for the createReview mutation */
-export type CreateReviewPayload = {
-  __typename?: 'CreateReviewPayload';
-  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The Post object mutation type. */
-  review?: Maybe<Review>;
 };
 
 /** Input for the createTag mutation */
@@ -1665,6 +1628,27 @@ export type DeletePartnerPayload = {
   partner?: Maybe<Partner>;
 };
 
+/** Input for the deletePeopleReview mutation */
+export type DeletePeopleReviewInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: Maybe<Scalars['Boolean']>;
+  /** The ID of the PeopleReview to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deletePeopleReview mutation */
+export type DeletePeopleReviewPayload = {
+  __typename?: 'DeletePeopleReviewPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The object before it was deleted */
+  peopleReview?: Maybe<PeopleReview>;
+};
+
 /** Input for the deletePostFormat mutation */
 export type DeletePostFormatInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1705,27 +1689,6 @@ export type DeletePostPayload = {
   post?: Maybe<Post>;
 };
 
-/** Input for the deleteProduct mutation */
-export type DeleteProductInput = {
-  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** Whether the object should be force deleted instead of being moved to the trash */
-  forceDelete?: Maybe<Scalars['Boolean']>;
-  /** The ID of the Product to delete */
-  id: Scalars['ID'];
-};
-
-/** The payload for the deleteProduct mutation */
-export type DeleteProductPayload = {
-  __typename?: 'DeleteProductPayload';
-  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
-  /** The object before it was deleted */
-  product?: Maybe<Product>;
-};
-
 /** Input for the deleteProductType mutation */
 export type DeleteProductTypeInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1743,27 +1706,6 @@ export type DeleteProductTypePayload = {
   deletedId?: Maybe<Scalars['ID']>;
   /** The deteted term object */
   productType?: Maybe<ProductType>;
-};
-
-/** Input for the deleteReview mutation */
-export type DeleteReviewInput = {
-  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** Whether the object should be force deleted instead of being moved to the trash */
-  forceDelete?: Maybe<Scalars['Boolean']>;
-  /** The ID of the Review to delete */
-  id: Scalars['ID'];
-};
-
-/** The payload for the deleteReview mutation */
-export type DeleteReviewPayload = {
-  __typename?: 'DeleteReviewPayload';
-  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
-  /** The object before it was deleted */
-  review?: Maybe<Review>;
 };
 
 /** Input for the deleteTag mutation */
@@ -2390,8 +2332,20 @@ export enum MediaItemSizeEnum {
   MediumLarge = 'MEDIUM_LARGE',
   /** MediaItem with the post-thumbnail size */
   PostThumbnail = 'POST_THUMBNAIL',
+  /** MediaItem with the shop_catalog size */
+  ShopCatalog = 'SHOP_CATALOG',
+  /** MediaItem with the shop_single size */
+  ShopSingle = 'SHOP_SINGLE',
+  /** MediaItem with the shop_thumbnail size */
+  ShopThumbnail = 'SHOP_THUMBNAIL',
   /** MediaItem with the thumbnail size */
   Thumbnail = 'THUMBNAIL',
+  /** MediaItem with the woocommerce_gallery_thumbnail size */
+  WoocommerceGalleryThumbnail = 'WOOCOMMERCE_GALLERY_THUMBNAIL',
+  /** MediaItem with the woocommerce_single size */
+  WoocommerceSingle = 'WOOCOMMERCE_SINGLE',
+  /** MediaItem with the woocommerce_thumbnail size */
+  WoocommerceThumbnail = 'WOOCOMMERCE_THUMBNAIL',
   /** MediaItem with the 1536x1536 size */
   '1536X1536' = '_1536X1536',
   /** MediaItem with the 2048x2048 size */
@@ -2545,7 +2499,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkeable Interface */
-export type MenuItemObjectUnion = Category | Page | Partner | Post | Product | ProductType | Review | Tag | Video;
+export type MenuItemObjectUnion = Category | Page | Partner | PeopleReview | Post | ProductType | Tag | Video;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
@@ -3371,6 +3325,123 @@ export type Partner_Partnermain = AcfFieldGroup & {
   link?: Maybe<Scalars['String']>;
 };
 
+/** The PeopleReview type */
+export type PeopleReview = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+  __typename?: 'PeopleReview';
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The unique resource identifier path */
+  databaseId: Scalars['Int'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']>;
+  /** The globally unique identifier of the peoplereviews object. */
+  id: Scalars['ID'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  peopleReviewId: Scalars['Int'];
+  /** Connection between the PeopleReview type and the PeopleReview type */
+  preview?: Maybe<PeopleReviewToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']>;
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;Отзывы – Основное&quot; was set to Show in GraphQL. */
+  reviewMain?: Maybe<PeopleReview_Reviewmain>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The PeopleReview type */
+export type PeopleReviewEnqueuedScriptsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+/** The PeopleReview type */
+export type PeopleReviewEnqueuedStylesheetsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+/** The PeopleReview type */
+export type PeopleReviewTitleArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum PeopleReviewIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the PeopleReview type and the PeopleReview type */
+export type PeopleReviewToPreviewConnectionEdge = {
+  __typename?: 'PeopleReviewToPreviewConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<PeopleReview>;
+};
+
+/** Field Group */
+export type PeopleReview_Reviewmain = AcfFieldGroup & {
+  __typename?: 'PeopleReview_Reviewmain';
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']>;
+  image?: Maybe<MediaItem>;
+};
+
 /** An plugin object */
 export type Plugin = Node & {
   __typename?: 'Plugin';
@@ -3939,10 +4010,14 @@ export enum PostStatusEnum {
   AutoDraft = 'AUTO_DRAFT',
   /** Objects with the draft status */
   Draft = 'DRAFT',
+  /** Objects with the failed status */
+  Failed = 'FAILED',
   /** Objects with the future status */
   Future = 'FUTURE',
   /** Objects with the inherit status */
   Inherit = 'INHERIT',
+  /** Objects with the in-progress status */
+  InProgress = 'IN_PROGRESS',
   /** Objects with the pending status */
   Pending = 'PENDING',
   /** Objects with the private status */
@@ -3958,7 +4033,21 @@ export enum PostStatusEnum {
   /** Objects with the request-pending status */
   RequestPending = 'REQUEST_PENDING',
   /** Objects with the trash status */
-  Trash = 'TRASH'
+  Trash = 'TRASH',
+  /** Objects with the wc-cancelled status */
+  WcCancelled = 'WC_CANCELLED',
+  /** Objects with the wc-completed status */
+  WcCompleted = 'WC_COMPLETED',
+  /** Objects with the wc-failed status */
+  WcFailed = 'WC_FAILED',
+  /** Objects with the wc-on-hold status */
+  WcOnHold = 'WC_ON_HOLD',
+  /** Objects with the wc-pending status */
+  WcPending = 'WC_PENDING',
+  /** Objects with the wc-processing status */
+  WcProcessing = 'WC_PROCESSING',
+  /** Objects with the wc-refunded status */
+  WcRefunded = 'WC_REFUNDED'
 }
 
 /** Set relationships between the post to tags */
@@ -4387,295 +4476,6 @@ export type PostTypeLabelDetails = {
   viewItems?: Maybe<Scalars['String']>;
 };
 
-/** The Product type */
-export type Product = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
-  __typename?: 'Product';
-  /** Connection between the ContentNode type and the ContentType type */
-  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
-  /** The unique resource identifier path */
-  databaseId: Scalars['Int'];
-  /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
-  /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
-  /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
-  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
-  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
-  /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
-  /** Connection between the ContentNode type and the EnqueuedScript type */
-  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
-  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
-  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
-  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
-  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
-  /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
-  /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
-  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
-  /** The globally unique identifier of the products object. */
-  id: Scalars['ID'];
-  /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
-  /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
-  /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
-  /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
-  /** The user that most recently edited the node */
-  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
-  /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
-  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
-  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
-  /** Connection between the Product type and the Product type */
-  preview?: Maybe<ProductToPreviewConnectionEdge>;
-  /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
-  /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
-  /**
-   * The id field matches the WP_Post-&gt;ID field.
-   * @deprecated Deprecated in favor of the databaseId field
-   */
-  productId: Scalars['Int'];
-  /** Added to the GraphQL Schema because the ACF Field Group &quot;Продукты – Основное&quot; was set to Show in GraphQL. */
-  productMain?: Maybe<Product_Productmain>;
-  /** Connection between the Product type and the ProductType type */
-  productTypes?: Maybe<ProductToProductTypeConnection>;
-  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
-  /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
-  /** The template assigned to a node of content */
-  template?: Maybe<ContentTemplate>;
-  /** Connection between the Product type and the TermNode type */
-  terms?: Maybe<ProductToTermNodeConnection>;
-  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
-  /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
-};
-
-
-/** The Product type */
-export type ProductEnqueuedScriptsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
-/** The Product type */
-export type ProductEnqueuedStylesheetsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
-/** The Product type */
-export type ProductProductTypesArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<ProductToProductTypeConnectionWhereArgs>;
-};
-
-
-/** The Product type */
-export type ProductTermsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<ProductToTermNodeConnectionWhereArgs>;
-};
-
-
-/** The Product type */
-export type ProductTitleArgs = {
-  format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** The Type of Identifier used to fetch a single resource. Default is ID. */
-export enum ProductIdType {
-  /** Identify a resource by the Database ID. */
-  DatabaseId = 'DATABASE_ID',
-  /** Identify a resource by the (hashed) Global ID. */
-  Id = 'ID',
-  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
-  Slug = 'SLUG',
-  /** Identify a resource by the URI. */
-  Uri = 'URI'
-}
-
-/** Set relationships between the Product to ProductTypes */
-export type ProductProductTypesInput = {
-  /** If true, this will append the ProductType to existing related ProductTypes. If false, this will replace existing relationships. Default true. */
-  append?: Maybe<Scalars['Boolean']>;
-  /** The input list of items to set. */
-  nodes?: Maybe<Array<Maybe<ProductProductTypesNodeInput>>>;
-};
-
-/** List of ProductTypes to connect the Product to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
-export type ProductProductTypesNodeInput = {
-  /** The description of the ProductType. This field is used to set a description of the ProductType if a new one is created during the mutation. */
-  description?: Maybe<Scalars['String']>;
-  /** The ID of the ProductType. If present, this will be used to connect to the Product. If no existing ProductType exists with this ID, no connection will be made. */
-  id?: Maybe<Scalars['ID']>;
-  /** The name of the ProductType. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
-  name?: Maybe<Scalars['String']>;
-  /** The slug of the ProductType. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
-  slug?: Maybe<Scalars['String']>;
-};
-
-/** Connection between the Product type and the Product type */
-export type ProductToPreviewConnectionEdge = {
-  __typename?: 'ProductToPreviewConnectionEdge';
-  /** The node of the connection, without the edges */
-  node?: Maybe<Product>;
-};
-
-/** Connection between the Product type and the ProductType type */
-export type ProductToProductTypeConnection = {
-  __typename?: 'ProductToProductTypeConnection';
-  /** Edges for the ProductToProductTypeConnection connection */
-  edges?: Maybe<Array<Maybe<ProductToProductTypeConnectionEdge>>>;
-  /** The nodes of the connection, without the edges */
-  nodes?: Maybe<Array<Maybe<ProductType>>>;
-  /** Information about pagination in a connection. */
-  pageInfo?: Maybe<WpPageInfo>;
-};
-
-/** An edge in a connection */
-export type ProductToProductTypeConnectionEdge = {
-  __typename?: 'ProductToProductTypeConnectionEdge';
-  /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
-  /** The item at the end of the edge */
-  node?: Maybe<ProductType>;
-};
-
-/** Arguments for filtering the ProductToProductTypeConnection connection */
-export type ProductToProductTypeConnectionWhereArgs = {
-  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: Maybe<Scalars['String']>;
-  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: Maybe<Scalars['Int']>;
-  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: Maybe<Scalars['Boolean']>;
-  /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: Maybe<Scalars['String']>;
-  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: Maybe<Scalars['Boolean']>;
-  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: Maybe<Scalars['Boolean']>;
-  /** Array of term ids to include. Default empty array. */
-  include?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Array of names to return term(s) for. Default empty. */
-  name?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: Maybe<Scalars['String']>;
-  /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Direction the connection should be ordered in */
-  order?: Maybe<OrderEnum>;
-  /** Field(s) to order terms by. Defaults to 'name'. */
-  orderby?: Maybe<TermObjectsConnectionOrderbyEnum>;
-  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: Maybe<Scalars['Boolean']>;
-  /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: Maybe<Scalars['Int']>;
-  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: Maybe<Scalars['String']>;
-  /** Array of slugs to return term(s) for. Default empty. */
-  slug?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: Maybe<Scalars['Boolean']>;
-};
-
-/** Connection between the Product type and the TermNode type */
-export type ProductToTermNodeConnection = {
-  __typename?: 'ProductToTermNodeConnection';
-  /** Edges for the ProductToTermNodeConnection connection */
-  edges?: Maybe<Array<Maybe<ProductToTermNodeConnectionEdge>>>;
-  /** The nodes of the connection, without the edges */
-  nodes?: Maybe<Array<Maybe<TermNode>>>;
-  /** Information about pagination in a connection. */
-  pageInfo?: Maybe<WpPageInfo>;
-};
-
-/** An edge in a connection */
-export type ProductToTermNodeConnectionEdge = {
-  __typename?: 'ProductToTermNodeConnectionEdge';
-  /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
-  /** The item at the end of the edge */
-  node?: Maybe<TermNode>;
-};
-
-/** Arguments for filtering the ProductToTermNodeConnection connection */
-export type ProductToTermNodeConnectionWhereArgs = {
-  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: Maybe<Scalars['String']>;
-  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: Maybe<Scalars['Int']>;
-  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: Maybe<Scalars['Boolean']>;
-  /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: Maybe<Scalars['String']>;
-  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: Maybe<Scalars['Boolean']>;
-  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: Maybe<Scalars['Boolean']>;
-  /** Array of term ids to include. Default empty array. */
-  include?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Array of names to return term(s) for. Default empty. */
-  name?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: Maybe<Scalars['String']>;
-  /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Direction the connection should be ordered in */
-  order?: Maybe<OrderEnum>;
-  /** Field(s) to order terms by. Defaults to 'name'. */
-  orderby?: Maybe<TermObjectsConnectionOrderbyEnum>;
-  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: Maybe<Scalars['Boolean']>;
-  /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: Maybe<Scalars['Int']>;
-  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: Maybe<Scalars['String']>;
-  /** Array of slugs to return term(s) for. Default empty. */
-  slug?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** The Taxonomy to filter terms by */
-  taxonomies?: Maybe<Array<Maybe<TaxonomyEnum>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: Maybe<Scalars['Boolean']>;
-};
-
 /** The ProductType type */
 export type ProductType = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & {
   __typename?: 'ProductType';
@@ -4708,8 +4508,6 @@ export type ProductType = DatabaseIdentifier & MenuItemLinkable & Node & TermNod
    * @deprecated Deprecated in favor of databaseId
    */
   productTypeId?: Maybe<Scalars['Int']>;
-  /** Connection between the ProductType type and the Product type */
-  products?: Maybe<ProductTypeToProductConnection>;
   /** An alphanumeric identifier for the object unique to its type. */
   slug?: Maybe<Scalars['String']>;
   /** Connection between the ProductType type and the Taxonomy type */
@@ -4750,16 +4548,6 @@ export type ProductTypeEnqueuedStylesheetsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-
-/** The ProductType type */
-export type ProductTypeProductsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<ProductTypeToProductConnectionWhereArgs>;
-};
-
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
 export enum ProductTypeIdType {
   /** The Database ID for the node */
@@ -4797,65 +4585,7 @@ export type ProductTypeToContentNodeConnectionEdge = {
 /** Arguments for filtering the ProductTypeToContentNodeConnection connection */
 export type ProductTypeToContentNodeConnectionWhereArgs = {
   /** The Types of content to filter */
-  contentTypes?: Maybe<Array<Maybe<ContentTypesOfProductTypeEnum>>>;
-  /** Filter the connection based on dates */
-  dateQuery?: Maybe<DateQueryInput>;
-  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: Maybe<Scalars['Boolean']>;
-  /** Specific ID of the object */
-  id?: Maybe<Scalars['Int']>;
-  /** Array of IDs for the objects to retrieve */
-  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Get objects with a specific mimeType property */
-  mimeType?: Maybe<MimeTypeEnum>;
-  /** Slug / post_name of the object */
-  name?: Maybe<Scalars['String']>;
-  /** Specify objects to retrieve. Use slugs */
-  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
-  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
-  /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: Maybe<Scalars['ID']>;
-  /** Specify objects whose parent is in an array */
-  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Specify posts whose parent is not in an array */
-  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Show posts with a specific password. */
-  password?: Maybe<Scalars['String']>;
-  /** Show Posts based on a keyword search */
-  search?: Maybe<Scalars['String']>;
-  /** Retrieve posts where post status is in an array. */
-  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
-  /** Show posts with a specific status. */
-  status?: Maybe<PostStatusEnum>;
-  /** Title of the object */
-  title?: Maybe<Scalars['String']>;
-};
-
-/** Connection between the ProductType type and the Product type */
-export type ProductTypeToProductConnection = {
-  __typename?: 'ProductTypeToProductConnection';
-  /** Edges for the ProductTypeToProductConnection connection */
-  edges?: Maybe<Array<Maybe<ProductTypeToProductConnectionEdge>>>;
-  /** The nodes of the connection, without the edges */
-  nodes?: Maybe<Array<Maybe<Product>>>;
-  /** Information about pagination in a connection. */
-  pageInfo?: Maybe<WpPageInfo>;
-};
-
-/** An edge in a connection */
-export type ProductTypeToProductConnectionEdge = {
-  __typename?: 'ProductTypeToProductConnectionEdge';
-  /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
-  /** The item at the end of the edge */
-  node?: Maybe<Product>;
-};
-
-/** Arguments for filtering the ProductTypeToProductConnection connection */
-export type ProductTypeToProductConnectionWhereArgs = {
+  contentTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
   /** Filter the connection based on dates */
   dateQuery?: Maybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
@@ -4897,18 +4627,6 @@ export type ProductTypeToTaxonomyConnectionEdge = {
   __typename?: 'ProductTypeToTaxonomyConnectionEdge';
   /** The node of the connection, without the edges */
   node?: Maybe<Taxonomy>;
-};
-
-/** Field Group */
-export type Product_Productmain = AcfFieldGroup & {
-  __typename?: 'Product_Productmain';
-  collection?: Maybe<Array<Maybe<MediaItem>>>;
-  discountPrice?: Maybe<Scalars['Float']>;
-  /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  notAvailable?: Maybe<Scalars['Boolean']>;
-  price?: Maybe<Scalars['Float']>;
-  productType?: Maybe<Array<Maybe<ProductType>>>;
 };
 
 /** The reading setting type */
@@ -5034,123 +4752,6 @@ export type RestoreCommentPayload = {
   restoredId?: Maybe<Scalars['ID']>;
 };
 
-/** The Review type */
-export type Review = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
-  __typename?: 'Review';
-  /** Connection between the ContentNode type and the ContentType type */
-  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
-  /** The unique resource identifier path */
-  databaseId: Scalars['Int'];
-  /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
-  /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
-  /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
-  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
-  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
-  /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
-  /** Connection between the ContentNode type and the EnqueuedScript type */
-  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
-  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
-  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
-  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
-  /** The globally unique identifier of the reviews object. */
-  id: Scalars['ID'];
-  /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
-  /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
-  /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
-  /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
-  /** The user that most recently edited the node */
-  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
-  /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
-  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
-  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
-  /** Connection between the Review type and the Review type */
-  preview?: Maybe<ReviewToPreviewConnectionEdge>;
-  /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
-  /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
-  /**
-   * The id field matches the WP_Post-&gt;ID field.
-   * @deprecated Deprecated in favor of the databaseId field
-   */
-  reviewId: Scalars['Int'];
-  /** Added to the GraphQL Schema because the ACF Field Group &quot;Отзывы – Основное&quot; was set to Show in GraphQL. */
-  reviewMain?: Maybe<Review_Reviewmain>;
-  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
-  /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
-  /** The template assigned to the node */
-  template?: Maybe<ContentTemplate>;
-  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
-  /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
-};
-
-
-/** The Review type */
-export type ReviewEnqueuedScriptsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
-/** The Review type */
-export type ReviewEnqueuedStylesheetsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
-/** The Review type */
-export type ReviewTitleArgs = {
-  format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** The Type of Identifier used to fetch a single resource. Default is ID. */
-export enum ReviewIdType {
-  /** Identify a resource by the Database ID. */
-  DatabaseId = 'DATABASE_ID',
-  /** Identify a resource by the (hashed) Global ID. */
-  Id = 'ID',
-  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
-  Slug = 'SLUG',
-  /** Identify a resource by the URI. */
-  Uri = 'URI'
-}
-
-/** Connection between the Review type and the Review type */
-export type ReviewToPreviewConnectionEdge = {
-  __typename?: 'ReviewToPreviewConnectionEdge';
-  /** The node of the connection, without the edges */
-  node?: Maybe<Review>;
-};
-
-/** Field Group */
-export type Review_Reviewmain = AcfFieldGroup & {
-  __typename?: 'Review_Reviewmain';
-  /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  image?: Maybe<MediaItem>;
-};
-
 /** The root mutation */
 export type RootMutation = {
   __typename?: 'RootMutation';
@@ -5164,16 +4765,14 @@ export type RootMutation = {
   createPage?: Maybe<CreatePagePayload>;
   /** The payload for the createPartner mutation */
   createPartner?: Maybe<CreatePartnerPayload>;
+  /** The payload for the createPeopleReview mutation */
+  createPeopleReview?: Maybe<CreatePeopleReviewPayload>;
   /** The payload for the createPost mutation */
   createPost?: Maybe<CreatePostPayload>;
   /** The payload for the createPostFormat mutation */
   createPostFormat?: Maybe<CreatePostFormatPayload>;
-  /** The payload for the createProduct mutation */
-  createProduct?: Maybe<CreateProductPayload>;
   /** The payload for the createProductType mutation */
   createProductType?: Maybe<CreateProductTypePayload>;
-  /** The payload for the createReview mutation */
-  createReview?: Maybe<CreateReviewPayload>;
   /** The payload for the createTag mutation */
   createTag?: Maybe<CreateTagPayload>;
   /** The payload for the createUser mutation */
@@ -5190,16 +4789,14 @@ export type RootMutation = {
   deletePage?: Maybe<DeletePagePayload>;
   /** The payload for the deletePartner mutation */
   deletePartner?: Maybe<DeletePartnerPayload>;
+  /** The payload for the deletePeopleReview mutation */
+  deletePeopleReview?: Maybe<DeletePeopleReviewPayload>;
   /** The payload for the deletePost mutation */
   deletePost?: Maybe<DeletePostPayload>;
   /** The payload for the deletePostFormat mutation */
   deletePostFormat?: Maybe<DeletePostFormatPayload>;
-  /** The payload for the deleteProduct mutation */
-  deleteProduct?: Maybe<DeleteProductPayload>;
   /** The payload for the deleteProductType mutation */
   deleteProductType?: Maybe<DeleteProductTypePayload>;
-  /** The payload for the deleteReview mutation */
-  deleteReview?: Maybe<DeleteReviewPayload>;
   /** The payload for the deleteTag mutation */
   deleteTag?: Maybe<DeleteTagPayload>;
   /** The payload for the deleteUser mutation */
@@ -5230,16 +4827,14 @@ export type RootMutation = {
   updatePage?: Maybe<UpdatePagePayload>;
   /** The payload for the updatePartner mutation */
   updatePartner?: Maybe<UpdatePartnerPayload>;
+  /** The payload for the updatePeopleReview mutation */
+  updatePeopleReview?: Maybe<UpdatePeopleReviewPayload>;
   /** The payload for the updatePost mutation */
   updatePost?: Maybe<UpdatePostPayload>;
   /** The payload for the UpdatePostFormat mutation */
   updatePostFormat?: Maybe<UpdatePostFormatPayload>;
-  /** The payload for the updateProduct mutation */
-  updateProduct?: Maybe<UpdateProductPayload>;
   /** The payload for the UpdateProductType mutation */
   updateProductType?: Maybe<UpdateProductTypePayload>;
-  /** The payload for the updateReview mutation */
-  updateReview?: Maybe<UpdateReviewPayload>;
   /** The payload for the updateSettings mutation */
   updateSettings?: Maybe<UpdateSettingsPayload>;
   /** The payload for the UpdateTag mutation */
@@ -5282,6 +4877,12 @@ export type RootMutationCreatePartnerArgs = {
 
 
 /** The root mutation */
+export type RootMutationCreatePeopleReviewArgs = {
+  input: CreatePeopleReviewInput;
+};
+
+
+/** The root mutation */
 export type RootMutationCreatePostArgs = {
   input: CreatePostInput;
 };
@@ -5294,20 +4895,8 @@ export type RootMutationCreatePostFormatArgs = {
 
 
 /** The root mutation */
-export type RootMutationCreateProductArgs = {
-  input: CreateProductInput;
-};
-
-
-/** The root mutation */
 export type RootMutationCreateProductTypeArgs = {
   input: CreateProductTypeInput;
-};
-
-
-/** The root mutation */
-export type RootMutationCreateReviewArgs = {
-  input: CreateReviewInput;
 };
 
 
@@ -5360,6 +4949,12 @@ export type RootMutationDeletePartnerArgs = {
 
 
 /** The root mutation */
+export type RootMutationDeletePeopleReviewArgs = {
+  input: DeletePeopleReviewInput;
+};
+
+
+/** The root mutation */
 export type RootMutationDeletePostArgs = {
   input: DeletePostInput;
 };
@@ -5372,20 +4967,8 @@ export type RootMutationDeletePostFormatArgs = {
 
 
 /** The root mutation */
-export type RootMutationDeleteProductArgs = {
-  input: DeleteProductInput;
-};
-
-
-/** The root mutation */
 export type RootMutationDeleteProductTypeArgs = {
   input: DeleteProductTypeInput;
-};
-
-
-/** The root mutation */
-export type RootMutationDeleteReviewArgs = {
-  input: DeleteReviewInput;
 };
 
 
@@ -5480,6 +5063,12 @@ export type RootMutationUpdatePartnerArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdatePeopleReviewArgs = {
+  input: UpdatePeopleReviewInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdatePostArgs = {
   input: UpdatePostInput;
 };
@@ -5492,20 +5081,8 @@ export type RootMutationUpdatePostFormatArgs = {
 
 
 /** The root mutation */
-export type RootMutationUpdateProductArgs = {
-  input: UpdateProductInput;
-};
-
-
-/** The root mutation */
 export type RootMutationUpdateProductTypeArgs = {
   input: UpdateProductTypeInput;
-};
-
-
-/** The root mutation */
-export type RootMutationUpdateReviewArgs = {
-  input: UpdateReviewInput;
 };
 
 
@@ -5600,6 +5177,15 @@ export type RootQuery = {
   partnerBy?: Maybe<Partner>;
   /** Connection between the RootQuery type and the Partner type */
   partners?: Maybe<RootQueryToPartnerConnection>;
+  /** An object of the PeopleReview Type.  */
+  peopleReview?: Maybe<PeopleReview>;
+  /**
+   * A PeopleReview object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  peopleReviewBy?: Maybe<PeopleReview>;
+  /** Connection between the RootQuery type and the PeopleReview type */
+  peopleReviews?: Maybe<RootQueryToPeopleReviewConnection>;
   /** A WordPress plugin */
   plugin?: Maybe<Plugin>;
   /** Connection between the RootQuery type and the Plugin type */
@@ -5617,34 +5203,16 @@ export type RootQuery = {
   postFormats?: Maybe<RootQueryToPostFormatConnection>;
   /** Connection between the RootQuery type and the post type */
   posts?: Maybe<RootQueryToPostConnection>;
-  /** An object of the Product Type.  */
-  product?: Maybe<Product>;
-  /**
-   * A Product object
-   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
-   */
-  productBy?: Maybe<Product>;
   /** A 0bject */
   productType?: Maybe<ProductType>;
   /** Connection between the RootQuery type and the ProductType type */
   productTypes?: Maybe<RootQueryToProductTypeConnection>;
-  /** Connection between the RootQuery type and the Product type */
-  products?: Maybe<RootQueryToProductConnection>;
   /** Fields of the &#039;ReadingSettings&#039; settings group */
   readingSettings?: Maybe<ReadingSettings>;
   /** Connection between the RootQuery type and the EnqueuedScript type */
   registeredScripts?: Maybe<RootQueryToEnqueuedScriptConnection>;
   /** Connection between the RootQuery type and the EnqueuedStylesheet type */
   registeredStylesheets?: Maybe<RootQueryToEnqueuedStylesheetConnection>;
-  /** An object of the Review Type.  */
-  review?: Maybe<Review>;
-  /**
-   * A Review object
-   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
-   */
-  reviewBy?: Maybe<Review>;
-  /** Connection between the RootQuery type and the Review type */
-  reviews?: Maybe<RootQueryToReviewConnection>;
   /** Connection between the RootQuery type and the ContentRevisionUnion type */
   revisions?: Maybe<RootQueryToContentRevisionUnionConnection>;
   /** A 0bject */
@@ -5882,6 +5450,33 @@ export type RootQueryPartnersArgs = {
 
 
 /** The root entry point into the Graph */
+export type RootQueryPeopleReviewArgs = {
+  asPreview?: Maybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  idType?: Maybe<PeopleReviewIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryPeopleReviewByArgs = {
+  id?: Maybe<Scalars['ID']>;
+  peopleReviewId?: Maybe<Scalars['Int']>;
+  slug?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryPeopleReviewsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  where?: Maybe<RootQueryToPeopleReviewConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
 export type RootQueryPluginArgs = {
   id: Scalars['ID'];
 };
@@ -5941,23 +5536,6 @@ export type RootQueryPostsArgs = {
 
 
 /** The root entry point into the Graph */
-export type RootQueryProductArgs = {
-  asPreview?: Maybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
-  idType?: Maybe<ProductIdType>;
-};
-
-
-/** The root entry point into the Graph */
-export type RootQueryProductByArgs = {
-  id?: Maybe<Scalars['ID']>;
-  productId?: Maybe<Scalars['Int']>;
-  slug?: Maybe<Scalars['String']>;
-  uri?: Maybe<Scalars['String']>;
-};
-
-
-/** The root entry point into the Graph */
 export type RootQueryProductTypeArgs = {
   id: Scalars['ID'];
   idType?: Maybe<ProductTypeIdType>;
@@ -5971,16 +5549,6 @@ export type RootQueryProductTypesArgs = {
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   where?: Maybe<RootQueryToProductTypeConnectionWhereArgs>;
-};
-
-
-/** The root entry point into the Graph */
-export type RootQueryProductsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<RootQueryToProductConnectionWhereArgs>;
 };
 
 
@@ -5999,33 +5567,6 @@ export type RootQueryRegisteredStylesheetsArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-};
-
-
-/** The root entry point into the Graph */
-export type RootQueryReviewArgs = {
-  asPreview?: Maybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
-  idType?: Maybe<ReviewIdType>;
-};
-
-
-/** The root entry point into the Graph */
-export type RootQueryReviewByArgs = {
-  id?: Maybe<Scalars['ID']>;
-  reviewId?: Maybe<Scalars['Int']>;
-  slug?: Maybe<Scalars['String']>;
-  uri?: Maybe<Scalars['String']>;
-};
-
-
-/** The root entry point into the Graph */
-export type RootQueryReviewsArgs = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  where?: Maybe<RootQueryToReviewConnectionWhereArgs>;
 };
 
 
@@ -6741,6 +6282,64 @@ export type RootQueryToPartnerConnectionWhereArgs = {
   title?: Maybe<Scalars['String']>;
 };
 
+/** Connection between the RootQuery type and the PeopleReview type */
+export type RootQueryToPeopleReviewConnection = {
+  __typename?: 'RootQueryToPeopleReviewConnection';
+  /** Edges for the RootQueryToPeopleReviewConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToPeopleReviewConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<PeopleReview>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToPeopleReviewConnectionEdge = {
+  __typename?: 'RootQueryToPeopleReviewConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<PeopleReview>;
+};
+
+/** Arguments for filtering the RootQueryToPeopleReviewConnection connection */
+export type RootQueryToPeopleReviewConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: Maybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: Maybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: Maybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: Maybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: Maybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: Maybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: Maybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: Maybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: Maybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
 /** Connection between the RootQuery type and the Plugin type */
 export type RootQueryToPluginConnection = {
   __typename?: 'RootQueryToPluginConnection';
@@ -6913,64 +6512,6 @@ export type RootQueryToPostFormatConnectionWhereArgs = {
   updateTermMetaCache?: Maybe<Scalars['Boolean']>;
 };
 
-/** Connection between the RootQuery type and the Product type */
-export type RootQueryToProductConnection = {
-  __typename?: 'RootQueryToProductConnection';
-  /** Edges for the RootQueryToProductConnection connection */
-  edges?: Maybe<Array<Maybe<RootQueryToProductConnectionEdge>>>;
-  /** The nodes of the connection, without the edges */
-  nodes?: Maybe<Array<Maybe<Product>>>;
-  /** Information about pagination in a connection. */
-  pageInfo?: Maybe<WpPageInfo>;
-};
-
-/** An edge in a connection */
-export type RootQueryToProductConnectionEdge = {
-  __typename?: 'RootQueryToProductConnectionEdge';
-  /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
-  /** The item at the end of the edge */
-  node?: Maybe<Product>;
-};
-
-/** Arguments for filtering the RootQueryToProductConnection connection */
-export type RootQueryToProductConnectionWhereArgs = {
-  /** Filter the connection based on dates */
-  dateQuery?: Maybe<DateQueryInput>;
-  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: Maybe<Scalars['Boolean']>;
-  /** Specific ID of the object */
-  id?: Maybe<Scalars['Int']>;
-  /** Array of IDs for the objects to retrieve */
-  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Get objects with a specific mimeType property */
-  mimeType?: Maybe<MimeTypeEnum>;
-  /** Slug / post_name of the object */
-  name?: Maybe<Scalars['String']>;
-  /** Specify objects to retrieve. Use slugs */
-  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
-  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
-  /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: Maybe<Scalars['ID']>;
-  /** Specify objects whose parent is in an array */
-  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Specify posts whose parent is not in an array */
-  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Show posts with a specific password. */
-  password?: Maybe<Scalars['String']>;
-  /** Show Posts based on a keyword search */
-  search?: Maybe<Scalars['String']>;
-  /** Retrieve posts where post status is in an array. */
-  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
-  /** Show posts with a specific status. */
-  status?: Maybe<PostStatusEnum>;
-  /** Title of the object */
-  title?: Maybe<Scalars['String']>;
-};
-
 /** Connection between the RootQuery type and the ProductType type */
 export type RootQueryToProductTypeConnection = {
   __typename?: 'RootQueryToProductTypeConnection';
@@ -7033,64 +6574,6 @@ export type RootQueryToProductTypeConnectionWhereArgs = {
   termTaxonomId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: Maybe<Scalars['Boolean']>;
-};
-
-/** Connection between the RootQuery type and the Review type */
-export type RootQueryToReviewConnection = {
-  __typename?: 'RootQueryToReviewConnection';
-  /** Edges for the RootQueryToReviewConnection connection */
-  edges?: Maybe<Array<Maybe<RootQueryToReviewConnectionEdge>>>;
-  /** The nodes of the connection, without the edges */
-  nodes?: Maybe<Array<Maybe<Review>>>;
-  /** Information about pagination in a connection. */
-  pageInfo?: Maybe<WpPageInfo>;
-};
-
-/** An edge in a connection */
-export type RootQueryToReviewConnectionEdge = {
-  __typename?: 'RootQueryToReviewConnectionEdge';
-  /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
-  /** The item at the end of the edge */
-  node?: Maybe<Review>;
-};
-
-/** Arguments for filtering the RootQueryToReviewConnection connection */
-export type RootQueryToReviewConnectionWhereArgs = {
-  /** Filter the connection based on dates */
-  dateQuery?: Maybe<DateQueryInput>;
-  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: Maybe<Scalars['Boolean']>;
-  /** Specific ID of the object */
-  id?: Maybe<Scalars['Int']>;
-  /** Array of IDs for the objects to retrieve */
-  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Get objects with a specific mimeType property */
-  mimeType?: Maybe<MimeTypeEnum>;
-  /** Slug / post_name of the object */
-  name?: Maybe<Scalars['String']>;
-  /** Specify objects to retrieve. Use slugs */
-  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
-  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
-  /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: Maybe<Scalars['ID']>;
-  /** Specify objects whose parent is in an array */
-  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Specify posts whose parent is not in an array */
-  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  /** Show posts with a specific password. */
-  password?: Maybe<Scalars['String']>;
-  /** Show Posts based on a keyword search */
-  search?: Maybe<Scalars['String']>;
-  /** Retrieve posts where post status is in an array. */
-  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
-  /** Show posts with a specific status. */
-  status?: Maybe<PostStatusEnum>;
-  /** Title of the object */
-  title?: Maybe<Scalars['String']>;
 };
 
 /** Connection between the RootQuery type and the tag type */
@@ -8128,6 +7611,35 @@ export type UpdatePartnerPayload = {
   partner?: Maybe<Partner>;
 };
 
+/** Input for the updatePeopleReview mutation */
+export type UpdatePeopleReviewInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: Maybe<Scalars['String']>;
+  /** The ID of the PeopleReview object */
+  id: Scalars['ID'];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: Maybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: Maybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: Maybe<Scalars['String']>;
+  /** The status of the object */
+  status?: Maybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** The payload for the updatePeopleReview mutation */
+export type UpdatePeopleReviewPayload = {
+  __typename?: 'UpdatePeopleReviewPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  peopleReview?: Maybe<PeopleReview>;
+};
+
 /** Input for the UpdatePostFormat mutation */
 export type UpdatePostFormatInput = {
   /** The slug that the post_format will be an alias of */
@@ -8194,37 +7706,6 @@ export type UpdatePostPayload = {
   post?: Maybe<Post>;
 };
 
-/** Input for the updateProduct mutation */
-export type UpdateProductInput = {
-  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: Maybe<Scalars['String']>;
-  /** The ID of the Product object */
-  id: Scalars['ID'];
-  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
-  /** The password used to protect the content of the object */
-  password?: Maybe<Scalars['String']>;
-  /** Set connections between the Product and ProductTypes */
-  productTypes?: Maybe<ProductProductTypesInput>;
-  /** The slug of the object */
-  slug?: Maybe<Scalars['String']>;
-  /** The status of the object */
-  status?: Maybe<PostStatusEnum>;
-  /** The title of the object */
-  title?: Maybe<Scalars['String']>;
-};
-
-/** The payload for the updateProduct mutation */
-export type UpdateProductPayload = {
-  __typename?: 'UpdateProductPayload';
-  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The Post object mutation type. */
-  product?: Maybe<Product>;
-};
-
 /** Input for the UpdateProductType mutation */
 export type UpdateProductTypeInput = {
   /** The slug that the product_type will be an alias of */
@@ -8248,35 +7729,6 @@ export type UpdateProductTypePayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The created product_type */
   productType?: Maybe<ProductType>;
-};
-
-/** Input for the updateReview mutation */
-export type UpdateReviewInput = {
-  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: Maybe<Scalars['String']>;
-  /** The ID of the Review object */
-  id: Scalars['ID'];
-  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
-  /** The password used to protect the content of the object */
-  password?: Maybe<Scalars['String']>;
-  /** The slug of the object */
-  slug?: Maybe<Scalars['String']>;
-  /** The status of the object */
-  status?: Maybe<PostStatusEnum>;
-  /** The title of the object */
-  title?: Maybe<Scalars['String']>;
-};
-
-/** The payload for the updateReview mutation */
-export type UpdateReviewPayload = {
-  __typename?: 'UpdateReviewPayload';
-  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
-  /** The Post object mutation type. */
-  review?: Maybe<Review>;
 };
 
 /** Input for the updateSettings mutation */
@@ -8640,13 +8092,15 @@ export type UserRole = Node & {
 /** Names of available user roles */
 export enum UserRoleEnum {
   /** User role with specific capabilities */
-  Administrator = 'ADMINISTRATOR',
-  /** User role with specific capabilities */
   Author = 'AUTHOR',
   /** User role with specific capabilities */
   Contributor = 'CONTRIBUTOR',
   /** User role with specific capabilities */
+  Customer = 'CUSTOMER',
+  /** User role with specific capabilities */
   Editor = 'EDITOR',
+  /** User role with specific capabilities */
+  ShopManager = 'SHOP_MANAGER',
   /** User role with specific capabilities */
   Subscriber = 'SUBSCRIBER'
 }
@@ -9284,25 +8738,15 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'RootMutation', registerUser?: Maybe<{ __typename?: 'RegisterUserPayload', clientMutationId?: Maybe<string> }> };
 
-export type GetGeneralSettingsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetGeneralSettingsQuery = { __typename?: 'RootQuery', generalSettings?: Maybe<{ __typename?: 'GeneralSettings', title?: Maybe<string>, description?: Maybe<string> }> };
-
 export type GetPartnersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPartnersQuery = { __typename?: 'RootQuery', partners?: Maybe<{ __typename?: 'RootQueryToPartnerConnection', nodes?: Maybe<Array<Maybe<{ __typename?: 'Partner', slug?: Maybe<string>, title?: Maybe<string>, partnerMain?: Maybe<{ __typename?: 'Partner_Partnermain', description?: Maybe<string>, city?: Maybe<string>, link?: Maybe<string>, image?: Maybe<{ __typename?: 'MediaItem', sourceUrl?: Maybe<string> }> }> }>>> }> };
 
-export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPeopleReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsQuery = { __typename?: 'RootQuery', products?: Maybe<{ __typename?: 'RootQueryToProductConnection', nodes?: Maybe<Array<Maybe<{ __typename?: 'Product', slug?: Maybe<string>, title?: Maybe<string>, productMain?: Maybe<{ __typename?: 'Product_Productmain', price?: Maybe<number>, discountPrice?: Maybe<number>, notAvailable?: Maybe<boolean>, productType?: Maybe<Array<Maybe<{ __typename?: 'ProductType', slug?: Maybe<string>, name?: Maybe<string> }>>> }> }>>> }> };
-
-export type GetReviewsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetReviewsQuery = { __typename?: 'RootQuery', reviews?: Maybe<{ __typename?: 'RootQueryToReviewConnection', nodes?: Maybe<Array<Maybe<{ __typename?: 'Review', slug?: Maybe<string>, title?: Maybe<string>, reviewMain?: Maybe<{ __typename?: 'Review_Reviewmain', image?: Maybe<{ __typename?: 'MediaItem', sourceUrl?: Maybe<string> }> }> }>>> }> };
+export type GetPeopleReviewsQuery = { __typename?: 'RootQuery', peopleReviews?: Maybe<{ __typename?: 'RootQueryToPeopleReviewConnection', nodes?: Maybe<Array<Maybe<{ __typename?: 'PeopleReview', slug?: Maybe<string>, title?: Maybe<string>, reviewMain?: Maybe<{ __typename?: 'PeopleReview_Reviewmain', image?: Maybe<{ __typename?: 'MediaItem', sourceUrl?: Maybe<string> }> }> }>>> }> };
 
 export type GetVideosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9381,41 +8825,6 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
-export const GetGeneralSettingsDocument = gql`
-    query GetGeneralSettings {
-  generalSettings {
-    title
-    description
-  }
-}
-    `;
-
-/**
- * __useGetGeneralSettingsQuery__
- *
- * To run a query within a React component, call `useGetGeneralSettingsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetGeneralSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetGeneralSettingsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetGeneralSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetGeneralSettingsQuery, GetGeneralSettingsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetGeneralSettingsQuery, GetGeneralSettingsQueryVariables>(GetGeneralSettingsDocument, options);
-      }
-export function useGetGeneralSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGeneralSettingsQuery, GetGeneralSettingsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetGeneralSettingsQuery, GetGeneralSettingsQueryVariables>(GetGeneralSettingsDocument, options);
-        }
-export type GetGeneralSettingsQueryHookResult = ReturnType<typeof useGetGeneralSettingsQuery>;
-export type GetGeneralSettingsLazyQueryHookResult = ReturnType<typeof useGetGeneralSettingsLazyQuery>;
-export type GetGeneralSettingsQueryResult = Apollo.QueryResult<GetGeneralSettingsQuery, GetGeneralSettingsQueryVariables>;
 export const GetPartnersDocument = gql`
     query GetPartners {
   partners {
@@ -9461,55 +8870,9 @@ export function useGetPartnersLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetPartnersQueryHookResult = ReturnType<typeof useGetPartnersQuery>;
 export type GetPartnersLazyQueryHookResult = ReturnType<typeof useGetPartnersLazyQuery>;
 export type GetPartnersQueryResult = Apollo.QueryResult<GetPartnersQuery, GetPartnersQueryVariables>;
-export const GetProductsDocument = gql`
-    query GetProducts {
-  products {
-    nodes {
-      slug
-      title
-      productMain {
-        price
-        discountPrice
-        notAvailable
-        productType {
-          slug
-          name
-        }
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useGetProductsQuery__
- *
- * To run a query within a React component, call `useGetProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetProductsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
-      }
-export function useGetProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
-        }
-export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
-export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
-export type GetProductsQueryResult = Apollo.QueryResult<GetProductsQuery, GetProductsQueryVariables>;
-export const GetReviewsDocument = gql`
-    query GetReviews {
-  reviews {
+export const GetPeopleReviewsDocument = gql`
+    query GetPeopleReviews {
+  peopleReviews {
     nodes {
       slug
       title
@@ -9524,31 +8887,31 @@ export const GetReviewsDocument = gql`
     `;
 
 /**
- * __useGetReviewsQuery__
+ * __useGetPeopleReviewsQuery__
  *
- * To run a query within a React component, call `useGetReviewsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetReviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPeopleReviewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPeopleReviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetReviewsQuery({
+ * const { data, loading, error } = useGetPeopleReviewsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetReviewsQuery(baseOptions?: Apollo.QueryHookOptions<GetReviewsQuery, GetReviewsQueryVariables>) {
+export function useGetPeopleReviewsQuery(baseOptions?: Apollo.QueryHookOptions<GetPeopleReviewsQuery, GetPeopleReviewsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetReviewsQuery, GetReviewsQueryVariables>(GetReviewsDocument, options);
+        return Apollo.useQuery<GetPeopleReviewsQuery, GetPeopleReviewsQueryVariables>(GetPeopleReviewsDocument, options);
       }
-export function useGetReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReviewsQuery, GetReviewsQueryVariables>) {
+export function useGetPeopleReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPeopleReviewsQuery, GetPeopleReviewsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetReviewsQuery, GetReviewsQueryVariables>(GetReviewsDocument, options);
+          return Apollo.useLazyQuery<GetPeopleReviewsQuery, GetPeopleReviewsQueryVariables>(GetPeopleReviewsDocument, options);
         }
-export type GetReviewsQueryHookResult = ReturnType<typeof useGetReviewsQuery>;
-export type GetReviewsLazyQueryHookResult = ReturnType<typeof useGetReviewsLazyQuery>;
-export type GetReviewsQueryResult = Apollo.QueryResult<GetReviewsQuery, GetReviewsQueryVariables>;
+export type GetPeopleReviewsQueryHookResult = ReturnType<typeof useGetPeopleReviewsQuery>;
+export type GetPeopleReviewsLazyQueryHookResult = ReturnType<typeof useGetPeopleReviewsLazyQuery>;
+export type GetPeopleReviewsQueryResult = Apollo.QueryResult<GetPeopleReviewsQuery, GetPeopleReviewsQueryVariables>;
 export const GetVideosDocument = gql`
     query GetVideos {
   videos {

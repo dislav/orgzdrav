@@ -16,6 +16,9 @@ const theme: DefaultTheme = {
         vk: '#597da3',
 
         text: '#333333',
+
+        red: '#f15e48',
+        blue: '#1fb6ff'
     },
     breakpoints: {},
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.header`
   position: sticky;
   top: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
   z-index: 10;
@@ -29,6 +30,9 @@ export const Links = styled.div`
 `;
 
 export const Info = styled.div<{ isHidden?: boolean }>`
+  position: absolute;
+  top: ${({ isHidden }) => isHidden ? '-100%' : '52px'};
+  left: 50%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -36,11 +40,10 @@ export const Info = styled.div<{ isHidden?: boolean }>`
   text-align: center;
   color: ${({ theme }) => theme.colors.white};
   border-bottom: 1px solid ${({ theme }) => theme.colors.white};
-  margin: 0 auto;
   padding: 20px 0;
-  will-change: transform;
-  transform: ${({ isHidden }) => (isHidden ? 'translateY(-100%)' : null)};
-  transition: transform 0.3s;
+  opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
+  transform: translateX(-50%);
+  transition: top 0.3s, opacity 0.3s;
   z-index: -1;
 
   a {

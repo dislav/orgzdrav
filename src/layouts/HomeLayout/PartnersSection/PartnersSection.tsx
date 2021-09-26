@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import Swiper, { SwiperOptions, Pagination } from 'swiper';
+import Swiper, { SwiperOptions, Pagination, Keyboard } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
-import { Partner } from '@graphql/graphql';
+import { PartnerProps } from '@graphql/queries/partners';
 import {
     Container,
     Header,
@@ -15,10 +15,10 @@ import {
 import { ArrowRight, Link } from '@icons/icons';
 
 interface IReviewsSection {
-    partners?: Partner[];
+    partners: PartnerProps[];
 }
 
-Swiper.use([Pagination]);
+Swiper.use([Pagination, Keyboard]);
 
 const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
     const options: SwiperOptions = {
@@ -29,6 +29,11 @@ const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
             clickable: true,
         },
         grabCursor: true,
+        slideToClickedSlide: true,
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
     };
 
     return (

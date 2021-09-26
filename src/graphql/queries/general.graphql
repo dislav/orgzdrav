@@ -1,6 +1,0 @@
-query GetGeneralSettings {
-  generalSettings {
-    title
-    description
-  }
-}

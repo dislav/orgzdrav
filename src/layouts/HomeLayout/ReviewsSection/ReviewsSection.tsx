@@ -1,17 +1,17 @@
 import React from 'react';
 import Image from 'next/image';
-import Swiper, { SwiperOptions, Pagination } from 'swiper';
+import Swiper, { SwiperOptions, Pagination, Keyboard } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
-import { Review } from '@graphql/graphql';
+import { PeopleReviewProps } from '@graphql/queries';
 import { Container, Header, Slider } from './ReviewsSection.styled';
 import { ArrowRight } from '@icons/icons';
 
 interface IReviewsSection {
-    reviews?: Review[];
+    reviews: PeopleReviewProps[];
 }
 
-Swiper.use([Pagination]);
+Swiper.use([Pagination, Keyboard]);
 
 const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
     const options: SwiperOptions = {
@@ -22,6 +22,11 @@ const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
             clickable: true,
         },
         grabCursor: true,
+        slideToClickedSlide: true,
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
     };
 
     return (

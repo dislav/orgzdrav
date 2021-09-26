@@ -26,6 +26,13 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+  
+  button {
+    font-size: inherit;
+    font-weight: inherit;
+    border: none;
+    outline: none;
+  }
 `;
 
 export default GlobalStyle;
