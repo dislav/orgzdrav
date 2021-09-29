@@ -5,6 +5,7 @@ import { CommonComponentsProps, WithFieldGroupName } from '@graphql/types';
 export const SimpleProductFragment = gql`
     fragment SimpleProductFragment on SimpleProduct {
         id
+        databaseId
         name
         slug
         price
@@ -32,12 +33,23 @@ export const SimpleProductFragment = gql`
                     fieldGroupName
                 }
             }
+            hasAdditionalOptions
+            options {
+                name
+                price
+            }
         }
     }
 `;
 
+export type ProductOption = {
+    name: string;
+    price: number;
+};
+
 export interface SimpleProductProps {
     id: string;
+    databaseId: number;
     name: string;
     slug: string;
     price: string;
@@ -53,5 +65,7 @@ export interface SimpleProductProps {
     };
     productAdditional: {
         content: WithFieldGroupName<CommonComponentsProps>[];
+        hasAdditionalOptions: boolean;
+        options: Maybe<ProductOption[]>
     };
 }

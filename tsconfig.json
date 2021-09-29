@@ -17,9 +17,11 @@
     "paths": {
       "@components/*": ["components/*"],
       "@graphql/*": ["graphql/*"],
+      "@hooks/*": ["hooks/*"],
       "@icons/*": ["icons/*"],
       "@layouts/*": ["layouts/*"],
       "@pages/*": ["pages/*"],
+      "@redux/*": ["redux/*"],
       "@theme/*": ["theme/*"]
     }
   },

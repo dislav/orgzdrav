@@ -1,11 +1,11 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { getToken } from '@graphql/utils';
 
 const getAuthHeaders = () => {
-    if (typeof window === 'undefined') return null;
-    const token = localStorage?.getItem('token');
+    const token = getToken();
 
     return {
-        authorization: `Bearer ${token || ''}`,
+        authorization: token ? `Bearer ${token}` : '',
     };
 };
 

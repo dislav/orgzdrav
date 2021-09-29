@@ -1,7 +1,7 @@
 import { Maybe } from './graphql';
 
 // Fragments
-export type { SimpleProductProps } from './fragments/simpleProduct';
+export type { SimpleProductProps, ProductOption } from './fragments/simpleProduct';
 
 // Queries
 export { GetPartnersQuery } from './queries/partners';

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Container as StyledProfile } from '@components/Profile/Profile.styled';
+
 export const Container = styled.header`
   position: sticky;
   top: 0;
@@ -16,7 +18,7 @@ export const Links = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
   height: 52px;
 
-  > a {
+  a {
     font-size: 14px;
     text-transform: uppercase;
     color: ${({ theme }) => theme.colors.white};
@@ -26,6 +28,10 @@ export const Links = styled.div`
     &:last-child {
       margin-right: 0;
     }
+  }
+  
+  ${StyledProfile} {
+    margin-left: 60px;
   }
 `;
 

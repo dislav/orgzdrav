@@ -12,10 +12,13 @@ import {
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import Meta from '@components/Meta/Meta';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
+import SectionOptions from '@layouts/CatalogLayout/SectionOptions/SectionOptions';
 
 const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     product,
 }) => {
+    console.log(product);
+
     return (
         <CatalogLayout product={product} isProductPage>
             <Meta title={product.name} />
@@ -24,6 +27,13 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             {product.productAdditional.content.map((section, index) => (
                 <CommonComponents key={index} {...section} />
             ))}
+
+            {product.productAdditional.hasAdditionalOptions &&
+                product.productAdditional.options && (
+                    <SectionOptions
+                        options={product.productAdditional.options}
+                    />
+                )}
         </CatalogLayout>
     );
 };

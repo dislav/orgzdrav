@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import ButtonComponent from '@components/Button/Button';
 
 export const Container = styled.div`
   max-width: 820px;
   padding: 160px 0 120px;
   margin: 0 auto;
-  
+
   h2 {
     color: ${({ theme }) => theme.colors.white};
     font-size: 28px;
@@ -31,10 +32,12 @@ export const Footer = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-export const Button = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const Button = styled(ButtonComponent)`
+  flex: 2;
+  min-height: 50px;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.blue};
+  margin-right: 20px;
 `;
 
 export const FooterWrapper = styled.div`
@@ -43,20 +46,12 @@ export const FooterWrapper = styled.div`
   max-width: 820px;
   width: 100%;
   margin: 0 auto;
-  
+
   > a {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    > svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-  
-  > a, ${Button} {
-    flex: 1;
     min-height: 50px;
     color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.gray05};
@@ -64,14 +59,13 @@ export const FooterWrapper = styled.div`
     margin-right: 20px;
     cursor: pointer;
 
-    &:nth-child(2) {
-      flex: 2;
-      color: ${({ theme }) => theme.colors.white};
-      background-color: ${({ theme }) => theme.colors.blue};
-    }
-
     &:last-child {
       margin-right: 0;
+    }
+
+    > svg {
+      width: 20px;
+      height: 20px;
     }
   }
 `;
@@ -80,7 +74,7 @@ export const CartButton = styled.div`
   position: relative;
   width: 20px;
   height: 20px;
-  
+
   > svg {
     width: 100%;
     height: 100%;
