@@ -20,7 +20,13 @@ const theme: DefaultTheme = {
         red: '#f15e48',
         blue: '#1fb6ff'
     },
-    breakpoints: {},
+    breakpoints: {
+        sm: 640,
+        md: 768,
+        xl: 1280,
+        xxl: 1536,
+        fhd: 1920
+    },
 };
 
 export default theme;

@@ -3,7 +3,6 @@ import { InferGetStaticPropsType } from 'next';
 import Image from 'next/image';
 import { useTheme } from 'styled-components';
 
-import { NextPageWithLayout } from '@pages/_app';
 import client from '@graphql/client';
 import {
     GetPartnersQuery,
@@ -12,7 +11,6 @@ import {
     GetReviewsQueryProps,
 } from '@graphql/types';
 
-import Layout from '@components/Layout/Layout';
 import HomeLayout from '@layouts/HomeLayout/HomeLayout';
 import ReviewsSection from '@layouts/HomeLayout/ReviewsSection/ReviewsSection';
 import PartnersSection from '@layouts/HomeLayout/PartnersSection/PartnersSection';
@@ -33,10 +31,10 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
     return (
         <HomeLayout>
-            <Image src="/images/1.png" width={500} height={500} />
+            <Image src="/images/1.png" alt="" width={500} height={500} />
 
             <Button
-                href="/catalog"
+                // href="/catalog"
                 id="catalog"
                 padding="16px 20px"
                 fullWidth
@@ -74,7 +72,7 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </TextSection>
 
             <Button
-                href="tg://join?invite=TTvAkkpKlyCjHXe4"
+                // href="tg://join?invite=TTvAkkpKlyCjHXe4"
                 icon={<Telegram />}
                 id="catalog"
                 variant="telegram"
@@ -84,7 +82,7 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Телеграм-чат проекта OrgZdrav
             </Button>
 
-            <Image src="/images/2.png" width={820} height={820} />
+            <Image src="/images/2.png" alt="" width={820} height={820} />
 
             <TextSection color={white} textAlign="center">
                 <p>*Оплата от организации возможна при заказе от 10.000 руб.</p>
@@ -92,19 +90,19 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
             <GradientLine />
 
-            <Image src="/images/3.png" width={500} height={422} />
+            <Image src="/images/3.png" alt="" width={500} height={422} />
 
             <GradientLine>
                 <ArrowsDown />
             </GradientLine>
 
-            <Image src="/images/4.png" width={500} height={488} />
+            <Image src="/images/4.png" alt="" width={500} height={488} />
 
             <GradientLine>
                 <ArrowsDown />
             </GradientLine>
 
-            <Image src="/images/5.png" width={500} height={440} />
+            <Image src="/images/5.png" alt="" width={500} height={440} />
 
             <GradientLine>
                 <ArrowsDown />
@@ -139,10 +137,6 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <SocialsSection />
         </HomeLayout>
     );
-};
-
-(Index as NextPageWithLayout).getLayout = (page: React.ReactElement) => {
-    return <Layout>{page}</Layout>;
 };
 
 export const getStaticProps = async () => {

@@ -9,12 +9,14 @@ const getAuthHeaders = () => {
     };
 };
 
-const client = new ApolloClient({
-    link: new HttpLink({
-        uri: 'http://orgzdrav.loc/graphql',
-        headers: getAuthHeaders(),
-    }),
-    cache: new InMemoryCache(),
+const link = new HttpLink({
+    uri: 'http://orgzdrav.loc/graphql',
+    headers: getAuthHeaders(),
 });
 
-export default client;
+const cache = new InMemoryCache();
+
+export default new ApolloClient({
+    link,
+    cache,
+});

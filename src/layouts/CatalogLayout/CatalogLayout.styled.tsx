@@ -1,16 +1,21 @@
 import styled from 'styled-components';
+
+import Layout from "@components/Layout/Layout";
+import { Container as StyledFilterForm } from '@layouts/CatalogLayout/FilterForm/FilterForm.styled';
 import ButtonComponent from '@components/Button/Button';
 
-export const Container = styled.div`
-  max-width: 820px;
+export const Container = styled(Layout)`
   padding: 160px 0 120px;
-  margin: 0 auto;
 
   h2 {
     color: ${({ theme }) => theme.colors.white};
     font-size: 28px;
     font-weight: 500;
     line-height: 1.2;
+    margin-bottom: 40px;
+  }
+  
+  ${StyledFilterForm} {
     margin-bottom: 40px;
   }
 `;
@@ -30,6 +35,7 @@ export const Footer = styled.div`
   align-items: center;
   height: 80px;
   background-color: ${({ theme }) => theme.colors.white};
+  z-index: 10;
 `;
 
 export const Button = styled(ButtonComponent)`
@@ -66,6 +72,10 @@ export const FooterWrapper = styled.div`
     > svg {
       width: 20px;
       height: 20px;
+    }
+    
+    > span {
+      margin-right: 8px;
     }
   }
 `;

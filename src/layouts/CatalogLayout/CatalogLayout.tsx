@@ -22,7 +22,7 @@ import {
     AddToCartMutationProps,
 } from '@graphql/mutations/addToCart';
 
-import { getCartItemCount, getCartProductCount } from '@redux/cart/selectors';
+import { getCartItemCount } from '@redux/cart/selectors';
 import { setCart } from '@redux/cart/actions';
 
 interface ICatalogLayout {
@@ -79,36 +79,40 @@ const CatalogLayout: React.FC<ICatalogLayout> = ({
 
             {children}
 
-            {isProductPage && (
-                <Footer>
-                    <FooterWrapper>
-                        <Link href="/catalog" passHref>
-                            <a>
-                                <DotsMenu />
-                            </a>
-                        </Link>
-
-                        <Button onClick={addToCartHandler} isLoading={loading}>
-                            Добавить в корзину
-                        </Button>
-
-                        {init && (
-                            <Link href="/card">
+            <Footer>
+                <FooterWrapper>
+                    {isProductPage && (
+                        <>
+                            <Link href="/catalog" passHref>
                                 <a>
-                                    <CartButton>
-                                        {itemCount > 0 && (
-                                            <CartCounter>
-                                                {itemCount}
-                                            </CartCounter>
-                                        )}
-                                        <CartIcon />
-                                    </CartButton>
+                                    <DotsMenu />
                                 </a>
                             </Link>
-                        )}
-                    </FooterWrapper>
-                </Footer>
-            )}
+
+                            <Button
+                                onClick={addToCartHandler}
+                                isLoading={loading}
+                            >
+                                Добавить в корзину
+                            </Button>
+                        </>
+                    )}
+
+                    {init && (
+                        <Link href="/cart">
+                            <a>
+                                {!isProductPage && <span>Корзина</span>}
+                                <CartButton>
+                                    {itemCount > 0 && (
+                                        <CartCounter>{itemCount}</CartCounter>
+                                    )}
+                                    <CartIcon />
+                                </CartButton>
+                            </a>
+                        </Link>
+                    )}
+                </FooterWrapper>
+            </Footer>
         </Container>
     );
 };

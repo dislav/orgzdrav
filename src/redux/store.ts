@@ -1,19 +1,19 @@
 import { useMemo } from 'react';
-import { createStore, Store } from 'redux';
+import { CombinedState, createStore, Store } from 'redux';
 import rootReducer, { RootReducer } from './rootReducer';
 
-let store: Store<RootReducer> | undefined;
+let store: any;
 
-export const makeStore = (initialState?: Store<RootReducer>) =>
+export const makeStore = (initialState = {}) =>
     createStore(rootReducer, initialState);
 
-export const initStore = (preloadedState?: Store<Partial<RootReducer>>) => {
+export const initStore = (preloadedState?: Store<RootReducer>) => {
     let _store = store ?? makeStore(preloadedState);
 
     if (preloadedState && store) {
         _store = makeStore({
             ...store.getState(),
-            ...preloadedState
+            ...preloadedState,
         });
 
         store = undefined;
@@ -23,9 +23,9 @@ export const initStore = (preloadedState?: Store<Partial<RootReducer>>) => {
     if (!store) store = _store;
 
     return _store;
-}
+};
 
-export const useStore = (initialState?: Store<Partial<RootReducer>>) => {
+export const useStore = (initialState?: Store<RootReducer>) => {
     const store = useMemo(() => makeStore(initialState), [initialState]);
     return store;
-}
+};

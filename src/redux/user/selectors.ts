@@ -3,6 +3,8 @@ import { createSelector } from 'reselect';
 
 export const getUser = (state: RootReducer) => state.user;
 
+export const getIsLoggedIn = createSelector(getUser, (state) => !!state.id);
+
 export const getUserName = createSelector(getUser, (state) => {
     return `${state.firstName || ''}${
         state.lastName ? ` ${state.lastName}` : ''

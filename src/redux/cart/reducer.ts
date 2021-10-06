@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { SET_CART } from './actions';
+import { CLEAR_CART, SET_CART } from './actions';
 import { GetCartQueryProps } from '@graphql/queries/cart';
 
 const initialState: GetCartQueryProps['cart'] = {
@@ -20,6 +20,9 @@ export const cartReducer = handleActions(
     {
         [SET_CART]: (state, { payload }) => {
             return { ...state, ...payload };
+        },
+        [CLEAR_CART]: () => {
+            return initialState;
         },
     },
     initialState

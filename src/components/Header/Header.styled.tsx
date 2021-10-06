@@ -5,18 +5,24 @@ import { Container as StyledProfile } from '@components/Profile/Profile.styled';
 export const Container = styled.header`
   position: sticky;
   top: 0;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  height: 52px;
+  background-color: ${({ theme }) => theme.colors.primary};
   z-index: 10;
+`;
+
+export const Wrapper = styled.div`
+  max-width: 820px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const Links = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.primary};
-  height: 52px;
+  height: 100%;
 
   a {
     font-size: 14px;
@@ -31,7 +37,7 @@ export const Links = styled.div`
   }
   
   ${StyledProfile} {
-    margin-left: 60px;
+    margin-left: auto;
   }
 `;
 
@@ -63,4 +69,11 @@ export const Info = styled.div<{ isHidden?: boolean }>`
     font-size: 14px;
     text-transform: uppercase;
   }
+`;
+
+export const Login = styled.div`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 14px;
+  margin-left: auto;
+  cursor: pointer;
 `;

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 import {
     LoginMutation,
@@ -9,9 +10,8 @@ import {
     LoginMutationProps,
 } from '@graphql/mutations/login';
 
-import { Container, Input } from './LoginForm.styled';
-import Button from '@components/Button/Button';
-import { setUser } from '@redux/user/actions';
+import { Container, Input, Button, Errors } from './LoginForm.styled';
+import { getError } from '@components/LoginForm/utils';
 
 interface ILoginForm {
     onSuccess?: () => void;
@@ -19,6 +19,9 @@ interface ILoginForm {
 
 const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
+
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     const [login, { loading }] = useMutation<
         LoginMutationProps,
@@ -32,6 +35,8 @@ const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
     } = useForm<LoginMutationOptions>();
 
     const onSubmit: SubmitHandler<LoginMutationOptions> = async (data) => {
+        setErrorMessages([]);
+
         try {
             const response = await login({ variables: data });
 
@@ -41,16 +46,22 @@ const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
                     response.data.login.authToken
                 );
 
-                dispatch(setUser(response.data.login.user));
                 onSuccess?.();
+                router.reload();
             }
+
+            return response;
         } catch (e) {
-            console.log(e);
+            const messages = (e as ApolloError)?.graphQLErrors.map(
+                ({ message }) => message
+            );
+            if (messages) setErrorMessages(messages);
         }
     };
 
     return (
         <Container onSubmit={handleSubmit(onSubmit)}>
+            <h2>Авторизация</h2>
             <Input
                 name="username"
                 placeholder="Имя пользователя"
@@ -70,6 +81,13 @@ const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
                 }}
                 error={errors?.['password']?.message}
             />
+            {errorMessages?.length > 0 && (
+                <Errors>
+                    {errorMessages.map((message, index) => (
+                        <span key={index}>{getError(message)}</span>
+                    ))}
+                </Errors>
+            )}
             <Button isLoading={loading}>Войти</Button>
         </Container>
     );

@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { SET_USER } from './actions';
+import { CLEAR_USER, SET_USER } from './actions';
 import { ViewerProps } from '@graphql/fragments/viewer';
 
 const initialState: ViewerProps = {
@@ -18,6 +18,9 @@ export const userReducer = handleActions(
     {
         [SET_USER]: (state, { payload }) => {
             return { ...state, ...payload };
+        },
+        [CLEAR_USER]: () => {
+            return initialState;
         },
     },
     initialState

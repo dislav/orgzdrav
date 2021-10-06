@@ -13,6 +13,9 @@ export const CartFragment = gql`
             itemCount
             productCount
             nodes {
+                key
+                total
+                quantity
                 product {
                     node {
                         ...SimpleProductFragment

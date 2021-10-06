@@ -6,16 +6,25 @@ import Header from '@components/Header/Header';
 import Meta from '@components/Meta/Meta';
 import Footer from '@components/Footer/Footer';
 
-const Layout: React.FC = ({ children }) => {
+interface ILayout {
+    className?: string;
+}
+
+const Layout: React.FC<ILayout> = ({ className, children }) => {
     return (
         <>
             <ImageWrapper>
-                <Image src="/images/bg.jpg" layout="fill" objectFit="cover" />
+                <Image
+                    src="/images/bg.jpg"
+                    alt=""
+                    layout="fill"
+                    objectFit="cover"
+                />
             </ImageWrapper>
 
             <Meta />
             <Header />
-            <Container>{children}</Container>
+            <Container className={className}>{children}</Container>
             <Footer />
         </>
     );

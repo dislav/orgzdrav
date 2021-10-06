@@ -22,6 +22,9 @@ export interface GetCartQueryProps {
             itemCount: number;
             productCount: number;
             nodes: {
+                key: string;
+                quantity: number;
+                total: string;
                 product: {
                     node: SimpleProductProps;
                 };

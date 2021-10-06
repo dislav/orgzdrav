@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+import Layout from '@components/Layout/Layout';
+
+export const Container = styled(Layout)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 820px;
-  width: 100%;
-  margin: 0 auto;
   padding: 120px 20px 0;
 `;

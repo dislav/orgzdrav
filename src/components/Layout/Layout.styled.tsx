@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const Container = styled.main``;
+export const Container = styled.main`
+  position: relative;
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+`;
 
 export const ImageWrapper = styled.div`
   position: fixed;

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Swiper, { SwiperOptions, Pagination, Keyboard } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
-import { PeopleReviewProps } from '@graphql/queries';
+import { PeopleReviewProps } from '@graphql/types';
 import { Container, Header, Slider } from './ReviewsSection.styled';
 import { ArrowRight } from '@icons/icons';
 

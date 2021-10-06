@@ -16,7 +16,7 @@ const QuestionsSection: React.FC = () => {
             </Text>
 
             <Button
-                href="https://wa.me/+79135682515"
+                // href="https://wa.me/+79135682515"
                 padding="14px 30px"
                 margin="0 0 40px"
             >

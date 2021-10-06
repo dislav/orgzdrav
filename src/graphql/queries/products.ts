@@ -6,8 +6,8 @@ import {
 
 export const GetProductsQuery = gql`
     ${SimpleProductFragment}
-    query GetProducts {
-        products {
+    query GetProducts($where: RootQueryToProductConnectionWhereArgs) {
+        products(where: $where) {
             nodes {
                 ...SimpleProductFragment
             }

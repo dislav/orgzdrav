@@ -14,23 +14,28 @@ const SocialsSection: React.FC = () => {
 
             <Row>
                 <Button
-                    href="https://www.instagram.com/orgzdrav.2019/"
+                    // href="https://www.instagram.com/orgzdrav.2019/"
                     icon={<Instagram />}
                     variant="instagram"
                 />
                 <Button
-                    href="https://vk.com/orgzdrav2019"
+                    // href="https://vk.com/orgzdrav2019"
                     icon={<Vk />}
                     variant="vk"
                 />
                 <Button
-                    href="https://www.facebook.com/orgzdrav2019/"
+                    // href="https://www.facebook.com/orgzdrav2019/"
                     icon={<Facebook />}
                     variant="facebook"
                 />
             </Row>
 
-            <Button href="tg://join?invite=TTvAkkpKlyCjHXe4" icon={<Telegram />} variant="telegram" fullWidth>
+            <Button
+                // href="tg://join?invite=TTvAkkpKlyCjHXe4"
+                icon={<Telegram />}
+                variant="telegram"
+                fullWidth
+            >
                 Общий чат в телеграмм
             </Button>
         </Container>

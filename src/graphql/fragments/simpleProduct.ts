@@ -33,11 +33,6 @@ export const SimpleProductFragment = gql`
                     fieldGroupName
                 }
             }
-            hasAdditionalOptions
-            options {
-                name
-                price
-            }
         }
     }
 `;

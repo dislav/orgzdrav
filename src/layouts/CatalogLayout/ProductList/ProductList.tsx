@@ -1,19 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { SimpleProductProps } from '@graphql/queries';
+import { getProducts } from '@redux/products/selectors';
+
 import { Container } from './ProductList.styled';
 import ProductCard from '@components/ProductCard/ProductCard';
 
-interface IProductList {
-    products: SimpleProductProps[];
-}
+const ProductList: React.FC = () => {
+    const products = useSelector(getProducts);
 
-const ProductList: React.FC<IProductList> = ({ products }) => {
     return (
         <Container>
-            {products.map((product) => (
-                <ProductCard key={product.id} {...product} />
-            ))}
+            {products.length > 0 ? (
+                products.map((product) => (
+                    <ProductCard key={product.id} {...product} />
+                ))
+            ) : (
+                <h3>Список товаров пуст</h3>
+            )}
         </Container>
     );
 };
