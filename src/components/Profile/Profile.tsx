@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import {useRouter} from "next/router";
+import React, { useState, useMemo, useRef } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-import { getUserAbbreviatedName, getUserName } from '@redux/user/selectors';
+import { ViewerProps } from '@graphql/fragments/viewer';
 
-import { Container, Avatar, Menu } from './Profile.styled';
+import { Container, Avatar, Menu, Logout } from './Profile.styled';
 import { useOnClickOutside } from '@hooks/useOnClickOutside';
 
-const Profile: React.FC = () => {
+const Profile: React.FC<ViewerProps> = ({ firstName, lastName, username }) => {
     const router = useRouter();
 
     const menuContainer = useRef(null);
@@ -15,8 +15,19 @@ const Profile: React.FC = () => {
 
     useOnClickOutside(menuContainer, () => setMenuActive(false));
 
-    const name = useSelector(getUserName);
-    const abbreviatedName = useSelector(getUserAbbreviatedName);
+    const name = useMemo(() => {
+        return `${firstName || ''}${lastName ? ` ${lastName}` : ''}`;
+    }, [firstName, lastName]);
+
+    const abbreviatedName = useMemo(() => {
+        if (firstName || lastName) {
+            return `${firstName ? firstName[0] : ''}${
+                lastName ? lastName[0] : ''
+            }`;
+        }
+
+        return username[0];
+    }, [firstName, lastName, username]);
 
     const onLogout = () => {
         localStorage.removeItem('authToken');
@@ -29,8 +40,14 @@ const Profile: React.FC = () => {
             <Avatar>{abbreviatedName}</Avatar>
 
             {menuActive && (
-                <Menu isMenuActive={menuActive} ref={menuContainer}>
-                    <button onClick={onLogout}>Выйти</button>
+                <Menu ref={menuContainer}>
+                    <Link href="/profile">
+                        <a>Профиль</a>
+                    </Link>
+                    <Link href="/videos">
+                        <a>Видеозаписи</a>
+                    </Link>
+                    <Logout onClick={onLogout}>Выйти</Logout>
                 </Menu>
             )}
         </Container>

@@ -28,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   button {
+    font-family: Roboto, sans-serif;
     font-size: inherit;
     font-weight: inherit;
     border: none;

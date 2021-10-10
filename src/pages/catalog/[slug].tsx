@@ -9,9 +9,6 @@ import {
     GetProductsQueryProps,
 } from '@graphql/types';
 
-import { NextPageWithLayout } from '@pages/_app';
-
-import Layout from '@components/Layout/Layout';
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import Meta from '@components/Meta/Meta';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
@@ -21,23 +18,21 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     product,
 }) => {
     return (
-        <Layout>
-            <CatalogLayout product={product} isProductPage>
-                <Meta title={product.name} />
-                <h2>{product.name}</h2>
+        <CatalogLayout product={product} hideFooter showCatalogButton>
+            <Meta title={product.name} />
+            <h2>{product.name}</h2>
 
-                {product.productAdditional.content.map((section, index) => (
-                    <CommonComponents key={index} {...section} />
-                ))}
+            {product.productAdditional.content.map((section, index) => (
+                <CommonComponents key={index} {...section} />
+            ))}
 
-                {product.productAdditional.hasAdditionalOptions &&
-                    product.productAdditional.options && (
-                        <SectionOptions
-                            options={product.productAdditional.options}
-                        />
-                    )}
-            </CatalogLayout>
-        </Layout>
+            {product.productAdditional.hasAdditionalOptions &&
+                product.productAdditional.options && (
+                    <SectionOptions
+                        options={product.productAdditional.options}
+                    />
+                )}
+        </CatalogLayout>
     );
 };
 

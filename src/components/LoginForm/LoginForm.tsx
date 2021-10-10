@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ApolloError, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -10,15 +9,10 @@ import {
     LoginMutationProps,
 } from '@graphql/mutations/login';
 
-import { Container, Input, Button, Errors } from './LoginForm.styled';
-import { getError } from '@components/LoginForm/utils';
+import { Container, Input, Button } from './LoginForm.styled';
+import FormErrors from '@components/FormErrors/FormErrors';
 
-interface ILoginForm {
-    onSuccess?: () => void;
-}
-
-const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
-    const dispatch = useDispatch();
+const LoginForm: React.FC = () => {
     const router = useRouter();
 
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
@@ -46,7 +40,6 @@ const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
                     response.data.login.authToken
                 );
 
-                onSuccess?.();
                 router.reload();
             }
 
@@ -81,13 +74,11 @@ const LoginForm: React.FC<ILoginForm> = ({ onSuccess }) => {
                 }}
                 error={errors?.['password']?.message}
             />
+
             {errorMessages?.length > 0 && (
-                <Errors>
-                    {errorMessages.map((message, index) => (
-                        <span key={index}>{getError(message)}</span>
-                    ))}
-                </Errors>
+                <FormErrors messages={errorMessages} />
             )}
+
             <Button isLoading={loading}>Войти</Button>
         </Container>
     );

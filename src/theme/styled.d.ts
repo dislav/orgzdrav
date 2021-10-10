@@ -4,7 +4,7 @@ declare module 'styled-components' {
     export interface DefaultTheme {
         fonts: {
             [key: string]: string;
-        },
+        };
         colors: {
             [key: string]: string;
             black: string;
@@ -19,7 +19,8 @@ declare module 'styled-components' {
             text: string;
             red: string;
             blue: string;
-        },
+            green: string;
+        };
         breakpoints: {
             [key: string]: number;
             sm: number;
@@ -27,6 +28,6 @@ declare module 'styled-components' {
             xl: number;
             xxl: number;
             fhd: number;
-        }
+        };
     }
 }

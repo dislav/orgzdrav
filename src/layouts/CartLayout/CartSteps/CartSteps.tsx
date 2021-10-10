@@ -8,19 +8,22 @@ import {
     UpdateItemQuantitiesMutationProps,
 } from '@graphql/mutations/updateItemQuantities';
 
-import { Container, Products, Footer, Price } from './CartSteps.styled';
+import { Container, Products, Footer, Price, Loader } from './CartSteps.styled';
 import CartProduct from '@components/CartProduct/CartProduct';
+import Spinner from '@components/Spinner/Spinner';
+import PromoCode from '@layouts/CartLayout/CartSteps/PromoCode/PromoCode';
 
 const CartSteps: React.FC = () => {
-    const { data: cart, loading, refetch } = useQuery<GetCartQueryProps>(GetCartQuery);
+    const {
+        data: cart,
+        loading,
+        refetch,
+    } = useQuery<GetCartQueryProps>(GetCartQuery);
+
     const [updateQuantities, { loading: quantitiesLoading }] = useMutation<
         UpdateItemQuantitiesMutationProps,
         CartItemQuantityInputProps
     >(UpdateItemQuantitiesMutation);
-
-    if (!cart?.cart && loading) {
-        return <div>Загрузка</div>;
-    }
 
     const onUpdateQuantity = async (key: string, quantity: number) => {
         try {
@@ -29,28 +32,41 @@ const CartSteps: React.FC = () => {
             });
 
             if (data?.updateItemQuantities) {
-                console.log(data?.updateItemQuantities);
                 await refetch();
             }
         } catch (e) {}
     };
 
+    if (!cart?.cart && loading) {
+        return <div>Загрузка</div>;
+    }
+
     return (
         <Container>
+            {quantitiesLoading && (
+                <Loader>
+                    <Spinner />
+                </Loader>
+            )}
+
             <Products>
                 {cart?.cart.contents.nodes.map(
                     ({ key: productKey, quantity, total, product }, index) => (
                         <CartProduct
                             key={index}
-                            productKey={productKey}
                             quantity={quantity}
                             totalPrice={total}
-                            onUpdateQuantity={onUpdateQuantity}
+                            onUpdateQuantity={(count) =>
+                                onUpdateQuantity(productKey, count)
+                            }
                             {...product.node}
                         />
                     )
                 )}
             </Products>
+
+            <PromoCode coupons={cart?.cart.appliedCoupons} onAddPromoCode={refetch} />
+
             <Footer>
                 <span>Итого:</span>
                 {cart?.cart.total && (

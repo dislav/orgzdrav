@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Layout from "@components/Layout/Layout";
+import Layout from '@components/Layout/Layout';
 
 export const Container = styled(Layout)`
-  padding: 60px 0;
+  padding: 100px 0 80px;
 `;

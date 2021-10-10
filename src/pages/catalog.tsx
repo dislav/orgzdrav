@@ -10,7 +10,7 @@ import ProductList from '@layouts/CatalogLayout/ProductList/ProductList';
 
 const Catalog: React.FC = () => {
     return (
-        <CatalogLayout>
+        <CatalogLayout hideFooter>
             <Meta title="Продукты" />
             <FilterForm />
             <ProductList />

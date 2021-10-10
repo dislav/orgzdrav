@@ -9,6 +9,11 @@ export const CartFragment = gql`
         shippingTotal
         contentsTotal
         discountTotal
+        appliedCoupons {
+            code
+            discountAmount
+            discountTax
+        }
         contents {
             itemCount
             productCount

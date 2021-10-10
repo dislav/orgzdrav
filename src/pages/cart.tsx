@@ -6,7 +6,7 @@ import CartSteps from '@layouts/CartLayout/CartSteps/CartSteps';
 
 const Cart: React.FC = () => {
     return (
-        <CartLayout>
+        <CartLayout hideFooter showCatalogButton isCheckout>
             <Meta title="Корзина" />
             <CartSteps />
         </CartLayout>

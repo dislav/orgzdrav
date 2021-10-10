@@ -11,6 +11,12 @@ export const GetCartQuery = gql`
     }
 `;
 
+export interface CouponProps {
+    code: string;
+    discountAmount: string;
+    discountTax: string;
+}
+
 export interface GetCartQueryProps {
     cart: {
         isEmpty: boolean;
@@ -18,6 +24,7 @@ export interface GetCartQueryProps {
         shippingTotal: string;
         contentsTotal: string;
         discountTotal: string;
+        appliedCoupons: CouponProps[];
         contents: {
             itemCount: number;
             productCount: number;

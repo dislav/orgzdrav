@@ -18,14 +18,15 @@ const theme: DefaultTheme = {
         text: '#333333',
 
         red: '#f15e48',
-        blue: '#1fb6ff'
+        blue: '#1fb6ff',
+        green: '#5cb85c',
     },
     breakpoints: {
         sm: 640,
         md: 768,
         xl: 1280,
         xxl: 1536,
-        fhd: 1920
+        fhd: 1920,
     },
 };
 

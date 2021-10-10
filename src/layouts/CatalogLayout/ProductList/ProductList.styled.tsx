@@ -7,6 +7,11 @@ export const Container = styled.div`
   flex-wrap: wrap;
   
   ${ProductCard} {
-    width: 30%;
+    width: 260px;
+    margin-right: 20px;
+    
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
   }
 `;

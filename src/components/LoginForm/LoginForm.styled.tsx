@@ -31,20 +31,3 @@ export const Input = styled(InputComponent)`
 export const Button = styled(ButtonComponent)`
   height: 48px;
 `;
-
-export const Errors = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  
-  span {
-    color: ${({ theme }) => theme.colors.red};
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-`;

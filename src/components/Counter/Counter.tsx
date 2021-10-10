@@ -4,34 +4,35 @@ import { Container, Button, Input } from './Counter.styled';
 
 interface ICounter {
     className?: string;
-    value?: number;
-    onChange?: (count: number) => void;
+    defaultValue: number;
+    onChange?: (value: number) => void;
 }
 
-const Counter: React.FC<ICounter> = ({ className, value, onChange }) => {
-    const [count, setCount] = useState(value || 0);
-
-    useEffect(() => {
-        onChange?.(count);
-    }, [count]);
+const Counter: React.FC<ICounter> = ({ className, defaultValue, onChange }) => {
+    const formatValue = (value: string) => value.replace(/[^\d+]/, '');
+    const [value, setValue] = useState(defaultValue || 0);
 
     const onDecrement = () => {
-        setCount(count - 1);
+        setValue(+formatValue((value - 1).toString()));
     };
 
     const onIncrement = () => {
-        setCount(count + 1);
+        setValue(+formatValue((value + 1).toString()));
     };
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/[^\d+]/, '');
-        setCount(+value);
+        setValue(+formatValue(e.target.value));
     };
+
+    useEffect(() => {
+        if (defaultValue === value) return;
+        onChange?.(value);
+    }, [value]);
 
     return (
         <Container className={className}>
             <Button onClick={onDecrement}>-</Button>
-            <Input type="text" value={count} onChange={onChangeHandler} />
+            <Input value={value} onChange={onChangeHandler} />
             <Button onClick={onIncrement}>+</Button>
         </Container>
     );
