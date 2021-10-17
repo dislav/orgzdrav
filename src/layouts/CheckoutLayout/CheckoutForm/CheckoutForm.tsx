@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 import {
     CheckoutMutation,
@@ -12,6 +13,8 @@ import { emailRegex } from '@constants/constants';
 import { Container, Group, Input, Button } from './CheckoutForm.styled';
 
 const CheckoutForm: React.FC = () => {
+    const router = useRouter();
+
     const {
         handleSubmit,
         register,
@@ -33,8 +36,17 @@ const CheckoutForm: React.FC = () => {
                 },
             });
 
-            console.log(response);
-        } catch (e) {}
+            if (response.data?.checkout.result === 'success') {
+                localStorage.setItem(
+                    'authToken',
+                    response.data.checkout.order.customer.jwtAuthToken
+                );
+
+                await router.push(`/orders/${response.data.checkout.order.id}`);
+            }
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (

@@ -51,9 +51,20 @@ const Document: React.FC<IDocument> = ({
                 </Footer>
             </Container>
 
-            <Modal isOpen={isOpen}>
+            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <VideoModal>
-                    <Video url={download.file} />
+                    <Video
+                        url={url}
+                        playing
+                        controls
+                        config={{
+                            file: {
+                                attributes: {
+                                    controlsList: 'nodownload',
+                                },
+                            },
+                        }}
+                    />
                 </VideoModal>
             </Modal>
         </>

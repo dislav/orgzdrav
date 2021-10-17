@@ -51,6 +51,10 @@ export const OrderFragment = gql`
             email
             phone
         }
+        customer {
+            jwtAuthToken
+            sessionToken
+        }
     }
 `;
 
@@ -102,4 +106,8 @@ export interface OrderProps {
         }[];
     };
     billing: BillingProps;
+    customer: {
+        jwtAuthToken: string;
+        sessionToken: string;
+    };
 }

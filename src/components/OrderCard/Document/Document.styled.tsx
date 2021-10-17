@@ -46,7 +46,5 @@ export const Format = styled.span`
 `;
 
 export const VideoModal = styled.div`
-  min-width: 800px;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: 40px;
+  min-width: 80vw;
 `;

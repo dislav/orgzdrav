@@ -1,22 +1,60 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-import { getToken } from '@graphql/utils';
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloLink,
+    createHttpLink,
+} from '@apollo/client';
 
-const getAuthHeaders = () => {
-    const token = getToken();
+export const middleware = new ApolloLink((operation, forward) => {
+    const isBrowser = typeof window !== 'undefined';
 
-    return {
-        authorization: token ? `Bearer ${token}` : '',
-    };
-};
+    const token = isBrowser ? localStorage.getItem('authToken') : null;
+    const session = isBrowser ? localStorage.getItem('woo-session') : null;
 
-const link = new HttpLink({
-    uri: 'http://orgzdrav.loc/graphql',
-    headers: getAuthHeaders(),
+    if (session) {
+        operation.setContext(({ headers = {} }) => ({
+            headers: {
+                'woocommerce-session': `Session ${session}`,
+                authorization: token ? `Bearer ${token}` : '',
+            },
+        }));
+    }
+
+    return forward(operation);
 });
 
-const cache = new InMemoryCache();
+export const afterware = new ApolloLink((operation, forward) => {
+    return forward(operation).map((response) => {
+        if (!process.browser) return response;
+
+        const ctx = operation.getContext();
+        const {
+            response: { headers },
+        } = ctx;
+        const session = headers.get('woocommerce-session');
+
+        if (session) {
+            if (session === 'false') {
+                localStorage.removeItem('woo-session');
+            } else if (localStorage.getItem('woo-session') !== session) {
+                localStorage.setItem(
+                    'woo-session',
+                    headers.get('woocommerce-session')
+                );
+            }
+        }
+
+        return response;
+    });
+});
 
 export default new ApolloClient({
-    link,
-    cache,
+    link: middleware.concat(
+        afterware.concat(
+            createHttpLink({
+                uri: 'http://orgzdrav.loc/graphql',
+            })
+        )
+    ),
+    cache: new InMemoryCache(),
 });

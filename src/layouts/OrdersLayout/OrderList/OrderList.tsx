@@ -13,8 +13,6 @@ const OrderList: React.FC = () => {
         return <div>Загрузка</div>;
     }
 
-    console.log(data?.orders.nodes[0]);
-
     return (
         <Container>
             {data?.orders.nodes.map((order) => (

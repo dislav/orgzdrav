@@ -35,12 +35,8 @@ const Layout: React.FC<ILayout> = ({
         skip: !authToken,
     });
 
-    const { data: cart, refetch: updateCart } = useQuery<GetCartQueryProps>(
-        GetCartQuery,
-        {
-            skip: !profile?.viewer,
-        }
-    );
+    const { data: cart, refetch: updateCart } =
+        useQuery<GetCartQueryProps>(GetCartQuery);
 
     const [addToCart, { loading }] = useMutation<
         AddToCartMutationProps,
@@ -84,14 +80,12 @@ const Layout: React.FC<ILayout> = ({
 
             {!hideFooter && <Footer />}
 
-            {cart?.cart && (
-                <ShopFooter
-                    itemCount={cart.cart.contents.itemCount}
-                    onAddToCart={onAddToCartHandler}
-                    isLoading={loading}
-                    {...props}
-                />
-            )}
+            <ShopFooter
+                itemCount={cart?.cart.contents.itemCount || 0}
+                onAddToCart={onAddToCartHandler}
+                isLoading={loading}
+                {...props}
+            />
         </>
     );
 };
