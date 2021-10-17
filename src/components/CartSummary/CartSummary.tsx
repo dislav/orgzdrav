@@ -8,12 +8,22 @@ import {
     UpdateItemQuantitiesMutationProps,
 } from '@graphql/mutations/updateItemQuantities';
 
-import { Container, Products, Footer, Price, Loader } from './CartSteps.styled';
+import {
+    Container,
+    Products,
+    Footer,
+    Price,
+    Loader,
+} from './CartSummary.styled';
 import CartProduct from '@components/CartProduct/CartProduct';
 import Spinner from '@components/Spinner/Spinner';
-import PromoCode from '@layouts/CartLayout/CartSteps/PromoCode/PromoCode';
+import PromoCode from '@components/CartSummary/PromoCode/PromoCode';
 
-const CartSteps: React.FC = () => {
+interface ICartSummary {
+    isReadOnly?: boolean;
+}
+
+const CartSummary: React.FC<ICartSummary> = ({ isReadOnly }) => {
     const {
         data: cart,
         loading,
@@ -65,7 +75,12 @@ const CartSteps: React.FC = () => {
                 )}
             </Products>
 
-            <PromoCode coupons={cart?.cart.appliedCoupons} onAddPromoCode={refetch} />
+            {!isReadOnly && (
+                <PromoCode
+                    coupons={cart?.cart.appliedCoupons || []}
+                    onUpdateCart={refetch}
+                />
+            )}
 
             <Footer>
                 <span>Итого:</span>
@@ -79,4 +94,4 @@ const CartSteps: React.FC = () => {
     );
 };
 
-export default CartSteps;
+export default CartSummary;

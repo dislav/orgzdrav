@@ -4,6 +4,8 @@ import { NextPage } from 'next';
 import { Provider } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import '../../node_modules/swiper/swiper.min.css';
 
 import { useStore } from '@redux/store';
@@ -18,6 +20,8 @@ export type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
     Component: NextPageWithLayout;
 };
+
+dayjs.extend(utc);
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     const store = useStore(pageProps?.initialReduxState);

@@ -39,10 +39,6 @@ const CartProduct: React.FC<ICartProduct> = ({
             )}
             <Text>{name}</Text>
             <RightWrapper>
-                <Counter
-                    defaultValue={quantity}
-                    onChange={onUpdateQuantity}
-                />
                 <Price dangerouslySetInnerHTML={{ __html: totalPrice }} />
             </RightWrapper>
         </Container>

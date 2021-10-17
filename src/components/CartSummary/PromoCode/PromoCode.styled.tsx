@@ -57,3 +57,27 @@ export const Button = styled(ButtonComponent)`
   height: 40px;
   border-radius: 4px;
 `;
+
+export const Coupons = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const Coupon = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  background-color: ${({ theme }) => theme.colors.gray15};
+  padding-left: 6px;
+`
+
+export const DeleteCoupon = styled.div`
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+  background-color: ${({ theme }) => theme.colors.gray10};
+`;

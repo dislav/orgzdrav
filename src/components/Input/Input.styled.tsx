@@ -23,7 +23,15 @@ export const Container = styled.label<{ isFill?: boolean; isError?: boolean }>`
   }
 `;
 
-export const Label = styled.span``;
+export const Label = styled.span`
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 14px;
+  margin-bottom: 4px;
+  
+  > span {
+    color: ${({ theme }) => theme.colors.red};
+  }
+`;
 
 export const Error = styled.span`
   color: ${({ theme }) => theme.colors.red};

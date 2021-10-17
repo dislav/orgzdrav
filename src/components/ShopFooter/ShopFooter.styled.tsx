@@ -86,11 +86,13 @@ export const CartCounter = styled.span`
   transform: translate(35%, -35%);
 `;
 
-export const CheckoutButton = styled(ButtonComponent)`
-  flex: 1;
-  min-height: 50px;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.green};
-  border-radius: 4px;
-  margin-right: 20px;
+export const CheckoutLink = styled.a`
+  && {
+    flex: 1;
+    min-height: 50px;
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.green};
+    border-radius: 4px;
+    margin-right: 20px;
+  }
 `;

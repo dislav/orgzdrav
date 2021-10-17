@@ -11,6 +11,7 @@ declare module 'styled-components' {
             white: string;
             gray05: string;
             gray10: string;
+            gray15: string;
             primary: string;
             telegram: string;
             instagram: string;
@@ -20,6 +21,8 @@ declare module 'styled-components' {
             red: string;
             blue: string;
             green: string;
+            orange: string;
+            purple: string;
         };
         breakpoints: {
             [key: string]: number;

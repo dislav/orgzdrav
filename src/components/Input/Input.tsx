@@ -29,8 +29,17 @@ const Input: React.FC<IInput> = ({
     };
 
     return (
-        <Container className={className} isFill={!!value.length} isError={!!error}>
-            {label && <Label>{label}</Label>}
+        <Container
+            className={className}
+            isFill={!!value.length}
+            isError={!!error}
+        >
+            {label && (
+                <Label>
+                    {label}
+                    {options?.required ? <span>*</span> : ''}
+                </Label>
+            )}
             <input {...input} {...props} onChange={onChangeHandler} />
             {error && <Error>{error}</Error>}
         </Container>

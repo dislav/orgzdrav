@@ -8,11 +8,16 @@ import {
     LoginMutationOptions,
     LoginMutationProps,
 } from '@graphql/mutations/login';
+import { AuthType } from '@components/AuthForm/AuthForm';
 
 import { Container, Input, Button } from './LoginForm.styled';
 import FormErrors from '@components/FormErrors/FormErrors';
 
-const LoginForm: React.FC = () => {
+interface ILoginForm {
+    setType: (type: AuthType) => void;
+}
+
+const LoginForm: React.FC<ILoginForm> = ({ setType }) => {
     const router = useRouter();
 
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
@@ -54,7 +59,6 @@ const LoginForm: React.FC = () => {
 
     return (
         <Container onSubmit={handleSubmit(onSubmit)}>
-            <h2>Авторизация</h2>
             <Input
                 name="username"
                 placeholder="Имя пользователя"
@@ -80,6 +84,13 @@ const LoginForm: React.FC = () => {
             )}
 
             <Button isLoading={loading}>Войти</Button>
+
+            <p>
+                Нет аккаунта?{' '}
+                <span onClick={() => setType(AuthType.Register)}>
+                    Зарегистрироваться
+                </span>
+            </p>
         </Container>
     );
 };

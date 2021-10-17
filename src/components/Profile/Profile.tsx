@@ -44,8 +44,8 @@ const Profile: React.FC<ViewerProps> = ({ firstName, lastName, username }) => {
                     <Link href="/profile">
                         <a>Профиль</a>
                     </Link>
-                    <Link href="/videos">
-                        <a>Видеозаписи</a>
+                    <Link href="/orders">
+                        <a>Заказы</a>
                     </Link>
                     <Logout onClick={onLogout}>Выйти</Logout>
                 </Menu>

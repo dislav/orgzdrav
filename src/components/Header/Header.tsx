@@ -6,8 +6,8 @@ import { ViewerProps } from '@graphql/fragments/viewer';
 
 import { Container, Wrapper, Links, Login } from './Header.styled';
 import Modal from '@components/Modal/Modal';
-import LoginForm from '@components/LoginForm/LoginForm';
 import Profile from '@components/Profile/Profile';
+import AuthForm from '@components/AuthForm/AuthForm';
 
 interface IHeader {
     profile?: ViewerProps;
@@ -50,7 +50,7 @@ const Header: React.FC<IHeader> = ({ profile }) => {
             </Wrapper>
 
             <Modal isOpen={isLoginModal} onClose={closeLoginModal}>
-                <LoginForm />
+                <AuthForm />
             </Modal>
         </Container>
     );

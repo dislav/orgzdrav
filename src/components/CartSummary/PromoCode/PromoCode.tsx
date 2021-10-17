@@ -7,6 +7,12 @@ import {
     ApplyCouponMutationProps,
     ApplyCouponMutationQueryProps,
 } from '@graphql/mutations/applyCoupon';
+import {
+    RemoveCouponsMutation,
+    RemoveCouponsMutationProps,
+    RemoveCouponsMutationQueryProps,
+} from '@graphql/mutations/removeCoupons';
+
 import { CouponProps } from '@graphql/queries/cart';
 
 import {
@@ -17,6 +23,9 @@ import {
     InputWrapper,
     Input,
     Button,
+    Coupons,
+    Coupon,
+    DeleteCoupon,
 } from './PromoCode.styled';
 
 import { Sale } from '@icons/icons';
@@ -24,18 +33,16 @@ import { Sale } from '@icons/icons';
 interface IPromoCode {
     className?: string;
     coupons: CouponProps[];
-    onAddPromoCode?: () => void;
+    onUpdateCart?: () => void;
 }
 
 const PromoCode: React.FC<IPromoCode> = ({
     className,
     coupons,
-    onAddPromoCode,
+    onUpdateCart,
 }) => {
     const [isPromoCode, setIsPromoCode] = useState(false);
     const [error, setError] = useState('');
-
-    console.log(coupons);
 
     const { handleSubmit, register } =
         useForm<ApplyCouponMutationQueryProps['input']>();
@@ -45,17 +52,22 @@ const PromoCode: React.FC<IPromoCode> = ({
         ApplyCouponMutationQueryProps
     >(ApplyCouponMutation);
 
+    const [deleteCoupon] = useMutation<
+        RemoveCouponsMutationProps,
+        RemoveCouponsMutationQueryProps
+    >(RemoveCouponsMutation);
+
     const onSubmit: SubmitHandler<ApplyCouponMutationQueryProps['input']> =
-        async (data) => {
+        async ({ code }) => {
             setError('');
 
             try {
                 const response = await applyCoupon({
-                    variables: { input: data },
+                    variables: { input: { code: code.toLowerCase() } },
                 });
 
                 if (response.data?.applyCoupon) {
-                    onAddPromoCode?.();
+                    onUpdateCart?.();
                 }
             } catch (e) {
                 if ((e as ApolloError)?.graphQLErrors.length) {
@@ -64,6 +76,22 @@ const PromoCode: React.FC<IPromoCode> = ({
             }
         };
 
+    const onDeleteCoupon = async (code: string) => {
+        try {
+            const response = await deleteCoupon({
+                variables: { input: { codes: [code] } },
+            });
+
+            if (response.data?.removeCoupons) {
+                onUpdateCart?.();
+            }
+        } catch (e) {
+            if ((e as ApolloError)?.graphQLErrors.length) {
+                setError((e as ApolloError).graphQLErrors[0].message);
+            }
+        }
+    };
+
     return (
         <Container className={className} onSubmit={handleSubmit(onSubmit)}>
             <Sale />
@@ -71,9 +99,16 @@ const PromoCode: React.FC<IPromoCode> = ({
                 <Title>Промокод</Title>
 
                 {coupons.length > 0 ? (
-                    coupons?.map((coupon) => (
-                        <span key={coupon.code}>{coupon.code}</span>
-                    ))
+                    <Coupons>
+                        {coupons?.map((coupon) => (
+                            <Coupon key={coupon.code}>
+                                {coupon.code}
+                                <DeleteCoupon
+                                    onClick={() => onDeleteCoupon(coupon.code)}
+                                />
+                            </Coupon>
+                        ))}
+                    </Coupons>
                 ) : (
                     <ApplyPromoCode
                         onClick={() => setIsPromoCode(!isPromoCode)}
@@ -83,7 +118,7 @@ const PromoCode: React.FC<IPromoCode> = ({
                 )}
             </Wrapper>
 
-            {isPromoCode && (
+            {isPromoCode && coupons.length === 0 && (
                 <InputWrapper>
                     <Input name="code" register={register} error={error} />
                     <Button isLoading={loading}>Применить</Button>

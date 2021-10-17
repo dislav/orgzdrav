@@ -8,6 +8,7 @@ const theme: DefaultTheme = {
 
         gray05: '#f6f6f6',
         gray10: '#cccccc',
+        gray15: '#ebebeb',
 
         primary: '#0b5ba6',
         telegram: '#61a8de',
@@ -20,6 +21,8 @@ const theme: DefaultTheme = {
         red: '#f15e48',
         blue: '#1fb6ff',
         green: '#5cb85c',
+        orange: '#f1a348',
+        purple: '#9248f1',
     },
     breakpoints: {
         sm: 640,

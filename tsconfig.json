@@ -16,6 +16,7 @@
     "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"],
       "@graphql/*": ["graphql/*"],
       "@hooks/*": ["hooks/*"],
       "@icons/*": ["icons/*"],

@@ -9,7 +9,7 @@ import {
     Button,
     CartButton,
     CartCounter,
-    CheckoutButton,
+    CheckoutLink,
 } from './ShopFooter.styled';
 import { CartIcon, DotsMenu } from '@icons/icons';
 
@@ -48,7 +48,9 @@ const ShopFooter: React.FC<IShopFooter> = ({
                 )}
 
                 {isCheckout ? (
-                    <CheckoutButton>Оформить заказ</CheckoutButton>
+                    <Link href="/checkout" passHref>
+                        <CheckoutLink>Оформить заказ</CheckoutLink>
+                    </Link>
                 ) : (
                     <Link href="/cart">
                         <a>
