@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CombinedState, createStore, Store } from 'redux';
+import { createStore, Store } from 'redux';
 import rootReducer, { RootReducer } from './rootReducer';
 
 let store: any;

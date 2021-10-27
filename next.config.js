@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['orgzdrav.loc']
+    domains: ['orgzdrav.loc', 'api.orgzdrav2019.ru']
   }
 }
