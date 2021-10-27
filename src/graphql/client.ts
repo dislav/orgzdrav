@@ -52,7 +52,7 @@ export default new ApolloClient({
     link: middleware.concat(
         afterware.concat(
             createHttpLink({
-                uri: process.env.API_GRAPHQL,
+                uri: 'https://api.orgzdrav2019.ru/graphql',
             })
         )
     ),
