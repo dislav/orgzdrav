@@ -37,5 +37,6 @@ EXPOSE 3000
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV API_GRAPHQL=https://api.orgzdrav2019.ru/graphql
 
 CMD ["yarn", "start"]
