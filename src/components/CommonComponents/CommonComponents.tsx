@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { CommonComponentsProps, WithFieldGroupName } from '@graphql/types';
-import { Error } from './CommonComponents.styled';
 
 import SectionText from '@components/CommonComponents/SectionText/SectionText';
 
@@ -11,21 +10,18 @@ const CommonComponents: React.FC<WithFieldGroupName<CommonComponentsProps>> = ({
 }) => {
     const componentType = fieldGroupName.split('_').slice(-1)[0];
     const components: {
-        [key: string]: React.ReactElement;
+        [key: string]: JSX.Element;
     } = {
         SectionText: <SectionText {...props} />,
     };
 
-    if (Object.keys(components).includes(componentType)) {
-        return components[componentType];
+    if (!Object.keys(components).includes(componentType)) {
+        console.warn(componentType, props);
+
+        return null;
     }
 
-    console.warn(componentType, props);
-    return (
-        <Error>
-            Component <span>{componentType}</span> does not exist
-        </Error>
-    );
+    return components[componentType];
 };
 
 export default CommonComponents;

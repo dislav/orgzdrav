@@ -44,8 +44,12 @@ const PromoCode: React.FC<IPromoCode> = ({
     const [isPromoCode, setIsPromoCode] = useState(false);
     const [error, setError] = useState('');
 
-    const { handleSubmit, register } =
-        useForm<ApplyCouponMutationQueryProps['input']>();
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        setValue,
+    } = useForm<ApplyCouponMutationQueryProps['input']>();
 
     const [applyCoupon, { loading }] = useMutation<
         ApplyCouponMutationProps,
@@ -68,6 +72,7 @@ const PromoCode: React.FC<IPromoCode> = ({
 
                 if (response.data?.applyCoupon) {
                     onUpdateCart?.();
+                    setValue('code', '');
                 }
             } catch (e) {
                 if ((e as ApolloError)?.graphQLErrors.length) {
@@ -98,9 +103,13 @@ const PromoCode: React.FC<IPromoCode> = ({
             <Wrapper>
                 <Title>Промокод</Title>
 
-                {coupons.length > 0 ? (
+                <ApplyPromoCode onClick={() => setIsPromoCode(!isPromoCode)}>
+                    {isPromoCode ? 'Скрыть' : 'Активировать'} промокод
+                </ApplyPromoCode>
+
+                {coupons.length > 0 && (
                     <Coupons>
-                        {coupons?.map((coupon) => (
+                        {coupons.map((coupon) => (
                             <Coupon key={coupon.code}>
                                 {coupon.code}
                                 <DeleteCoupon
@@ -109,18 +118,19 @@ const PromoCode: React.FC<IPromoCode> = ({
                             </Coupon>
                         ))}
                     </Coupons>
-                ) : (
-                    <ApplyPromoCode
-                        onClick={() => setIsPromoCode(!isPromoCode)}
-                    >
-                        {isPromoCode ? 'Скрыть' : 'Активировать'} промокод
-                    </ApplyPromoCode>
                 )}
             </Wrapper>
 
-            {isPromoCode && coupons.length === 0 && (
+            {isPromoCode && (
                 <InputWrapper>
-                    <Input name="code" register={register} error={error} />
+                    <Input
+                        name="code"
+                        register={register}
+                        options={{
+                            required: 'Обязательное поле',
+                        }}
+                        error={errors.code?.message || error}
+                    />
                     <Button isLoading={loading}>Применить</Button>
                 </InputWrapper>
             )}

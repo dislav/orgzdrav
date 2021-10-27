@@ -19,7 +19,9 @@ export interface IShopFooter {
     showCatalogButton?: boolean;
     isCheckout?: boolean;
     isLoading?: boolean;
+    hasItemInCart?: boolean;
     onAddToCart?: () => void;
+    onRemoveFromCart?: () => void;
 }
 
 const ShopFooter: React.FC<IShopFooter> = ({
@@ -28,7 +30,9 @@ const ShopFooter: React.FC<IShopFooter> = ({
     showCatalogButton,
     isCheckout,
     isLoading,
+    hasItemInCart,
     onAddToCart,
+    onRemoveFromCart,
 }) => {
     return (
         <Container>
@@ -41,10 +45,16 @@ const ShopFooter: React.FC<IShopFooter> = ({
                     </Link>
                 )}
 
-                {product?.databaseId && (
-                    <Button onClick={onAddToCart} isLoading={isLoading}>
-                        Добавить в корзину
+                {hasItemInCart ? (
+                    <Button onClick={onRemoveFromCart} isLoading={isLoading}>
+                        Удалить из корзины
                     </Button>
+                ) : (
+                    product?.databaseId && (
+                        <Button onClick={onAddToCart} isLoading={isLoading}>
+                            Добавить в корзину
+                        </Button>
+                    )
                 )}
 
                 {isCheckout ? (

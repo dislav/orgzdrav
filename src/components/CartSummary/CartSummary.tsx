@@ -1,12 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 
 import { GetCartQuery, GetCartQueryProps } from '@graphql/queries/cart';
-import {
-    CartItemQuantityInputProps,
-    UpdateItemQuantitiesMutation,
-    UpdateItemQuantitiesMutationProps,
-} from '@graphql/mutations/updateItemQuantities';
 
 import {
     Container,
@@ -18,33 +13,46 @@ import {
 import CartProduct from '@components/CartProduct/CartProduct';
 import Spinner from '@components/Spinner/Spinner';
 import PromoCode from '@components/CartSummary/PromoCode/PromoCode';
+import {
+    RemoveItemsFromCartMutation,
+    RemoveItemsFromCartMutationProps,
+    RemoveItemsFromCartMutationQueryProps,
+} from '@graphql/mutations/removeItemsFromCart';
 
 interface ICartSummary {
     isReadOnly?: boolean;
 }
 
 const CartSummary: React.FC<ICartSummary> = ({ isReadOnly }) => {
+    const [isLoading, setIsLoading] = useState(false);
+
     const {
         data: cart,
         loading,
         refetch,
     } = useQuery<GetCartQueryProps>(GetCartQuery);
 
-    const [updateQuantities, { loading: quantitiesLoading }] = useMutation<
-        UpdateItemQuantitiesMutationProps,
-        CartItemQuantityInputProps
-    >(UpdateItemQuantitiesMutation);
+    const [removeItemsFromCart] = useMutation<
+        RemoveItemsFromCartMutationProps,
+        RemoveItemsFromCartMutationQueryProps
+    >(RemoveItemsFromCartMutation);
 
-    const onUpdateQuantity = async (key: string, quantity: number) => {
+    const onRemoveProduct = async (key: string) => {
+        setIsLoading(true);
+
         try {
-            const { data } = await updateQuantities({
-                variables: { items: [{ key, quantity }] },
+            const { data } = await removeItemsFromCart({
+                variables: { input: { keys: [key] } },
             });
 
-            if (data?.updateItemQuantities) {
+            if (data?.removeItemsFromCart) {
                 await refetch();
             }
-        } catch (e) {}
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (!cart?.cart && loading) {
@@ -53,7 +61,7 @@ const CartSummary: React.FC<ICartSummary> = ({ isReadOnly }) => {
 
     return (
         <Container>
-            {quantitiesLoading && (
+            {isLoading && (
                 <Loader>
                     <Spinner />
                 </Loader>
@@ -66,9 +74,7 @@ const CartSummary: React.FC<ICartSummary> = ({ isReadOnly }) => {
                             key={index}
                             quantity={quantity}
                             totalPrice={total}
-                            onUpdateQuantity={(count) =>
-                                onUpdateQuantity(productKey, count)
-                            }
+                            onRemoveProduct={() => onRemoveProduct(productKey)}
                             {...product.node}
                         />
                     )

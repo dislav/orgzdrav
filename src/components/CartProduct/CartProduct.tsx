@@ -9,21 +9,20 @@ import {
     Price,
     RightWrapper,
     Text,
+    Remove
 } from './CartProduct.styled';
-import Counter from '@components/Counter/Counter';
 
 interface ICartProduct extends SimpleProductProps {
     quantity: number;
     totalPrice: string;
-    onUpdateQuantity?: (value: number) => void;
+    onRemoveProduct?: () => void;
 }
 
 const CartProduct: React.FC<ICartProduct> = ({
     image,
     name,
-    quantity,
     totalPrice,
-    onUpdateQuantity
+    onRemoveProduct
 }) => {
     return (
         <Container>
@@ -40,6 +39,7 @@ const CartProduct: React.FC<ICartProduct> = ({
             <Text>{name}</Text>
             <RightWrapper>
                 <Price dangerouslySetInnerHTML={{ __html: totalPrice }} />
+                <Remove onClick={onRemoveProduct} />
             </RightWrapper>
         </Container>
     );

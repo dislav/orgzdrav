@@ -26,12 +26,6 @@ export const SimpleProductFragment = gql`
                     text
                     fieldGroupName
                 }
-                ... on Product_Productadditional_Content_Image {
-                    image {
-                        sourceUrl
-                    }
-                    fieldGroupName
-                }
             }
         }
     }

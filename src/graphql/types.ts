@@ -29,9 +29,6 @@ export type { GetProductQueryProps } from './queries/product';
 export type WithFieldGroupName<T = {}> = T & { fieldGroupName: string };
 
 export type CommonComponentsProps = {
-    image?: {
-        sourceUrl: string;
-    };
     title?: Maybe<string>;
     text?: string;
 };

@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { Container as StyledCounter } from "@components/Counter/Counter.styled";
-
 export const Container = styled.div`
   display: flex;
   align-items: center;
@@ -29,13 +27,40 @@ export const RightWrapper = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  
-  ${StyledCounter} {
-    max-width: 40%;
-    margin-right: 40px;
-  }
 `;
 
 export const Price = styled.span`
   margin-left: auto;
+`;
+
+export const Remove = styled.div`
+  position: relative;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  background-color: ${({ theme }) => theme.colors.gray05};
+  border-radius: 50%;
+  margin-left: 20px;
+  transition: background-color 0.15s;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray15};
+  }
+  
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 2px;
+    background-color: ${({ theme }) => theme.colors.red};
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
 `;

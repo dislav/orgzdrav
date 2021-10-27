@@ -31,6 +31,10 @@ const Header: React.FC<IHeader> = ({ profile }) => {
                         <a>Каталог</a>
                     </Link>
 
+                    <Link href="/blog">
+                        <a>Статьи</a>
+                    </Link>
+
                     <ScrollLink to="reviews" smooth offset={-80}>
                         Отзывы
                     </ScrollLink>

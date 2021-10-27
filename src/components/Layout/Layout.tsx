@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useMutation, useQuery } from '@apollo/client';
 
@@ -9,6 +9,11 @@ import {
     AddToCartMutationOptionsProps,
     AddToCartMutationProps,
 } from '@graphql/mutations/addToCart';
+import {
+    RemoveItemsFromCartMutation,
+    RemoveItemsFromCartMutationProps,
+    RemoveItemsFromCartMutationQueryProps,
+} from '@graphql/mutations/removeItemsFromCart';
 import { getToken } from '@graphql/utils';
 
 import { Container, ImageWrapper } from './Layout.styled';
@@ -31,6 +36,8 @@ const Layout: React.FC<ILayout> = ({
 }) => {
     const authToken = getToken();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const { data: profile } = useQuery<GetViewerQueryProps>(GetViewerQuery, {
         skip: !authToken,
     });
@@ -38,12 +45,31 @@ const Layout: React.FC<ILayout> = ({
     const { data: cart, refetch: updateCart } =
         useQuery<GetCartQueryProps>(GetCartQuery);
 
-    const [addToCart, { loading }] = useMutation<
+    const [addToCart] = useMutation<
         AddToCartMutationProps,
         AddToCartMutationOptionsProps
     >(AddToCartMutation);
 
+    const [removeItemsFromCart] = useMutation<
+        RemoveItemsFromCartMutationProps,
+        RemoveItemsFromCartMutationQueryProps
+    >(RemoveItemsFromCartMutation);
+
+    const productKeyInCart = useMemo(() => {
+        if (cart?.cart && props.product) {
+            return (
+                cart.cart.contents.nodes.find(
+                    (product) => product.product.node.id === props.product?.id
+                )?.key || ''
+            );
+        }
+
+        return '';
+    }, [cart, props.product]);
+
     const onAddToCartHandler = async () => {
+        setIsLoading(true);
+
         if (props.product?.databaseId) {
             try {
                 const { data } = await addToCart({
@@ -55,7 +81,27 @@ const Layout: React.FC<ILayout> = ({
                 }
             } catch (e) {
                 console.log(e);
+            } finally {
+                setIsLoading(false);
             }
+        }
+    };
+
+    const onRemoveProduct = async (key: string) => {
+        setIsLoading(true);
+
+        try {
+            const { data } = await removeItemsFromCart({
+                variables: { input: { keys: [key] } },
+            });
+
+            if (data?.removeItemsFromCart) {
+                await updateCart();
+            }
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -83,7 +129,9 @@ const Layout: React.FC<ILayout> = ({
             <ShopFooter
                 itemCount={cart?.cart.contents.itemCount || 0}
                 onAddToCart={onAddToCartHandler}
-                isLoading={loading}
+                onRemoveFromCart={() => onRemoveProduct(productKeyInCart)}
+                isLoading={isLoading}
+                hasItemInCart={!!productKeyInCart}
                 {...props}
             />
         </>
