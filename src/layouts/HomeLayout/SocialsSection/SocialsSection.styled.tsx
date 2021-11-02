@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import ButtonLinkComponent from "@components/ButtonLink/ButtonLink";
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,5 +39,15 @@ export const Row = styled.div`
     &:last-child {
       margin-right: 0;
     }
+  }
+`;
+
+export const ButtonLink = styled(ButtonLinkComponent)`
+  flex: 1;
+  padding: 10px 20px;
+  margin-right: 10px;
+  
+  &:last-child {
+    margin-right: 0;
   }
 `;

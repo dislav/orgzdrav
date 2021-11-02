@@ -37,7 +37,7 @@ const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
     };
 
     return (
-        <Container id="partners">
+        <Container>
             <Header>
                 <h2>Нам доверяют</h2>
                 <p>Клиники, которые пользуются нашими услугами</p>

@@ -17,11 +17,11 @@ import PartnersSection from '@layouts/HomeLayout/PartnersSection/PartnersSection
 import SocialsSection from '@layouts/HomeLayout/SocialsSection/SocialsSection';
 import QuestionsSection from '@layouts/HomeLayout/QuestionsSection/QuestionsSection';
 
-import Button from '@components/Button/Button';
 import TextSection from '@components/TextSection/TextSection';
 import GradientLine from '@components/GradientLine/GradientLine';
 
 import { ArrowsDown, Telegram } from '@icons/icons';
+import ButtonLink from '@components/ButtonLink/ButtonLink';
 
 const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     reviews,
@@ -33,15 +33,15 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <HomeLayout>
             <Image src="/images/1.png" alt="" width={500} height={500} />
 
-            <Button
-                // href="/catalog"
-                id="catalog"
-                padding="16px 20px"
-                fullWidth
-                flare
+            <ButtonLink
+                href="/catalog"
+                options={{
+                    flare: true,
+                    fullWidth: true,
+                }}
             >
                 Посмотреть каталог
-            </Button>
+            </ButtonLink>
 
             <TextSection
                 title="ВНИМАНИЕ!!!"
@@ -71,16 +71,16 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 </p>
             </TextSection>
 
-            <Button
-                // href="tg://join?invite=TTvAkkpKlyCjHXe4"
+            <ButtonLink
+                href="tg://join?invite=TTvAkkpKlyCjHXe4"
                 icon={<Telegram />}
-                id="catalog"
-                variant="telegram"
-                padding="16px 20px"
-                fullWidth
+                options={{
+                    variant: 'telegram',
+                    fullWidth: true,
+                }}
             >
                 Телеграм-чат проекта OrgZdrav
-            </Button>
+            </ButtonLink>
 
             <Image src="/images/2.png" alt="" width={820} height={820} />
 
@@ -122,9 +122,14 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 </p>
             </TextSection>
 
-            <Button id="catalog" padding="16px 20px" fullWidth>
+            <ButtonLink
+                href="/catalog"
+                options={{
+                    fullWidth: true,
+                }}
+            >
                 Посмотреть каталог
-            </Button>
+            </ButtonLink>
 
             <GradientLine>
                 <ArrowsDown />

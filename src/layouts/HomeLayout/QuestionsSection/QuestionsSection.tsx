@@ -1,12 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Container, Text } from './QuestionsSection.styled';
-import Button from '@components/Button/Button';
+import { Container, Text, ButtonLink } from './QuestionsSection.styled';
 
 const QuestionsSection: React.FC = () => {
     return (
-        <Container id="questions">
+        <Container>
             <Text>
                 <h2>Остались вопросы?</h2>
                 <p>
@@ -15,13 +14,9 @@ const QuestionsSection: React.FC = () => {
                 </p>
             </Text>
 
-            <Button
-                // href="https://wa.me/+79135682515"
-                padding="14px 30px"
-                margin="0 0 40px"
-            >
+            <ButtonLink href="https://wa.me/+79135682515">
                 Перейти в чат
-            </Button>
+            </ButtonLink>
 
             <Link href="/author">Информация об авторе проекта</Link>
         </Container>

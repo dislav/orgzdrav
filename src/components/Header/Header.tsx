@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Link as ScrollLink } from 'react-scroll';
 
 import { ViewerProps } from '@graphql/fragments/viewer';
 
@@ -34,14 +33,6 @@ const Header: React.FC<IHeader> = ({ profile }) => {
                     <Link href="/blog">
                         <a>Статьи</a>
                     </Link>
-
-                    <ScrollLink to="reviews" smooth offset={-80}>
-                        Отзывы
-                    </ScrollLink>
-
-                    <ScrollLink to="questions" smooth offset={-80}>
-                        Чат
-                    </ScrollLink>
 
                     {profile ? (
                         <Profile {...profile} />

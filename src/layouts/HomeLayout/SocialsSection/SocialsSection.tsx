@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Container, Row, Text } from './SocialsSection.styled';
-import Button from '@components/Button/Button';
+import { Container, Row, Text, ButtonLink } from './SocialsSection.styled';
 import { Facebook, Instagram, Telegram, Vk } from '@icons/icons';
 
 const SocialsSection: React.FC = () => {
@@ -13,31 +12,40 @@ const SocialsSection: React.FC = () => {
             </Text>
 
             <Row>
-                <Button
-                    // href="https://www.instagram.com/orgzdrav.2019/"
+                <ButtonLink
+                    href="https://www.instagram.com/orgzdrav.2019/"
+                    target="_blank"
                     icon={<Instagram />}
-                    variant="instagram"
+                    options={{ variant: 'instagram' }}
                 />
-                <Button
-                    // href="https://vk.com/orgzdrav2019"
+                <ButtonLink
+                    href="https://vk.com/orgzdrav2019"
+                    target="_blank"
                     icon={<Vk />}
-                    variant="vk"
+                    options={{
+                        variant: 'vk',
+                    }}
                 />
-                <Button
-                    // href="https://www.facebook.com/orgzdrav2019/"
+                <ButtonLink
+                    href="https://www.facebook.com/orgzdrav2019/"
+                    target="_blank"
                     icon={<Facebook />}
-                    variant="facebook"
+                    options={{
+                        variant: 'facebook',
+                    }}
                 />
             </Row>
 
-            <Button
-                // href="tg://join?invite=TTvAkkpKlyCjHXe4"
+            <ButtonLink
+                href="tg://join?invite=TTvAkkpKlyCjHXe4"
                 icon={<Telegram />}
-                variant="telegram"
-                fullWidth
+                options={{
+                    fullWidth: true,
+                    variant: 'telegram',
+                }}
             >
                 Общий чат в телеграмм
-            </Button>
+            </ButtonLink>
         </Container>
     );
 };

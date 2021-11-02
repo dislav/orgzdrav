@@ -30,7 +30,7 @@ const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
     };
 
     return (
-        <Container id="reviews">
+        <Container>
             <Header>
                 <h2>Ваши отзывы о нас</h2>
                 <ArrowRight />

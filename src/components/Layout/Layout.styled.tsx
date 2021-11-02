@@ -5,6 +5,7 @@ export const Container = styled.main`
   max-width: 820px;
   width: 100%;
   margin: 0 auto;
+  padding: 40px 0;
 `;
 
 export const ImageWrapper = styled.div`
