@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
 import { Container as StyledProfile } from '@components/Profile/Profile.styled';
 
@@ -20,9 +21,13 @@ export const Wrapper = styled.div`
 `;
 
 export const Links = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
+  display: none;
+  
+  ${up('sm')} {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
 
   > a {
     font-size: 14px;

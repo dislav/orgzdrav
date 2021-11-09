@@ -2,6 +2,7 @@ import React from 'react';
 
 import { PostProps } from '@graphql/fragments/post';
 import { Container } from './BlogList.styled';
+import BlogCard from '@components/BlogCard/BlogCard';
 
 interface IBlogList {
     posts: PostProps[];
@@ -11,7 +12,7 @@ const BlogList: React.FC<IBlogList> = ({ posts }) => {
     return (
         <Container>
             {posts.map((post) => (
-                <div key={post.id}>{post.title}</div>
+                <BlogCard key={post.id} {...post} />
             ))}
         </Container>
     );

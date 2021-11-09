@@ -1,27 +1,50 @@
 import React from 'react';
 
 import { CommonComponentsProps, WithFieldGroupName } from '@graphql/types';
+import { Container, Component } from './CommonComponents.styled';
 
 import SectionText from '@components/CommonComponents/SectionText/SectionText';
+import SectionProduct from '@components/CommonComponents/SectionProduct/SectionProduct';
+import SectionSlider from '@components/CommonComponents/SectionSlider/SectionSlider';
+import SectionLink from '@components/CommonComponents/SectionLink/SectionLink';
 
-const CommonComponents: React.FC<WithFieldGroupName<CommonComponentsProps>> = ({
-    fieldGroupName,
-    ...props
+interface ICommonComponents {
+    className?: string;
+    components: WithFieldGroupName<CommonComponentsProps>[];
+}
+
+const CommonComponents: React.FC<ICommonComponents> = ({
+    className,
+    components,
 }) => {
-    const componentType = fieldGroupName.split('_').slice(-1)[0];
-    const components: {
-        [key: string]: JSX.Element;
-    } = {
-        SectionText: <SectionText {...props} />,
-    };
+    return (
+        <Container className={className}>
+            {components.map(({ fieldGroupName, ...props }, index) => {
+                const renderComponents: {
+                    [key: string]: JSX.Element;
+                } = {
+                    SectionText: <SectionText {...props} />,
+                    SectionProduct: <SectionProduct {...props} />,
+                    SectionSlider: <SectionSlider {...props} />,
+                    SectionLink: <SectionLink {...props} />,
+                };
 
-    if (!Object.keys(components).includes(componentType)) {
-        console.warn(componentType, props);
+                const componentType = fieldGroupName.split('_').slice(-1)[0];
 
-        return null;
-    }
+                if (!Object.keys(renderComponents).includes(componentType)) {
+                    console.warn(componentType, props);
 
-    return components[componentType];
+                    return null;
+                }
+
+                return (
+                    <Component key={index}>
+                        {renderComponents[componentType]}
+                    </Component>
+                );
+            })}
+        </Container>
+    );
 };
 
 export default CommonComponents;

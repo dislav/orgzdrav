@@ -22,9 +22,7 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <Meta title={product.name} />
             <h2>{product.name}</h2>
 
-            {product.productAdditional.content.map((section, index) => (
-                <CommonComponents key={index} {...section} />
-            ))}
+            <CommonComponents components={product.productAdditional.content} />
 
             {product.productAdditional.hasAdditionalOptions &&
                 product.productAdditional.options && (

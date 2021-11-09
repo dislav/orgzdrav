@@ -1,7 +1,12 @@
 import { Maybe } from './graphql';
+import { PostProps } from '@graphql/fragments/post';
+import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
 
 // Fragments
-export type { SimpleProductProps, ProductOption } from './fragments/simpleProduct';
+export type {
+    SimpleProductProps,
+    ProductOption,
+} from './fragments/simpleProduct';
 
 // Queries
 export { GetPartnersQuery } from './queries/partners';
@@ -31,4 +36,7 @@ export type WithFieldGroupName<T = {}> = T & { fieldGroupName: string };
 export type CommonComponentsProps = {
     title?: Maybe<string>;
     text?: string;
+    gallery?: { sourceUrl: string }[];
+    post?: PostProps;
+    product?: SimpleProductProps;
 };

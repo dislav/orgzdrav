@@ -18,7 +18,7 @@ import { getToken } from '@graphql/utils';
 
 import { Container, ImageWrapper } from './Layout.styled';
 import Header from '@components/Header/Header';
-import Meta from '@components/Meta/Meta';
+import Meta, { IMeta } from '@components/Meta/Meta';
 import Footer from '@components/Footer/Footer';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 import ShopFooter, { IShopFooter } from '@components/ShopFooter/ShopFooter';
@@ -26,12 +26,14 @@ import ShopFooter, { IShopFooter } from '@components/ShopFooter/ShopFooter';
 export interface ILayout extends Partial<IShopFooter> {
     className?: string;
     hideFooter?: boolean;
+    meta?: IMeta;
 }
 
 const Layout: React.FC<ILayout> = ({
     className,
     children,
     hideFooter,
+    meta,
     ...props
 }) => {
     const authToken = getToken();
@@ -116,7 +118,7 @@ const Layout: React.FC<ILayout> = ({
                 />
             </ImageWrapper>
 
-            <Meta />
+            <Meta {...meta} />
 
             <ClientOnly>
                 <Header profile={profile?.viewer} />
