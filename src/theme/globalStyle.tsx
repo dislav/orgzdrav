@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
       bottom: 0;
       background: url('/images/bg.jpg') no-repeat 50% 50% / cover;
       opacity: 0.35;
+      z-index: -1;
     }
   }
   
