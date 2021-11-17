@@ -1,26 +1,40 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
 export const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  flex-direction: column-reverse;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
+  
+  ${up('md')} {
+    flex-direction: row;
+  }
 `;
 
 export const Avatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   color: ${({ theme }) => theme.colors.primary};
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 1;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 50%;
-  margin-left: 16px;
+  margin-bottom: 10px;
+
+  ${up('md')} {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    margin-left: 16px;
+    margin-bottom: 0;
+  }
 `;
 
 export const Menu = styled.div`

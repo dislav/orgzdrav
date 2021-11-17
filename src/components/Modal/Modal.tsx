@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import {Container, Backdrop, Content} from './Modal.styled';
+import { Container, Backdrop, Content, Close } from './Modal.styled';
 
 interface IModal {
     className?: string;
@@ -9,18 +9,19 @@ interface IModal {
     onClose?: () => void;
 }
 
-const Modal: React.FC<IModal> = ({ children, isOpen, onClose }) => {
-    if (isOpen) {
-        return createPortal(
-            <Container>
-                <Backdrop onClick={onClose} />
-                <Content>{children}</Content>
-            </Container>,
-            document.getElementById('__next') as HTMLElement
-        );
-    }
+const Modal: React.FC<IModal> = ({ children, className, isOpen, onClose }) => {
+    if (!isOpen) return null;
 
-    return null;
+    return createPortal(
+        <Container className={className}>
+            <Backdrop onClick={onClose} />
+            <Content>
+                <Close onClick={onClose} />
+                {children}
+            </Content>
+        </Container>,
+        document.getElementById('__next') as HTMLElement
+    );
 };
 
 export default Modal;

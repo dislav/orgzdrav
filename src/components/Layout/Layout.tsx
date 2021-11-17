@@ -16,7 +16,7 @@ import {
 } from '@graphql/mutations/removeItemsFromCart';
 import { getToken } from '@graphql/utils';
 
-import { Container, ImageWrapper } from './Layout.styled';
+import { Container } from './Layout.styled';
 import Header from '@components/Header/Header';
 import Meta, { IMeta } from '@components/Meta/Meta';
 import Footer from '@components/Footer/Footer';
@@ -109,15 +109,6 @@ const Layout: React.FC<ILayout> = ({
 
     return (
         <>
-            <ImageWrapper>
-                <Image
-                    src="/images/bg.jpg"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                />
-            </ImageWrapper>
-
             <Meta {...meta} />
 
             <ClientOnly>

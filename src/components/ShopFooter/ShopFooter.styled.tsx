@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
 import ButtonComponent from '@components/Button/Button';
 
@@ -9,9 +10,15 @@ export const Container = styled.div`
   bottom: 0;
   display: flex;
   align-items: center;
-  height: 80px;
+  height: 64px;
   background-color: ${({ theme }) => theme.colors.white};
+  padding: 0 16px;
   z-index: 10;
+  
+  ${up('xl')} {
+    height: 80px;
+    padding: 0;
+  }
 `;
 
 export const Wrapper = styled.div`

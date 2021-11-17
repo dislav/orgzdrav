@@ -11,16 +11,32 @@ export interface IMeta {
 const Meta: React.FC<IMeta> = ({ title, description, image }) => {
     const router = useRouter();
 
-    const formatTitle = `Оргздрав${title ? ` — ${title}` : ''}`;
+    const metaProps: IMeta = {
+        title: `Оргздрав${title ? ` — ${title}` : ''}`,
+        description:
+            description ||
+            `Проект «ORGZDRAV» направлен на помощь клиникам и врачам:\nСопровождение медицинской деятельности.\nАудиты выполнения требований законодательства.\nЛицензирование медицинских организаций.\nПодготовка и сопровождение проверок.\nПодготовка внутренних документов.\nОбучение.`,
+        image,
+    };
 
     return (
         <Head>
-            <title>{formatTitle}</title>
+            <title>{metaProps.title}</title>
 
-            <meta property="og:title" content={formatTitle}/>
-            <meta property="twitter:title" content={formatTitle} />
+            <meta property="og:title" content={metaProps.title} />
+            <meta property="twitter:title" content={metaProps.title} />
 
-            <meta property="og:url" content={`https://orgzdrav2019.ru${router.asPath}`} />
+            <meta
+                property="og:url"
+                content={`https://orgzdrav2019.ru${router.asPath}`}
+            />
+
+            <meta name="description" content={metaProps.description} />
+            <meta property="og:description" content={metaProps.description} />
+            <meta
+                property="twitter:description"
+                content={metaProps.description}
+            />
 
             {image && (
                 <>
@@ -29,13 +45,7 @@ const Meta: React.FC<IMeta> = ({ title, description, image }) => {
                 </>
             )}
 
-            {description && (
-                <>
-                    <meta name="description" content={description} />
-                    <meta property="og:description" content={description} />
-                    <meta property="twitter:description" content={description} />
-                </>
-            )}
+          <link rel="icon" type="image/png" href="/favicon.jpeg" />
         </Head>
     );
 };

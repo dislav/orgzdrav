@@ -4,8 +4,6 @@ import Layout from "@components/Layout/Layout";
 import { Container as StyledFilterForm } from '@layouts/CatalogLayout/FilterForm/FilterForm.styled';
 
 export const Container = styled(Layout)`
-  padding: 80px 0 120px;
-
   h2 {
     color: ${({ theme }) => theme.colors.white};
     font-size: 28px;
