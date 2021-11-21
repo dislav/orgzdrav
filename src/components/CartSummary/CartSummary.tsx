@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import React from 'react';
 
-import { GetCartQuery, GetCartQueryProps } from '@graphql/queries/cart';
+import { GetCartQueryProps } from '@graphql/queries/cart';
 
 import {
     Container,
@@ -13,52 +12,20 @@ import {
 import CartProduct from '@components/CartProduct/CartProduct';
 import Spinner from '@components/Spinner/Spinner';
 import PromoCode from '@components/CartSummary/PromoCode/PromoCode';
-import {
-    RemoveItemsFromCartMutation,
-    RemoveItemsFromCartMutationProps,
-    RemoveItemsFromCartMutationQueryProps,
-} from '@graphql/mutations/removeItemsFromCart';
 
 interface ICartSummary {
-    isReadOnly?: boolean;
+    cart: GetCartQueryProps['cart'];
+    isLoading?: boolean;
+    onUpdate?: () => void;
+    onRemoveItem?: (items: string[]) => void;
 }
 
-const CartSummary: React.FC<ICartSummary> = ({ isReadOnly }) => {
-    const [isLoading, setIsLoading] = useState(false);
-
-    const {
-        data: cart,
-        loading,
-        refetch,
-    } = useQuery<GetCartQueryProps>(GetCartQuery);
-
-    const [removeItemsFromCart] = useMutation<
-        RemoveItemsFromCartMutationProps,
-        RemoveItemsFromCartMutationQueryProps
-    >(RemoveItemsFromCartMutation);
-
-    const onRemoveProduct = async (key: string) => {
-        setIsLoading(true);
-
-        try {
-            const { data } = await removeItemsFromCart({
-                variables: { input: { keys: [key] } },
-            });
-
-            if (data?.removeItemsFromCart) {
-                await refetch();
-            }
-        } catch (e) {
-            console.log(e);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    if (!cart?.cart && loading) {
-        return <div>Загрузка</div>;
-    }
-
+const CartSummary: React.FC<ICartSummary> = ({
+    cart,
+    isLoading,
+    onUpdate,
+    onRemoveItem,
+}) => {
     return (
         <Container>
             {isLoading && (
@@ -68,32 +35,28 @@ const CartSummary: React.FC<ICartSummary> = ({ isReadOnly }) => {
             )}
 
             <Products>
-                {cart?.cart.contents.nodes.map(
+                {cart.contents.nodes.map(
                     ({ key: productKey, quantity, total, product }, index) => (
                         <CartProduct
                             key={index}
                             quantity={quantity}
                             totalPrice={total}
-                            onRemoveProduct={() => onRemoveProduct(productKey)}
+                            onRemoveProduct={() => onRemoveItem?.([productKey])}
                             {...product.node}
                         />
                     )
                 )}
             </Products>
 
-            {!isReadOnly && (
-                <PromoCode
-                    coupons={cart?.cart.appliedCoupons || []}
-                    onUpdateCart={refetch}
-                />
-            )}
+            <PromoCode
+                coupons={cart.appliedCoupons || []}
+                onUpdateCart={onUpdate}
+            />
 
             <Footer>
                 <span>Итого:</span>
-                {cart?.cart.total && (
-                    <Price
-                        dangerouslySetInnerHTML={{ __html: cart.cart.total }}
-                    />
+                {cart.total && (
+                    <Price dangerouslySetInnerHTML={{ __html: cart.total }} />
                 )}
             </Footer>
         </Container>

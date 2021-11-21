@@ -3,9 +3,13 @@ import React from 'react';
 import { Container } from './Spinner.styled';
 import { Spinner as SpinnerIcon } from '@icons/icons';
 
-const Spinner: React.FC = () => {
+interface ISpinner {
+    className?: string;
+}
+
+const Spinner: React.FC<ISpinner> = ({ className }) => {
     return (
-        <Container>
+        <Container className={className}>
             <SpinnerIcon />
         </Container>
     );

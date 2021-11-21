@@ -16,11 +16,11 @@ export const Counter = styled.div`
   margin-bottom: 20px;
   margin-left: auto;
   padding: 6px 16px;
-  
+
   span {
     font-weight: 700;
     margin-left: 6px;
-    
+
     &:before {
       content: '/';
       margin-right: 6px;
@@ -45,11 +45,26 @@ export const Slide = styled.div`
 export const SlideButton = styled.div<{ isNextButton?: boolean }>`
   position: absolute;
   top: 50%;
-  right: ${({ isNextButton }) => isNextButton ? 0 : null};
+  right: ${({ isNextButton }) => (isNextButton ? 0 : null)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.white};
-  transform: translate(${({ isNextButton }) => isNextButton ? '50%, -50%' : '-50%, -50%'});
-  z-index: 10;
+  transform: translate(
+    ${({ isNextButton }) => (isNextButton ? '50%, -50%' : '-50%, -50%')}
+  );
+  cursor: pointer;
+  z-index: 2;
+
+  svg {
+    width: 40%;
+    height: 40%;
+    transform: translateX(
+        ${({ isNextButton }) => (isNextButton ? '2px' : '-2px')}
+      )
+      rotate(${({ isNextButton }) => (isNextButton ? '-90deg' : '90deg')});
+  }
 `;

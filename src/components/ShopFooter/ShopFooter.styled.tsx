@@ -92,14 +92,3 @@ export const CartCounter = styled.span`
   padding: 2px 4px;
   transform: translate(35%, -35%);
 `;
-
-export const CheckoutLink = styled.a`
-  && {
-    flex: 1;
-    min-height: 50px;
-    color: ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.green};
-    border-radius: 4px;
-    margin-right: 20px;
-  }
-`;

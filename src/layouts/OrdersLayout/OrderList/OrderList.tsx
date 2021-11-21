@@ -1,21 +1,19 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
 
-import { GetOrdersQuery, GetOrdersQueryProps } from '@graphql/queries/orders';
+import { OrderProps } from '@graphql/fragments/order';
 
 import { Container } from './OrderList.styled';
 import OrderCard from '@components/OrderCard/OrderCard';
 
-const OrderList: React.FC = () => {
-    const { data, loading } = useQuery<GetOrdersQueryProps>(GetOrdersQuery);
+interface IOrderList {
+    className?: string;
+    orders: OrderProps[];
+}
 
-    if (loading) {
-        return <div>Загрузка</div>;
-    }
-
+const OrderList: React.FC<IOrderList> = ({ className, orders }) => {
     return (
-        <Container>
-            {data?.orders.nodes.map((order) => (
+        <Container className={className}>
+            {orders.map((order) => (
                 <OrderCard key={order.id} {...order} />
             ))}
         </Container>

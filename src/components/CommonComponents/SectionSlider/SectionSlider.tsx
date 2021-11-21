@@ -11,6 +11,7 @@ import {
     Slide,
     SlideButton,
 } from './SectionSlider.styled';
+import { ArrowRight, ArrowsDown } from "@icons/icons"
 
 const SectionSlider: React.FC<CommonComponentsProps> = ({ gallery }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,8 +27,12 @@ const SectionSlider: React.FC<CommonComponentsProps> = ({ gallery }) => {
                 <span>{formatCounter(gallery?.length || 1)}</span>
             </Counter>
             <SliderWrapper>
-                <SlideButton onClick={() => slider?.slidePrev()} />
-                <SlideButton onClick={() => slider?.slideNext()} isNextButton />
+                <SlideButton onClick={() => slider?.slidePrev()}>
+                    <ArrowsDown />
+                </SlideButton>
+                <SlideButton onClick={() => slider?.slideNext()} isNextButton>
+                    <ArrowsDown />
+                </SlideButton>
 
                 <Swiper
                     onSwiper={setSlider}

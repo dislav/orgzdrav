@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
 import InputComponent from "@components/Input/Input";
 import ButtonComponent from "@components/Button/Button";
@@ -22,13 +23,21 @@ export const Container = styled.form`
 
 export const Group = styled.div`
   display: flex;
+  flex-direction: column;
+  
+  ${up('md')} {
+    flex-direction: row;
+  }
   
   ${Input} {
     flex: 1;
-    margin-right: 12px;
-    
-    &:last-child {
-      margin-right: 0;
+
+    ${up('md')} {
+      margin-right: 12px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 `;

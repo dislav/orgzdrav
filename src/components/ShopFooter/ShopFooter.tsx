@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
 
@@ -9,7 +10,6 @@ import {
     Button,
     CartButton,
     CartCounter,
-    CheckoutLink,
 } from './ShopFooter.styled';
 import { CartIcon, DotsMenu } from '@icons/icons';
 
@@ -17,7 +17,6 @@ export interface IShopFooter {
     product?: SimpleProductProps;
     itemCount: number;
     showCatalogButton?: boolean;
-    isCheckout?: boolean;
     isLoading?: boolean;
     hasItemInCart?: boolean;
     onAddToCart?: () => void;
@@ -28,12 +27,15 @@ const ShopFooter: React.FC<IShopFooter> = ({
     product,
     itemCount,
     showCatalogButton,
-    isCheckout,
     isLoading,
     hasItemInCart,
     onAddToCart,
     onRemoveFromCart,
 }) => {
+    const { asPath } = useRouter();
+
+    const hasCartButton = !['/cart'].includes(asPath);
+
     return (
         <Container>
             <Wrapper>
@@ -57,11 +59,7 @@ const ShopFooter: React.FC<IShopFooter> = ({
                     )
                 )}
 
-                {isCheckout ? (
-                    <Link href="/checkout" passHref>
-                        <CheckoutLink>Оформить заказ</CheckoutLink>
-                    </Link>
-                ) : (
+                {hasCartButton && (
                     <Link href="/cart">
                         <a>
                             {!product?.databaseId && <span>Корзина</span>}

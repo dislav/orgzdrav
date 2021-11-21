@@ -8,18 +8,32 @@ import {
     CheckoutMutationProps,
     CheckoutMutationQueryProps,
 } from '@graphql/mutations/checkout';
+import { ViewerProps } from '@graphql/fragments/viewer';
 
 import { emailRegex } from '@constants/constants';
 import { Container, Group, Input, Button } from './CheckoutForm.styled';
 
-const CheckoutForm: React.FC = () => {
+interface ICheckoutForm {
+    className?: string;
+    profile?: ViewerProps;
+}
+
+const CheckoutForm: React.FC<ICheckoutForm> = ({ className, profile }) => {
     const router = useRouter();
+
+    console.log(profile);
 
     const {
         handleSubmit,
         register,
         formState: { errors },
-    } = useForm<CheckoutMutationQueryProps['input']['billing']>();
+    } = useForm<CheckoutMutationQueryProps['input']['billing']>({
+        defaultValues: {
+            firstName: profile?.firstName || '',
+            lastName: profile?.lastName || '',
+            email: profile?.email || '',
+        },
+    });
 
     const [checkout, { loading }] = useMutation<
         CheckoutMutationProps,
@@ -50,7 +64,7 @@ const CheckoutForm: React.FC = () => {
     };
 
     return (
-        <Container onSubmit={handleSubmit(onSubmit)}>
+        <Container className={className} onSubmit={handleSubmit(onSubmit)}>
             <Group>
                 <Input
                     label="Имя"

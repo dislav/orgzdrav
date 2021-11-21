@@ -8,6 +8,7 @@ export const ViewerFragment = gql`
         username
         firstName
         lastName
+        email
     }
 `;
 
@@ -17,4 +18,5 @@ export interface ViewerProps {
     username: string;
     firstName: Maybe<string>;
     lastName: Maybe<string>;
+    email: string;
 }

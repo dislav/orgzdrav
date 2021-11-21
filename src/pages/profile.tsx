@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/client';
 
 import Layout from '@components/Layout/Layout';
 import { GetViewerQuery, GetViewerQueryProps } from '@graphql/queries/viewer';
+import ProfileCard from '@components/ProfileCard/ProfileCard';
+import Spinner from '@components/Spinner/Spinner';
 
 const Profile = () => {
     const router = useRouter();
@@ -23,9 +25,12 @@ const Profile = () => {
         }`;
     }, [data]);
 
-    console.log(data);
-
-    return <Layout meta={{ title }}></Layout>;
+    return (
+        <Layout meta={{ title }} hideFooter>
+            {loading && <Spinner />}
+            {!loading && data?.viewer && <ProfileCard profile={data.viewer} />}
+        </Layout>
+    );
 };
 
 export default Profile;

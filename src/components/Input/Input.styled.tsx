@@ -26,7 +26,9 @@ export const Container = styled.label<{ isFill?: boolean; isError?: boolean }>`
 export const Label = styled.span`
   color: ${({ theme }) => theme.colors.black};
   font-size: 14px;
-  margin-bottom: 4px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 6px;
   
   > span {
     color: ${({ theme }) => theme.colors.red};
