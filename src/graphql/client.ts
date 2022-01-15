@@ -8,15 +8,27 @@ import {
 export const middleware = new ApolloLink((operation, forward) => {
     const isBrowser = typeof window !== 'undefined';
 
+    let wooHeaders = {};
+
     const token = isBrowser ? localStorage.getItem('authToken') : null;
     const session = isBrowser ? localStorage.getItem('woo-session') : null;
+    const hasSession = token || session;
 
-    if (session) {
+    if (token) {
+        wooHeaders = {
+            ...wooHeaders,
+            authorization: `Bearer ${token}`,
+        };
+    } else if (session) {
+        wooHeaders = {
+            ...wooHeaders,
+            'woocommerce-session': `Session ${session}`,
+        };
+    }
+
+    if (hasSession) {
         operation.setContext(({ headers = {} }) => ({
-            headers: {
-                'woocommerce-session': `Session ${session}`,
-                authorization: token ? `Bearer ${token}` : '',
-            },
+            headers: wooHeaders,
         }));
     }
 

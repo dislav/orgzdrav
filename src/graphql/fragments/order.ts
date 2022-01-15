@@ -71,10 +71,8 @@ export enum OrderStatusEnum {
 export interface BillingProps {
     firstName: string;
     lastName: string;
-    company: string;
-    city: string;
     email: string;
-    phone: string;
+    phone?: string;
 }
 
 export interface OrderProps {

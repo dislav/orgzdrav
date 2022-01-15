@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import Image from 'next/image';
 import { useMutation, useQuery } from '@apollo/client';
 
 import { GetViewerQuery, GetViewerQueryProps } from '@graphql/queries/viewer';
@@ -26,6 +25,7 @@ import ShopFooter, { IShopFooter } from '@components/ShopFooter/ShopFooter';
 export interface ILayout extends Partial<IShopFooter> {
     className?: string;
     hideFooter?: boolean;
+    hideShopFooter?: boolean;
     meta?: IMeta;
 }
 
@@ -33,6 +33,7 @@ const Layout: React.FC<ILayout> = ({
     className,
     children,
     hideFooter,
+    hideShopFooter,
     meta,
     ...props
 }) => {
@@ -119,14 +120,16 @@ const Layout: React.FC<ILayout> = ({
 
             {!hideFooter && <Footer />}
 
-            <ShopFooter
-                itemCount={cart?.cart.contents.itemCount || 0}
-                onAddToCart={onAddToCartHandler}
-                onRemoveFromCart={() => onRemoveProduct(productKeyInCart)}
-                isLoading={isLoading}
-                hasItemInCart={!!productKeyInCart}
-                {...props}
-            />
+            {!hideShopFooter && (
+                <ShopFooter
+                    itemCount={cart?.cart.contents.itemCount || 0}
+                    onAddToCart={onAddToCartHandler}
+                    onRemoveFromCart={() => onRemoveProduct(productKeyInCart)}
+                    isLoading={isLoading}
+                    hasItemInCart={!!productKeyInCart}
+                    {...props}
+                />
+            )}
         </>
     );
 };

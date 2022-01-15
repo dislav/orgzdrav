@@ -1,16 +1,13 @@
 import React from 'react';
+import { ButtonProps } from '@mui/material';
 
-import { IStyledButton, Container, Icon, Inner } from './Button.styled';
+import { Container } from './Button.styled';
 import Spinner from '@components/Spinner/Spinner';
 
-interface IButton
-    extends IStyledButton,
-        React.HtmlHTMLAttributes<HTMLButtonElement> {
+interface IButton extends ButtonProps {
     className?: string;
     icon?: React.ReactNode;
-    isDisabled?: boolean;
     isLoading?: boolean;
-    onClick?: () => void;
 }
 
 const Button: React.FC<IButton> = ({
@@ -18,7 +15,6 @@ const Button: React.FC<IButton> = ({
     children,
     icon,
     isLoading,
-    isDisabled,
     onClick,
     ...props
 }) => {
@@ -26,17 +22,12 @@ const Button: React.FC<IButton> = ({
         <Container
             className={className}
             onClick={onClick}
-            disabled={isDisabled || isLoading}
+            disabled={props.disabled || isLoading}
+            variant="contained"
+            disableElevation
             {...props}
         >
-            {isLoading ? (
-                <Spinner />
-            ) : (
-                <>
-                    {icon && <Icon>{icon}</Icon>}
-                    {children && <Inner>{children}</Inner>}
-                </>
-            )}
+            {isLoading ? <Spinner /> : children}
         </Container>
     );
 };

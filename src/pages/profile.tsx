@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 
@@ -11,14 +11,14 @@ const Profile = () => {
     const router = useRouter();
     const { data, loading } = useQuery<GetViewerQueryProps>(GetViewerQuery);
 
-    useMemo(() => {
-        if (!loading && !data?.viewer) {
+    useEffect(() => {
+        if (!data?.viewer) {
             router.push('/');
         }
-    }, [data, loading]);
+    }, [data]);
 
     const title = useMemo(() => {
-        if (!data) return '';
+        if (!data?.viewer) return '';
 
         return `${data.viewer.firstName}${
             data.viewer.lastName ? ` ${data.viewer.lastName}` : ''

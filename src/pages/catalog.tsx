@@ -1,18 +1,50 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/client';
 
 import client from '@graphql/client';
+import { RootQueryToProductTypeConnectionWhereArgs } from '@graphql/graphql';
 import { GetProductsQuery, GetProductsQueryProps } from '@graphql/types';
 
-import Meta from '@components/Meta/Meta';
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
-import FilterForm from '@layouts/CatalogLayout/FilterForm/FilterForm';
 import ProductList from '@layouts/CatalogLayout/ProductList/ProductList';
+import SearchForm from '@components/SearchForm/SearchForm';
+import { setProducts } from '@redux/products/actions';
 
 const Catalog: React.FC = () => {
+    const dispatch = useDispatch();
+
+    const { refetch: fetchProducts } = useQuery<
+        GetProductsQueryProps,
+        { where: RootQueryToProductTypeConnectionWhereArgs }
+    >(GetProductsQuery, {
+        skip: true,
+    });
+
+    const onSearch = useCallback(
+        async (search: string) => {
+            try {
+                const response = await fetchProducts();
+
+                console.log(response);
+
+                if (response?.data?.products)
+                    dispatch(setProducts(response.data.products.nodes));
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        [dispatch, fetchProducts]
+    );
+
     return (
-        <CatalogLayout hideFooter>
-            <Meta title="Продукты" />
-            <FilterForm />
+        <CatalogLayout
+            meta={{
+                title: 'Продукты',
+            }}
+            hideFooter
+        >
+            <SearchForm onChange={onSearch} />
             <ProductList />
         </CatalogLayout>
     );
@@ -29,6 +61,7 @@ export const getStaticProps = async () => {
                 products: products.products.nodes,
             },
         },
+        revalidate: 1000,
     };
 };
 

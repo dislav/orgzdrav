@@ -25,12 +25,12 @@ declare module 'styled-components' {
             purple: string;
         };
         breakpoints: {
-            [key: string]: number;
-            sm: number;
-            md: number;
-            xl: number;
-            xxl: number;
-            fhd: number;
+            [key: string]: string;
+            sm: string;
+            md: string;
+            xl: string;
+            xxl: string;
+            fhd: string;
         };
     }
 }

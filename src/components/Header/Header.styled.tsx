@@ -21,7 +21,7 @@ export const Container = styled.header`
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  max-width: 820px;
+  max-width: 1100px;
   width: 100%;
   height: 100%;
   margin: 0 auto;

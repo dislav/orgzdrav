@@ -12,6 +12,7 @@ import { useStore } from '@redux/store';
 import client from '@graphql/client';
 import theme from '@theme/theme';
 import GlobalStyle from '@theme/globalStyle';
+import ConfigProvider from '../context/configProvider';
 
 export type NextPageWithLayout = NextPage & {
     getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -30,10 +31,12 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     return (
         <Provider store={store}>
             <ApolloProvider client={client}>
-                <ThemeProvider theme={theme}>
-                    {getLayout(<Component {...pageProps} />)}
-                    <GlobalStyle />
-                </ThemeProvider>
+                <ConfigProvider>
+                    <ThemeProvider theme={theme}>
+                        {getLayout(<Component {...pageProps} />)}
+                        <GlobalStyle />
+                    </ThemeProvider>
+                </ConfigProvider>
             </ApolloProvider>
         </Provider>
     );

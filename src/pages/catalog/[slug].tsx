@@ -1,5 +1,7 @@
 import React from 'react';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import { useRouter } from 'next/router';
+import { Skeleton } from '@mui/material';
 
 import client from '@graphql/client';
 import {
@@ -10,21 +12,37 @@ import {
 } from '@graphql/types';
 
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
-import Meta from '@components/Meta/Meta';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
 import SectionOptions from '@layouts/CatalogLayout/SectionOptions/SectionOptions';
+import Spinner from '@components/Spinner/Spinner';
 
 const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     product,
 }) => {
+    const { isFallback } = useRouter();
+
     return (
-        <CatalogLayout product={product} hideFooter showCatalogButton>
-            <Meta title={product.name} />
-            <h2>{product.name}</h2>
+        <CatalogLayout
+            meta={{
+                title: product.name,
+            }}
+            isFallback={isFallback}
+            product={product}
+            hideShopFooter={isFallback}
+            hideFooter
+        >
+            <h2>{isFallback ? <Skeleton /> : product.name}</h2>
 
-            <CommonComponents components={product.productAdditional.content} />
+            {isFallback ? (
+                <Spinner />
+            ) : (
+                <CommonComponents
+                    components={product.productAdditional.content}
+                />
+            )}
 
-            {product.productAdditional.hasAdditionalOptions &&
+            {!isFallback &&
+                product.productAdditional.hasAdditionalOptions &&
                 product.productAdditional.options && (
                     <SectionOptions
                         options={product.productAdditional.options}
@@ -45,7 +63,7 @@ export const getStaticPaths = async () => {
 
     return {
         paths,
-        fallback: false,
+        fallback: true,
     };
 };
 
@@ -63,7 +81,7 @@ export const getStaticProps = async ({
         props: {
             product: product.product,
         },
-        revalidate: 3600,
+        revalidate: 1000,
     };
 };
 

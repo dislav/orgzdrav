@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
 
   > a {
-    flex: 1;
+    flex: 1 1 48%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,12 +37,8 @@ export const Wrapper = styled.div`
     color: ${({ theme }) => theme.colors.black};
     background-color: ${({ theme }) => theme.colors.gray05};
     border-radius: 4px;
-    margin-right: 20px;
     cursor: pointer;
-
-    &:last-child {
-      margin-right: 0;
-    }
+    margin-left: 20px;
 
     > svg {
       width: 20px;
@@ -56,12 +52,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Button = styled(ButtonComponent)`
-  flex: 2;
+  flex: 1 1 48%;
   min-height: 50px;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.blue};
-  border-radius: 4px;
-  margin-right: 20px;
 `;
 
 export const CartButton = styled.div`

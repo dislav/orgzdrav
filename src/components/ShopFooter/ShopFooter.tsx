@@ -11,12 +11,11 @@ import {
     CartButton,
     CartCounter,
 } from './ShopFooter.styled';
-import { CartIcon, DotsMenu } from '@icons/icons';
+import { CartIcon } from '@icons/icons';
 
 export interface IShopFooter {
     product?: SimpleProductProps;
     itemCount: number;
-    showCatalogButton?: boolean;
     isLoading?: boolean;
     hasItemInCart?: boolean;
     onAddToCart?: () => void;
@@ -26,7 +25,6 @@ export interface IShopFooter {
 const ShopFooter: React.FC<IShopFooter> = ({
     product,
     itemCount,
-    showCatalogButton,
     isLoading,
     hasItemInCart,
     onAddToCart,
@@ -39,14 +37,6 @@ const ShopFooter: React.FC<IShopFooter> = ({
     return (
         <Container>
             <Wrapper>
-                {showCatalogButton && (
-                    <Link href="/catalog" passHref>
-                        <a>
-                            <DotsMenu />
-                        </a>
-                    </Link>
-                )}
-
                 {hasItemInCart ? (
                     <Button onClick={onRemoveFromCart} isLoading={isLoading}>
                         Удалить из корзины

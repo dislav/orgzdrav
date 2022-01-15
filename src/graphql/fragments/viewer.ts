@@ -16,7 +16,7 @@ export interface ViewerProps {
     id: string;
     userId: Maybe<number>;
     username: string;
-    firstName: Maybe<string>;
-    lastName: Maybe<string>;
+    firstName: string;
+    lastName: string;
     email: string;
 }

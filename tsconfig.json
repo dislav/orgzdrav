@@ -25,6 +25,9 @@
       "@constants/*": [
         "constants/*"
       ],
+      "@context/*": [
+        "context/*"
+      ],
       "@graphql/*": [
         "graphql/*"
       ],

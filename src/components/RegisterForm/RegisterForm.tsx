@@ -1,30 +1,25 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
-import {
-    RegisterUserMutation,
-    RegisterUserMutationProps,
-    RegisterUserMutationQueryProps,
-} from '@graphql/mutations/registerUser';
+import { RegisterUserMutationQueryProps } from '@graphql/mutations/registerUser';
 import { AuthType } from '@components/AuthForm/AuthForm';
 
 import { emailRegex } from '@constants/constants';
 import { Container, Input, Button } from './RegisterForm.styled';
-import { ApolloError, useMutation } from '@apollo/client';
 import FormErrors from '@components/FormErrors/FormErrors';
 
 interface IRegisterForm {
     setType: (type: AuthType) => void;
+    onSubmit: SubmitHandler<RegisterUserMutationInputs>;
 }
 
-type Inputs = RegisterUserMutationQueryProps['input'] & {
-    confirmPassword: string;
-};
+export type RegisterUserMutationInputs =
+    RegisterUserMutationQueryProps['input'] & {
+        confirmPassword: string;
+    };
 
-const RegisterForm: React.FC<IRegisterForm> = ({ setType }) => {
-    const router = useRouter();
-
+const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     const {
@@ -32,41 +27,33 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType }) => {
         register,
         watch,
         formState: { errors },
-    } = useForm<Inputs>();
-
-    const [registerUser, { loading }] = useMutation<
-        RegisterUserMutationProps,
-        RegisterUserMutationQueryProps
-    >(RegisterUserMutation);
+    } = useForm<RegisterUserMutationInputs>();
 
     const password = watch('password', '');
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmitHandler: SubmitHandler<RegisterUserMutationInputs> = async (
+        data
+    ) => {
+        setIsLoading(true);
+        setErrorMessages([]);
+
         try {
-            const { confirmPassword, ...input } = data;
+            const response = await onSubmit(data);
 
-            const response = await registerUser({
-                variables: { input },
-            });
-
-            if (response.data?.registerUser) {
-                localStorage.setItem(
-                    'authToken',
-                    response.data.registerUser.user.jwtAuthToken
-                );
-
-                await router.reload();
+            if (response?.errors) {
+                setErrorMessages(response.errors);
             }
         } catch (e) {
-            const messages = (e as ApolloError)?.graphQLErrors.map(
-                ({ message }) => message
-            );
-            if (messages) setErrorMessages(messages);
+            console.log(e);
+        } finally {
+            setIsLoading(false);
         }
     };
 
+    const onChangeType = (type: AuthType) => () => setType(type);
+
     return (
-        <Container onSubmit={handleSubmit(onSubmit)}>
+        <Container onSubmit={handleSubmit(onSubmitHandler)}>
             <Input
                 name="username"
                 placeholder="Имя пользователя"
@@ -138,11 +125,13 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType }) => {
                 <FormErrors messages={errorMessages} />
             )}
 
-            <Button isLoading={loading}>Зарегистрироваться</Button>
+            <Button type="submit" isLoading={isLoading}>
+                Зарегистрироваться
+            </Button>
 
             <p>
                 Есть аккаунт?{' '}
-                <span onClick={() => setType(AuthType.Login)}>Войти</span>
+                <span onClick={onChangeType(AuthType.Login)}>Войти</span>
             </p>
         </Container>
     );

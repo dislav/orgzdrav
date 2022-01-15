@@ -15,8 +15,6 @@ const Order: React.FC = () => {
         skip: !router.query?.id,
     });
 
-    console.log(data);
-
     return (
         <OrdersLayout hideFooter>
             {loading && (

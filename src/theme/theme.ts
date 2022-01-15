@@ -25,11 +25,11 @@ const theme: DefaultTheme = {
         purple: '#9248f1',
     },
     breakpoints: {
-        sm: 640,
-        md: 768,
-        xl: 1280,
-        xxl: 1536,
-        fhd: 1920,
+        sm: '640px',
+        md: '768px',
+        xl: '1280px',
+        xxl: '1536px',
+        fhd: '1920px',
     },
 };
 

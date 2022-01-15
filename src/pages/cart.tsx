@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 
-import { GetViewerQuery, GetViewerQueryProps } from "@graphql/queries/viewer"
+import { GetViewerQuery, GetViewerQueryProps } from '@graphql/queries/viewer';
 import { GetCartQuery, GetCartQueryProps } from '@graphql/queries/cart';
 import {
     RemoveItemsFromCartMutation,
@@ -11,14 +11,14 @@ import {
 
 import CartLayout from '@layouts/CartLayout/CartLayout';
 import CartSummary from '@components/CartSummary/CartSummary';
-import CheckoutForm from '@components/CheckoutForm/CheckoutForm';
 import Spinner from '@components/Spinner/Spinner';
 import EmptyList from '@components/EmptyList/EmptyList';
+import CheckoutToolbar from '@layouts/CartLayout/CheckoutToolbar/CheckoutToolbar';
 
 const Cart: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const { data: profile, loading: profileLoading } = useQuery<GetViewerQueryProps>(GetViewerQuery);
+    const { data: profile } = useQuery<GetViewerQueryProps>(GetViewerQuery);
     const {
         data: cart,
         loading,
@@ -49,8 +49,9 @@ const Cart: React.FC = () => {
     };
 
     return (
-        <CartLayout meta={{ title: 'Корзина' }} hideFooter showCatalogButton>
+        <CartLayout meta={{ title: 'Корзина' }} hideFooter hideShopFooter>
             {loading && <Spinner />}
+
             {!loading && cart?.cart && cart.cart.contents.productCount > 0 && (
                 <>
                     <CartSummary
@@ -59,9 +60,14 @@ const Cart: React.FC = () => {
                         onRemoveItem={onRemoveProduct}
                         onUpdate={refetch}
                     />
-                    <CheckoutForm profile={profile?.viewer} />
+
+                    <CheckoutToolbar
+                        profile={profile?.viewer}
+                        total={cart.cart.total}
+                    />
                 </>
             )}
+
             {!loading && cart?.cart && cart.cart.contents.productCount <= 0 && (
                 <EmptyList>
                     <span>Корзина пуста</span>

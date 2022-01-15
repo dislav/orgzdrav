@@ -13,29 +13,17 @@ import {
 } from './Header.styled';
 import Modal from '@components/Modal/Modal';
 import Profile from '@components/Profile/Profile';
-import AuthForm from '@components/AuthForm/AuthForm';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
+import AuthModal from '@components/Header/AuthModal/AuthModal';
+import { useConfig } from '@context/configProvider';
 
 interface IHeader {
     profile?: ViewerProps;
 }
 
-const links = [
-    {
-        title: 'Главная',
-        href: '/',
-    },
-    {
-        title: 'Каталог',
-        href: '/catalog',
-    },
-    {
-        title: 'Статьи',
-        href: '/blog',
-    },
-];
-
 const Header: React.FC<IHeader> = ({ profile }) => {
+    const links = useConfig().header.links;
+
     const [isLoginModal, setIsLoginModal] = useState(false);
     const [isMobileMenu, setIsMobileMenu] = useState(false);
 
@@ -80,7 +68,7 @@ const Header: React.FC<IHeader> = ({ profile }) => {
             </SandwichModal>
 
             <Modal isOpen={isLoginModal} onClose={closeLoginModal}>
-                <AuthForm />
+                <AuthModal />
             </Modal>
         </Container>
     );
