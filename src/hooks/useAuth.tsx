@@ -14,6 +14,7 @@ import {
     RegisterUserMutationProps,
     RegisterUserMutationQueryProps,
 } from '@graphql/mutations/registerUser';
+import { ViewerProps } from "@graphql/fragments/viewer"
 
 export const useAuth = () => {
     const router = useRouter();
@@ -30,7 +31,7 @@ export const useAuth = () => {
     const onLogin = useCallback(
         async (
             data: UnpackNestedValue<LoginMutationOptions>,
-            onSubmit?: (fromLogin?: boolean) => Promise<void>
+            onSubmit?: (user?: ViewerProps) => Promise<void>
         ) => {
             try {
                 const response = await login({ variables: data });
@@ -41,7 +42,7 @@ export const useAuth = () => {
                         response.data.login.authToken
                     );
 
-                    await onSubmit?.(true);
+                    await onSubmit?.(response.data.login.user);
                 }
             } catch (e) {
                 const errors = (e as ApolloError)?.graphQLErrors.map(

@@ -47,15 +47,17 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className, profile }) => {
     >(CheckoutMutation);
 
     const onSubmitOrder = useCallback(
-        async (fromLogin?: boolean) => {
+        async (user?: ViewerProps) => {
             try {
                 const response = await checkout({
                     variables: {
                         input: {
                             billing: {
-                                firstName: profile?.firstName || '',
-                                lastName: profile?.lastName || '',
-                                email: profile?.email || '',
+                                firstName:
+                                    user?.firstName || profile?.firstName || '',
+                                lastName:
+                                    user?.lastName || profile?.lastName || '',
+                                email: user?.email || profile?.email || '',
                             },
                             paymentMethod: 'bacs',
                         },
@@ -72,7 +74,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className, profile }) => {
                         `/orders/${response.data.checkout.order.id}`
                     );
 
-                    if (fromLogin) {
+                    if (user) {
                         await router.reload();
                     }
                 }

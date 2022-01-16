@@ -51,8 +51,21 @@ const Catalog: React.FC = () => {
 };
 
 export const getStaticProps = async () => {
-    const { data: products } = await client.query<GetProductsQueryProps>({
+    const { data: products } = await client.query<
+        GetProductsQueryProps,
+        { where?: { orderby?: { field: string; order?: 'ASC' | 'DESC' }[] } }
+    >({
         query: GetProductsQuery,
+        variables: {
+            where: {
+                orderby: [
+                    {
+                        field: 'MENU_ORDER',
+                        order: 'ASC',
+                    },
+                ],
+            },
+        },
     });
 
     return {

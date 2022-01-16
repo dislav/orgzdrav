@@ -41,8 +41,10 @@ export const ImageWrapper = styled.div`
 `;
 
 export const Button = styled(ButtonComponent)`
-    height: 40px;
-    margin-top: auto;
+    && {
+        height: 40px;
+        margin-top: auto;
+    }
 `;
 
 export const Price = styled.span`

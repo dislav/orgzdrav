@@ -44,10 +44,7 @@ const CartSummary: React.FC = () => {
                 )}
             </Products>
 
-            {/*<PromoCode*/}
-            {/*    coupons={cart.appliedCoupons || []}*/}
-            {/*    onUpdateCart={onUpdate}*/}
-            {/*/>*/}
+            <PromoCode />
 
             <Footer>
                 <span>Итого:</span>

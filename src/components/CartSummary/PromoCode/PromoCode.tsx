@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { ApolloError, useMutation } from '@apollo/client';
@@ -12,8 +13,6 @@ import {
     RemoveCouponsMutationProps,
     RemoveCouponsMutationQueryProps,
 } from '@graphql/mutations/removeCoupons';
-
-import { CouponProps } from '@graphql/queries/cart';
 
 import {
     Container,
@@ -30,17 +29,18 @@ import {
 
 import { Sale } from '@icons/icons';
 
+import { setCart } from '@redux/cart/actions';
+import { getCartCoupons } from '@redux/cart/selectors';
+
 interface IPromoCode {
     className?: string;
-    coupons: CouponProps[];
-    onUpdateCart?: () => void;
 }
 
-const PromoCode: React.FC<IPromoCode> = ({
-    className,
-    coupons,
-    onUpdateCart,
-}) => {
+const PromoCode: React.FC<IPromoCode> = ({ className }) => {
+    const dispatch = useDispatch();
+
+    const coupons = useSelector(getCartCoupons);
+
     const [isPromoCode, setIsPromoCode] = useState(false);
     const [error, setError] = useState('');
 
@@ -61,25 +61,26 @@ const PromoCode: React.FC<IPromoCode> = ({
         RemoveCouponsMutationQueryProps
     >(RemoveCouponsMutation);
 
-    const onSubmit: SubmitHandler<ApplyCouponMutationQueryProps['input']> =
-        async ({ code }) => {
-            setError('');
+    const onSubmit: SubmitHandler<
+        ApplyCouponMutationQueryProps['input']
+    > = async ({ code }) => {
+        setError('');
 
-            try {
-                const response = await applyCoupon({
-                    variables: { input: { code: code.toLowerCase() } },
-                });
+        try {
+            const response = await applyCoupon({
+                variables: { input: { code: code.toLowerCase() } },
+            });
 
-                if (response.data?.applyCoupon) {
-                    onUpdateCart?.();
-                    setValue('code', '');
-                }
-            } catch (e) {
-                if ((e as ApolloError)?.graphQLErrors.length) {
-                    setError((e as ApolloError).graphQLErrors[0].message);
-                }
+            if (response.data?.applyCoupon.cart) {
+                dispatch(setCart(response.data.applyCoupon.cart));
+                setValue('code', '');
             }
-        };
+        } catch (e) {
+            if ((e as ApolloError)?.graphQLErrors.length) {
+                setError((e as ApolloError).graphQLErrors[0].message);
+            }
+        }
+    };
 
     const onDeleteCoupon = async (code: string) => {
         try {
@@ -87,9 +88,8 @@ const PromoCode: React.FC<IPromoCode> = ({
                 variables: { input: { codes: [code] } },
             });
 
-            if (response.data?.removeCoupons) {
-                onUpdateCart?.();
-            }
+            if (response.data?.removeCoupons.cart)
+                dispatch(setCart(response.data.removeCoupons.cart));
         } catch (e) {
             if ((e as ApolloError)?.graphQLErrors.length) {
                 setError((e as ApolloError).graphQLErrors[0].message);

@@ -22,3 +22,8 @@ export const getCartItemCount = createSelector(
 );
 
 export const getCartTotalPrice = createSelector(getCart, (cart) => cart.total);
+
+export const getCartCoupons = createSelector(
+    getCart,
+    (cart) => cart?.appliedCoupons || []
+);
