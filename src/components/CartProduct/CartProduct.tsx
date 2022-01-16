@@ -9,20 +9,20 @@ import {
     Price,
     RightWrapper,
     Text,
-    Remove
+    Remove,
 } from './CartProduct.styled';
 
 interface ICartProduct extends SimpleProductProps {
     quantity: number;
     totalPrice: string;
-    onRemoveProduct?: () => void;
+    onRemoveProduct?: React.DispatchWithoutAction;
 }
 
 const CartProduct: React.FC<ICartProduct> = ({
     image,
     name,
     totalPrice,
-    onRemoveProduct
+    onRemoveProduct,
 }) => {
     return (
         <Container>

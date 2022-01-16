@@ -47,7 +47,7 @@ const Document: React.FC<IDocument> = ({
                                 .format('DD.MM.YYYY')}
                         </Date>
                     )}
-                    <Format>{download.fileExt}</Format>
+                    {download.fileExt && <Format>{download.fileExt}</Format>}
                 </Footer>
             </Container>
 

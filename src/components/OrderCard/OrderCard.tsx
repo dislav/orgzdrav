@@ -59,17 +59,6 @@ const OrderCard: React.FC<OrderProps> = ({
                         <Cell>Телефон</Cell>
                         <Cell>{billing.phone}</Cell>
                     </Row>
-                    <Row>
-                        <Cell>Город</Cell>
-                        <Cell>{billing.city}</Cell>
-                    </Row>
-
-                    {billing.company && (
-                        <Row>
-                            <Cell>Компания</Cell>
-                            <Cell>{billing.company}</Cell>
-                        </Row>
-                    )}
                 </Grid>
             </Group>
 

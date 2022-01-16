@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { ApolloError, useMutation } from '@apollo/client';
-import { SubmitHandler } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { UnpackNestedValue } from 'react-hook-form';
+import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 
@@ -9,40 +10,32 @@ import {
     CheckoutMutationProps,
     CheckoutMutationQueryProps,
 } from '@graphql/mutations/checkout';
+import { ViewerProps } from '@graphql/fragments/viewer';
+import { LoginMutationOptions } from '@graphql/mutations/login';
 
 import { Container, Button, Wrapper, Controls } from './CheckoutToolbar.styled';
 import Modal from '@components/Modal/Modal';
-import { useTogglable } from '@hooks/useTogglable';
 import AuthForm from '@components/AuthForm/AuthForm';
-import {
-    LoginMutation,
-    LoginMutationOptions,
-    LoginMutationProps,
-} from '@graphql/mutations/login';
-import {
-    RegisterUserMutation,
-    RegisterUserMutationProps,
-    RegisterUserMutationQueryProps,
-} from '@graphql/mutations/registerUser';
-import { ViewerProps } from '@graphql/fragments/viewer';
-import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
+
+import { useTogglable } from '@hooks/useTogglable';
+import { useAuth } from '@hooks/useAuth';
 import { useConfig } from '@context/configProvider';
+import { getCartTotalPrice } from '@redux/cart/selectors';
 
 interface ICheckoutForm {
     className?: string;
     profile?: ViewerProps;
-    total: string;
 }
 
-const CheckoutToolbar: React.FC<ICheckoutForm> = ({
-    className,
-    profile,
-    total,
-}) => {
+const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className, profile }) => {
     const router = useRouter();
+
     const { isOpen, onOpen, onClose } = useTogglable();
+    const { onLogin, onRegister } = useAuth();
 
     const [isEntity, setIsEntity] = useState(false);
+
+    const total = useSelector(getCartTotalPrice);
 
     const maxOrderPrice = useConfig().order.maxOrderPrice;
     const totalPrice = +total.replace(/\D+/gm, '');
@@ -52,15 +45,6 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({
         CheckoutMutationProps,
         CheckoutMutationQueryProps
     >(CheckoutMutation);
-
-    const [login] = useMutation<LoginMutationProps, LoginMutationOptions>(
-        LoginMutation
-    );
-
-    const [registerUser] = useMutation<
-        RegisterUserMutationProps,
-        RegisterUserMutationQueryProps
-    >(RegisterUserMutation);
 
     const onSubmitOrder = useCallback(
         async (fromLogin?: boolean) => {
@@ -99,63 +83,8 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({
         [profile, checkout, router]
     );
 
-    const onLogin: SubmitHandler<LoginMutationOptions> = useCallback(
-        async (data) => {
-            try {
-                const response = await login({ variables: data });
-
-                if (response.data?.login) {
-                    localStorage.setItem(
-                        'authToken',
-                        response.data.login.authToken
-                    );
-
-                    await onSubmitOrder(true);
-                }
-            } catch (e) {
-                const errors = (e as ApolloError)?.graphQLErrors.map(
-                    ({ message }) => message
-                );
-
-                if (errors)
-                    return {
-                        errors,
-                    };
-            }
-        },
-        [login, onSubmitOrder]
-    );
-
-    const onRegister: SubmitHandler<RegisterUserMutationInputs> = useCallback(
-        async (data) => {
-            try {
-                const { confirmPassword, ...input } = data;
-
-                const response = await registerUser({
-                    variables: { input },
-                });
-
-                if (response.data?.registerUser) {
-                    localStorage.setItem(
-                        'authToken',
-                        response.data.registerUser.user.jwtAuthToken
-                    );
-
-                    await router.reload();
-                }
-            } catch (e) {
-                const errors = (e as ApolloError)?.graphQLErrors.map(
-                    ({ message }) => message
-                );
-
-                if (errors)
-                    return {
-                        errors,
-                    };
-            }
-        },
-        [registerUser, router]
-    );
+    const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
+        onLogin(data, onSubmitOrder);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsEntity(e.target.checked);
@@ -199,7 +128,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({
             </Wrapper>
 
             <Modal isOpen={isOpen} onClose={onClose}>
-                <AuthForm onLogin={onLogin} onRegister={onRegister} />
+                <AuthForm onLogin={onLoginHandler} onRegister={onRegister} />
             </Modal>
         </Container>
     );

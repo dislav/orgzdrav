@@ -15,6 +15,7 @@ import Modal from '@components/Modal/Modal';
 import Profile from '@components/Profile/Profile';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
 import AuthModal from '@components/Header/AuthModal/AuthModal';
+import ClientOnly from '@components/ClientOnly/ClientOnly';
 import { useConfig } from '@context/configProvider';
 
 interface IHeader {
@@ -49,13 +50,15 @@ const Header: React.FC<IHeader> = ({ profile }) => {
                 <Links>
                     {renderLinks()}
 
-                    {profile ? (
-                        <Profile {...profile} />
-                    ) : (
-                        <Login onClick={openLoginModal}>
-                            Войти / Зарегистрироваться
-                        </Login>
-                    )}
+                    <ClientOnly>
+                        {profile ? (
+                            <Profile {...profile} />
+                        ) : (
+                            <Login onClick={openLoginModal}>
+                                Войти / Зарегистрироваться
+                            </Login>
+                        )}
+                    </ClientOnly>
                 </Links>
 
                 <SandwichIcon onClick={openMobileMenu}>

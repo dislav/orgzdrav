@@ -24,7 +24,7 @@ const Catalog: React.FC = () => {
     const onSearch = useCallback(
         async (search: string) => {
             try {
-                const response = await fetchProducts();
+                const response = await fetchProducts({ where: { search } });
 
                 console.log(response);
 
@@ -44,7 +44,7 @@ const Catalog: React.FC = () => {
             }}
             hideFooter
         >
-            <SearchForm onChange={onSearch} />
+            {/*<SearchForm onChange={onSearch} />*/}
             <ProductList />
         </CatalogLayout>
     );

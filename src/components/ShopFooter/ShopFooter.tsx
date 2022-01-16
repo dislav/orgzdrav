@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
 
@@ -12,56 +12,67 @@ import {
     CartCounter,
 } from './ShopFooter.styled';
 import { CartIcon } from '@icons/icons';
+import { useCart } from '@hooks/useCart';
+import { getCartItemCount, getCartProducts } from '@redux/cart/selectors';
 
 export interface IShopFooter {
     product?: SimpleProductProps;
-    itemCount: number;
-    isLoading?: boolean;
-    hasItemInCart?: boolean;
-    onAddToCart?: () => void;
-    onRemoveFromCart?: () => void;
 }
 
-const ShopFooter: React.FC<IShopFooter> = ({
-    product,
-    itemCount,
-    isLoading,
-    hasItemInCart,
-    onAddToCart,
-    onRemoveFromCart,
-}) => {
-    const { asPath } = useRouter();
+const ShopFooter: React.FC<IShopFooter> = ({ product }) => {
+    const cartProducts = useSelector(getCartProducts);
+    const itemCount = useSelector(getCartItemCount);
 
-    const hasCartButton = !['/cart'].includes(asPath);
+    const { onAddProductToCart, onRemoveProductFromCart, isLoading } =
+        useCart();
+
+    const productKey = useMemo(() => {
+        if (cartProducts.length && product?.databaseId)
+            return (
+                cartProducts.find(
+                    (cartProduct) =>
+                        cartProduct.product.node.databaseId ===
+                        product.databaseId
+                )?.key || null
+            );
+
+        return null;
+    }, [cartProducts, product?.databaseId]);
+
+    const onAddProduct = () => {
+        if (product?.databaseId) onAddProductToCart(product.databaseId);
+    };
+
+    const onRemoveProduct = () => {
+        if (productKey) onRemoveProductFromCart(productKey);
+    };
 
     return (
         <Container>
             <Wrapper>
-                {hasItemInCart ? (
-                    <Button onClick={onRemoveFromCart} isLoading={isLoading}>
+                {productKey ? (
+                    <Button onClick={onRemoveProduct} isLoading={isLoading}>
                         Удалить из корзины
                     </Button>
                 ) : (
                     product?.databaseId && (
-                        <Button onClick={onAddToCart} isLoading={isLoading}>
+                        <Button onClick={onAddProduct} isLoading={isLoading}>
                             Добавить в корзину
                         </Button>
                     )
                 )}
 
-                {hasCartButton && (
-                    <Link href="/cart">
-                        <a>
-                            {!product?.databaseId && <span>Корзина</span>}
-                            <CartButton>
-                                {itemCount > 0 && (
-                                    <CartCounter>{itemCount}</CartCounter>
-                                )}
-                                <CartIcon />
-                            </CartButton>
-                        </a>
-                    </Link>
-                )}
+                <Link href="/cart">
+                    <a>
+                        {!product?.databaseId && <span>Корзина</span>}
+                        <CartButton>
+                            {itemCount > 0 && (
+                                <CartCounter>{itemCount}</CartCounter>
+                            )}
+                            <CartIcon />
+                        </CartButton>
+                    </a>
+                </Link>
             </Wrapper>
         </Container>
     );

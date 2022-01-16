@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
-import { CartFragment } from '@graphql/fragments/cart';
+import { CartFragment, CartProps } from '@graphql/fragments/cart';
 
 export const GetCartQuery = gql`
     ${CartFragment}
@@ -18,24 +17,5 @@ export interface CouponProps {
 }
 
 export interface GetCartQueryProps {
-    cart: {
-        isEmpty: boolean;
-        total: string;
-        shippingTotal: string;
-        contentsTotal: string;
-        discountTotal: string;
-        appliedCoupons: CouponProps[];
-        contents: {
-            itemCount: number;
-            productCount: number;
-            nodes: {
-                key: string;
-                quantity: number;
-                total: string;
-                product: {
-                    node: SimpleProductProps;
-                };
-            }[];
-        };
-    };
+    cart: CartProps;
 }

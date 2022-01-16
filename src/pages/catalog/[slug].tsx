@@ -24,7 +24,7 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     return (
         <CatalogLayout
             meta={{
-                title: product.name,
+                title: isFallback ? 'Загрузка' : product.name,
             }}
             isFallback={isFallback}
             product={product}
