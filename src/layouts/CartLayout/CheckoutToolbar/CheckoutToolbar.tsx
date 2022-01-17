@@ -13,7 +13,7 @@ import {
 import { ViewerProps } from '@graphql/fragments/viewer';
 import { LoginMutationOptions } from '@graphql/mutations/login';
 
-import { Container, Button, Wrapper, Controls } from './CheckoutToolbar.styled';
+import { Container, Button, Wrapper } from './CheckoutToolbar.styled';
 import Modal from '@components/Modal/Modal';
 import AuthForm from '@components/AuthForm/AuthForm';
 
@@ -103,22 +103,17 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className, profile }) => {
     return (
         <Container className={className}>
             <Wrapper>
-                <Controls>
-                    <Tooltip
-                        title="Минимальныая сумма заказа для юр. лиц составляет 10 000 ₽"
-                        placement="top"
-                    >
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={isEntity}
-                                    onChange={onChange}
-                                />
-                            }
-                            label="Юридическое лицо"
-                        />
-                    </Tooltip>
-                </Controls>
+                <Tooltip
+                    title="Минимальныая сумма заказа для юр. лиц составляет 10 000 ₽"
+                    placement="top"
+                >
+                    <FormControlLabel
+                        control={
+                            <Switch checked={isEntity} onChange={onChange} />
+                        }
+                        label="Юридическое лицо"
+                    />
+                </Tooltip>
 
                 <Button
                     isLoading={loading}

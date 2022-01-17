@@ -31,7 +31,7 @@ const OrderCard: React.FC<OrderProps> = ({
         [OrderStatusEnum.FAILED]: 'Не удался',
         [OrderStatusEnum.ON_HOLD]: 'На удержании',
         [OrderStatusEnum.PROCESSING]: 'Обработка',
-        [OrderStatusEnum.PENDING]: 'В ожидании оплаты',
+        [OrderStatusEnum.PENDING]: 'Ожидает оплаты',
         [OrderStatusEnum.REFUNDED]: 'Возвращен',
     };
 

@@ -4,7 +4,10 @@ import { up } from 'styled-breakpoints';
 import ButtonComponent from '@components/Button/Button';
 
 export const Button = styled(ButtonComponent)`
-    height: 48px;
+    && {
+        height: 48px;
+        margin-left: auto;
+    }
 `;
 
 export const Container = styled.div`
@@ -18,14 +21,10 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    max-width: 1100px;
 
     ${up('xl')} {
-        max-width: 820px;
         margin: 0 auto;
     }
-`;
-
-export const Controls = styled.div`
-    margin-bottom: 20px;
 `;

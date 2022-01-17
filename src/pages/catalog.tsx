@@ -53,7 +53,10 @@ const Catalog: React.FC = () => {
 export const getStaticProps = async () => {
     const { data: products } = await client.query<
         GetProductsQueryProps,
-        { where?: { orderby?: { field: string; order?: 'ASC' | 'DESC' }[] } }
+        Partial<{
+            where: { orderby?: { field: string; order?: 'ASC' | 'DESC' }[] };
+            first: number;
+        }>
     >({
         query: GetProductsQuery,
         variables: {
@@ -65,6 +68,7 @@ export const getStaticProps = async () => {
                     },
                 ],
             },
+            first: 100
         },
     });
 

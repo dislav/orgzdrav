@@ -3,7 +3,7 @@ import { up } from 'styled-breakpoints';
 
 export const Container = styled.main`
     position: relative;
-    max-width: 820px;
+    max-width: 1100px;
     width: 100%;
     margin: 0 auto;
     padding: 26px 16px 100px;
