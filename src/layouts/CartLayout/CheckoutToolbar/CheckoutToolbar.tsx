@@ -21,14 +21,17 @@ import { useTogglable } from '@hooks/useTogglable';
 import { useAuth } from '@hooks/useAuth';
 import { useConfig } from '@context/configProvider';
 import { getCartTotalPrice } from '@redux/cart/selectors';
+import { getIsLoggedIn, getProfile } from "@redux/profile/selectors"
 
 interface ICheckoutForm {
     className?: string;
-    profile?: ViewerProps;
 }
 
-const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className, profile }) => {
+const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const router = useRouter();
+
+    const profile = useSelector(getProfile);
+    const isLoggedIn = useSelector(getIsLoggedIn);
 
     const { isOpen, onOpen, onClose } = useTogglable();
     const { onLogin, onRegister } = useAuth();
@@ -93,7 +96,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className, profile }) => {
     };
 
     const onClick = () => {
-        if (profile?.username) {
+        if (isLoggedIn) {
             onSubmitOrder();
         } else {
             onOpen();

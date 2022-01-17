@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
-
-import { ViewerProps } from '@graphql/fragments/viewer';
 
 import {
     Container,
@@ -17,13 +16,13 @@ import MobileMenu from '@components/MobileMenu/MobileMenu';
 import AuthModal from '@components/Header/AuthModal/AuthModal';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 import { useConfig } from '@context/configProvider';
+import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
 
-interface IHeader {
-    profile?: ViewerProps;
-}
-
-const Header: React.FC<IHeader> = ({ profile }) => {
+const Header: React.FC = () => {
     const links = useConfig().header.links;
+
+    const profile = useSelector(getProfile);
+    const isLoggedIn = useSelector(getIsLoggedIn);
 
     const [isLoginModal, setIsLoginModal] = useState(false);
     const [isMobileMenu, setIsMobileMenu] = useState(false);
@@ -51,7 +50,7 @@ const Header: React.FC<IHeader> = ({ profile }) => {
                     {renderLinks()}
 
                     <ClientOnly>
-                        {profile ? (
+                        {isLoggedIn ? (
                             <Profile {...profile} />
                         ) : (
                             <Login onClick={openLoginModal}>

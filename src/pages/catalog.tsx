@@ -54,7 +54,10 @@ export const getStaticProps = async () => {
     const { data: products } = await client.query<
         GetProductsQueryProps,
         Partial<{
-            where: { orderby?: { field: string; order?: 'ASC' | 'DESC' }[] };
+            where: {
+                orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
+                category?: string;
+            };
             first: number;
         }>
     >({
@@ -67,8 +70,9 @@ export const getStaticProps = async () => {
                         order: 'ASC',
                     },
                 ],
+                category: 'dokumenty'
             },
-            first: 100
+            first: 100,
         },
     });
 

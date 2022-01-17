@@ -1,7 +1,5 @@
 import React from 'react';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import { useRouter } from 'next/router';
-import { Skeleton } from '@mui/material';
 
 import client from '@graphql/client';
 import {
@@ -14,35 +12,24 @@ import {
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
 import SectionOptions from '@layouts/CatalogLayout/SectionOptions/SectionOptions';
-import Spinner from '@components/Spinner/Spinner';
 
 const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     product,
 }) => {
-    const { isFallback } = useRouter();
-
     return (
         <CatalogLayout
             meta={{
-                title: isFallback ? 'Загрузка' : product.name,
+                title: product.name,
+                image: product.image?.sourceUrl,
             }}
-            isFallback={isFallback}
             product={product}
-            hideShopFooter={isFallback}
             hideFooter
         >
-            <h2>{isFallback ? <Skeleton /> : product.name}</h2>
+            <h2>{product.name}</h2>
 
-            {isFallback ? (
-                <Spinner />
-            ) : (
-                <CommonComponents
-                    components={product.productAdditional.content}
-                />
-            )}
+            <CommonComponents components={product.productAdditional.content} />
 
-            {!isFallback &&
-                product.productAdditional.hasAdditionalOptions &&
+            {product.productAdditional.hasAdditionalOptions &&
                 product.productAdditional.options && (
                     <SectionOptions
                         options={product.productAdditional.options}
@@ -53,8 +40,22 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 };
 
 export const getStaticPaths = async () => {
-    const { data: products } = await client.query<GetProductsQueryProps>({
+    const { data: products } = await client.query<
+        GetProductsQueryProps,
+        Partial<{
+            where: {
+                orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
+                category?: string;
+            };
+            first: number;
+        }>
+    >({
         query: GetProductsQuery,
+        variables: {
+            where: {
+                category: 'dokumenty',
+            },
+        },
     });
 
     const paths = products.products.nodes.map((product) => ({

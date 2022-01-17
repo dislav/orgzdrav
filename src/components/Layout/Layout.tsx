@@ -1,22 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
 
-import { GetViewerQuery, GetViewerQueryProps } from '@graphql/queries/viewer';
-import { getToken } from '@graphql/utils';
+import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
 
 import { Container } from './Layout.styled';
 import Header from '@components/Header/Header';
 import Meta, { IMeta } from '@components/Meta/Meta';
 import Footer from '@components/Footer/Footer';
-import ShopFooter, { IShopFooter } from '@components/ShopFooter/ShopFooter';
-import { fetchCart } from '@redux/cart/actions';
+import ShopFooter from '@components/ShopFooter/ShopFooter';
 
-export interface ILayout extends Partial<IShopFooter> {
+import { fetchCart } from '@redux/cart/actions';
+import { fetchProfile } from '@redux/profile/actions';
+import { getToken } from '@graphql/utils';
+
+export interface ILayout {
     className?: string;
     hideFooter?: boolean;
     hideShopFooter?: boolean;
     meta?: IMeta;
+    product?: SimpleProductProps;
 }
 
 const Layout: React.FC<ILayout> = ({
@@ -25,30 +27,29 @@ const Layout: React.FC<ILayout> = ({
     hideFooter,
     hideShopFooter,
     meta,
-    ...props
+    product,
 }) => {
-    const authToken = getToken();
     const dispatch = useDispatch();
 
-    const { data: profile } = useQuery<GetViewerQueryProps>(GetViewerQuery, {
-        skip: !authToken,
-    });
+    const authToken = getToken();
 
     useEffect(() => {
         dispatch(fetchCart());
-    }, [dispatch]);
+
+        if (authToken) dispatch(fetchProfile());
+    }, [dispatch, authToken]);
 
     return (
         <>
             <Meta {...meta} />
 
-            <Header profile={profile?.viewer} />
+            <Header />
 
             <Container className={className}>{children}</Container>
 
             {!hideFooter && <Footer />}
 
-            {!hideShopFooter && <ShopFooter product={props.product} />}
+            {!hideShopFooter && <ShopFooter product={product} />}
         </>
     );
 };

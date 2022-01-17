@@ -5,11 +5,10 @@ import {
     OrderProps,
 } from '@graphql/fragments/order';
 
-export const CheckoutMutation = gql`
+export const CreateOrderMutation = gql`
     ${OrderFragment}
-    mutation CheckoutMutation($input: CheckoutInput!) {
-        checkout(input: $input) {
-            result
+    mutation CreateOrderMutation($input: CreateOrderInput!) {
+        createOrder(input: $input) {
             order {
                 ...OrderFragment
             }
@@ -17,7 +16,7 @@ export const CheckoutMutation = gql`
     }
 `;
 
-export interface CheckoutMutationQueryProps {
+export interface CreateOrderMutationQueryProps {
     input: {
         account?: {
             username: string;
@@ -26,13 +25,18 @@ export interface CheckoutMutationQueryProps {
         billing: BillingProps;
         clientMutationId?: string;
         isPaid?: boolean;
-        paymentMethod: string;
+        paymentMethod?: string;
+        lineItems: Partial<{
+            id: string;
+            name: string;
+            productId: number;
+            quantity: number;
+        }>[];
     };
 }
 
-export interface CheckoutMutationProps {
+export interface CreateOrderMutationProps {
     checkout: {
-        result: string;
         order: OrderProps;
     };
 }

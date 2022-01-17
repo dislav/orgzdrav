@@ -6,23 +6,10 @@ import { Container, ImageWrapper } from './CatalogLayout.styled';
 
 import { ILayout } from '@components/Layout/Layout';
 
-interface ICatalogLayout extends ILayout {
-    isFallback?: boolean;
-}
-
-const CatalogLayout: React.FC<ICatalogLayout> = ({
-    children,
-    product,
-    isFallback,
-    ...props
-}) => {
+const CatalogLayout: React.FC<ILayout> = ({ children, product, ...props }) => {
     return (
         <Container {...props} product={product}>
-            {isFallback && (
-                <Skeleton variant="rectangular" width={820} height={820} />
-            )}
-
-            {!isFallback && product?.image && (
+            {product?.image && (
                 <ImageWrapper>
                     <Image
                         src={product.image.sourceUrl}
@@ -31,6 +18,7 @@ const CatalogLayout: React.FC<ICatalogLayout> = ({
                     />
                 </ImageWrapper>
             )}
+
             {children}
         </Container>
     );

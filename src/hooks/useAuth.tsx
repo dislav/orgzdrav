@@ -14,16 +14,17 @@ import {
     RegisterUserMutationProps,
     RegisterUserMutationQueryProps,
 } from '@graphql/mutations/registerUser';
-import { ViewerProps } from "@graphql/fragments/viewer"
+import { ViewerProps } from '@graphql/fragments/viewer';
 
 export const useAuth = () => {
     const router = useRouter();
 
-    const [login] = useMutation<LoginMutationProps, LoginMutationOptions>(
-        LoginMutation
-    );
+    const [login, { loading: loginLoading }] = useMutation<
+        LoginMutationProps,
+        LoginMutationOptions
+    >(LoginMutation);
 
-    const [registerUser] = useMutation<
+    const [registerUser, { loading: registerLoading }] = useMutation<
         RegisterUserMutationProps,
         RegisterUserMutationQueryProps
     >(RegisterUserMutation);
@@ -92,5 +93,6 @@ export const useAuth = () => {
     return {
         onLogin,
         onRegister,
+        isLoading: loginLoading || registerLoading,
     };
 };

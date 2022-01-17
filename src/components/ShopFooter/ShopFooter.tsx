@@ -15,7 +15,7 @@ import { CartIcon } from '@icons/icons';
 import { useCart } from '@hooks/useCart';
 import { getCartItemCount, getCartProducts } from '@redux/cart/selectors';
 
-export interface IShopFooter {
+interface IShopFooter {
     product?: SimpleProductProps;
 }
 
