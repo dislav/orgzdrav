@@ -1,22 +1,19 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
-
-import { GetOrdersQuery, GetOrdersQueryProps } from '@graphql/queries/orders';
+import { useSelector } from 'react-redux';
 
 import OrdersLayout from '@layouts/OrdersLayout/OrdersLayout';
 import OrderList from '@layouts/OrdersLayout/OrderList/OrderList';
 import Spinner from '@components/Spinner/Spinner';
 
+import { getIsOrdersLoading } from '@redux/orders/selectors';
+
 const Orders: React.FC = () => {
-    const { data: orders, loading } =
-        useQuery<GetOrdersQueryProps>(GetOrdersQuery);
+    const isLoading = useSelector(getIsOrdersLoading);
 
     return (
         <OrdersLayout meta={{ title: 'Заказы' }} hideFooter>
-            {loading && <Spinner />}
-            {!loading && orders?.orders && (
-                <OrderList orders={orders.orders.nodes} />
-            )}
+            {isLoading && <Spinner />}
+            {!isLoading && <OrderList />}
         </OrdersLayout>
     );
 };

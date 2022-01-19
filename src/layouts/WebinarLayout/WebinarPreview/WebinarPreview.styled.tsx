@@ -1,30 +1,31 @@
 import styled from 'styled-components';
 import { up } from 'styled-breakpoints';
+import { Skeleton as SkeletonComponent } from '@mui/material';
 
 import { Container as StyledWebinarTime } from '@layouts/WebinarLayout/WebinarTime/WebinarTime.styled';
 import ButtonComponent from '@components/Button/Button';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  ${StyledWebinarTime} {
     display: flex;
-    flex-direction: column-reverse;
-    color: ${({ theme }) => theme.colors.black};
-    border-radius: 4px;
-    margin-bottom: 14px;
-    z-index: 10;
+    flex-direction: column;
 
-    ${up('xl')} {
-      margin-bottom: 0;
-    }
+    ${StyledWebinarTime} {
+        display: flex;
+        flex-direction: column-reverse;
+        color: ${({ theme }) => theme.colors.black};
+        border-radius: 4px;
+        margin-bottom: 14px;
+        z-index: 10;
 
-    span {
-      font-size: 14px;
-      margin-bottom: 8px;
+        ${up('xl')} {
+            margin-bottom: 0;
+        }
+
+        span {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
     }
-  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -52,6 +53,18 @@ export const Footer = styled.div`
 export const Button = styled(ButtonComponent)`
     && {
         height: 40px;
+
+        ${up('xl')} {
+            margin-left: auto;
+        }
+    }
+`;
+
+export const Skeleton = styled(SkeletonComponent)`
+    && {
+        min-width: 120px;
+        height: 40px;
+        border-radius: 4px;
 
         ${up('xl')} {
             margin-left: auto;

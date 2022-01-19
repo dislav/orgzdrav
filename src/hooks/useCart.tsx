@@ -1,38 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useMutation } from '@apollo/client';
-import {
-    AddToCartMutation,
-    AddToCartMutationOptionsProps,
-    AddToCartMutationProps,
-} from '@graphql/mutations/addToCart';
-import {
-    RemoveItemsFromCartMutation,
-    RemoveItemsFromCartMutationProps,
-    RemoveItemsFromCartMutationQueryProps,
-} from '@graphql/mutations/removeItemsFromCart';
-
 import { setCart } from '@redux/cart/actions';
+import { useAddToCartMutation } from '@hooks/useAddToCartMutation';
+import { useRemoveItemsFromCartMutation } from '@hooks/useRemoveItemsFromCartMutation';
 
 export const useCart = () => {
     const dispatch = useDispatch();
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    const [addToCart] = useMutation<
-        AddToCartMutationProps,
-        AddToCartMutationOptionsProps
-    >(AddToCartMutation);
-
-    const [removeItemsFromCart] = useMutation<
-        RemoveItemsFromCartMutationProps,
-        RemoveItemsFromCartMutationQueryProps
-    >(RemoveItemsFromCartMutation);
+    const [addToCart, { loading: addToCartLoading }] = useAddToCartMutation();
+    const [removeItemsFromCart, { loading: removeItemsFromCartLoading }] =
+        useRemoveItemsFromCartMutation();
 
     const onAddProductToCart = async (databaseId: number) => {
-        setIsLoading(true);
-
         try {
             const { data } = await addToCart({
                 variables: { productId: databaseId },
@@ -41,14 +21,10 @@ export const useCart = () => {
             if (data?.addToCart.cart) dispatch(setCart(data.addToCart.cart));
         } catch (e) {
             console.log(e);
-        } finally {
-            setIsLoading(false);
         }
     };
 
     const onRemoveProductFromCart = async (key: string) => {
-        setIsLoading(true);
-
         if (key) {
             try {
                 const { data } = await removeItemsFromCart({
@@ -59,8 +35,6 @@ export const useCart = () => {
                     dispatch(setCart(data.removeItemsFromCart.cart));
             } catch (e) {
                 console.log(e);
-            } finally {
-                setIsLoading(false);
             }
         }
     };
@@ -68,6 +42,6 @@ export const useCart = () => {
     return {
         onAddProductToCart,
         onRemoveProductFromCart,
-        isLoading,
+        isLoading: addToCartLoading || removeItemsFromCartLoading,
     };
 };

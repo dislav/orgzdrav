@@ -1,15 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { UnpackNestedValue } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 
-import {
-    CheckoutMutation,
-    CheckoutMutationProps,
-    CheckoutMutationQueryProps,
-} from '@graphql/mutations/checkout';
 import { ViewerProps } from '@graphql/fragments/viewer';
 import { LoginMutationOptions } from '@graphql/mutations/login';
 
@@ -17,6 +11,7 @@ import { Container, Button, Wrapper } from './CheckoutToolbar.styled';
 import Modal from '@components/Modal/Modal';
 import AuthForm from '@components/AuthForm/AuthForm';
 
+import { useCheckoutMutation } from "@hooks/useCheckoutMutation"
 import { useTogglable } from '@hooks/useTogglable';
 import { useAuth } from '@hooks/useAuth';
 import { useConfig } from '@context/configProvider';
@@ -44,10 +39,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const totalPrice = +total.replace(/\D+/gm, '');
     const isUnavailablePrice = isEntity && maxOrderPrice > totalPrice;
 
-    const [checkout, { loading }] = useMutation<
-        CheckoutMutationProps,
-        CheckoutMutationQueryProps
-    >(CheckoutMutation);
+    const [checkout, { loading }] = useCheckoutMutation();
 
     const onSubmitOrder = useCallback(
         async (user?: ViewerProps) => {
@@ -68,11 +60,6 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 });
 
                 if (response.data?.checkout.result === 'success') {
-                    localStorage.setItem(
-                        'authToken',
-                        response.data.checkout.order.customer.jwtAuthToken
-                    );
-
                     await router.push(
                         `/orders/${response.data.checkout.order.id}`
                     );

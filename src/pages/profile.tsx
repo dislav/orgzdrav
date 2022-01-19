@@ -1,34 +1,42 @@
 import React, { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/client';
 
 import Layout from '@components/Layout/Layout';
-import { GetViewerQuery, GetViewerQueryProps } from '@graphql/queries/viewer';
 import ProfileCard from '@components/ProfileCard/ProfileCard';
 import Spinner from '@components/Spinner/Spinner';
 
+import {
+    getIsLoggedIn,
+    getIsProfileLoading,
+    getProfile,
+} from '@redux/profile/selectors';
+
 const Profile = () => {
     const router = useRouter();
-    const { data, loading } = useQuery<GetViewerQueryProps>(GetViewerQuery);
+
+    const isLoggedIn = useSelector(getIsLoggedIn);
+    const isLoading = useSelector(getIsProfileLoading);
+    const profile = useSelector(getProfile);
 
     useEffect(() => {
-        if (!data?.viewer) {
+        if (!isLoading && !isLoggedIn) {
             router.push('/');
         }
-    }, [data]);
+    }, [isLoading, isLoggedIn]);
 
     const title = useMemo(() => {
-        if (!data?.viewer) return '';
+        if (!isLoading && !isLoggedIn) return '';
 
-        return `${data.viewer.firstName}${
-            data.viewer.lastName ? ` ${data.viewer.lastName}` : ''
+        return `${profile.firstName}${
+            profile.lastName ? ` ${profile.lastName}` : ''
         }`;
-    }, [data]);
+    }, [isLoading, isLoggedIn, profile]);
 
     return (
         <Layout meta={{ title }} hideFooter>
-            {loading && <Spinner />}
-            {!loading && data?.viewer && <ProfileCard profile={data.viewer} />}
+            {isLoading && <Spinner />}
+            {!isLoading && <ProfileCard />}
         </Layout>
     );
 };

@@ -1,33 +1,19 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { UnpackNestedValue } from 'react-hook-form';
-import { ApolloError, useMutation } from '@apollo/client';
+import { ApolloError } from '@apollo/client';
 
-import {
-    LoginMutation,
-    LoginMutationOptions,
-    LoginMutationProps,
-} from '@graphql/mutations/login';
+import { LoginMutationOptions } from '@graphql/mutations/login';
 import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
-import {
-    RegisterUserMutation,
-    RegisterUserMutationProps,
-    RegisterUserMutationQueryProps,
-} from '@graphql/mutations/registerUser';
 import { ViewerProps } from '@graphql/fragments/viewer';
+import { useLoginMutation } from '@hooks/useLoginMutation';
+import { useRegisterMutation } from '@hooks/useRegisterMutation';
 
 export const useAuth = () => {
     const router = useRouter();
 
-    const [login, { loading: loginLoading }] = useMutation<
-        LoginMutationProps,
-        LoginMutationOptions
-    >(LoginMutation);
-
-    const [registerUser, { loading: registerLoading }] = useMutation<
-        RegisterUserMutationProps,
-        RegisterUserMutationQueryProps
-    >(RegisterUserMutation);
+    const [login, { loading: loginLoading }] = useLoginMutation();
+    const [registerUser, { loading: registerLoading }] = useRegisterMutation();
 
     const onLogin = useCallback(
         async (

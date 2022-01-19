@@ -1,14 +1,10 @@
-import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { UnpackNestedValue } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 
-import {
-    CreateOrderMutation,
-    CreateOrderMutationProps,
-    CreateOrderMutationQueryProps,
-} from '@graphql/mutations/createOrder';
 import { ViewerProps } from '@graphql/fragments/viewer';
 import { LoginMutationOptions } from '@graphql/mutations/login';
 import { WebinarProps } from '@graphql/queries/webinar';
@@ -18,16 +14,20 @@ import {
     ImageWrapper,
     Footer,
     Button,
+    Skeleton,
 } from './WebinarPreview.styled';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 import WebinarTime from '@layouts/WebinarLayout/WebinarTime/WebinarTime';
 import AuthForm from '@components/AuthForm/AuthForm';
 import Modal from '@components/Modal/Modal';
 
+import { useCreateOrderMutation } from '@hooks/useCreateOrderMutation';
 import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
+import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';
 import { useAuth } from '@hooks/useAuth';
 import { useTogglable } from '@hooks/useTogglable';
-import { useMutation } from '@apollo/client';
+import { OrderStatusEnum } from '@graphql/fragments/order';
+import { addOrder } from '@redux/orders/actions';
 
 interface IWebinarPreview {
     className?: string;
@@ -41,17 +41,26 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
     webinar,
 }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
     const isLoggedIn = useSelector(getIsLoggedIn);
+    const isOrdersLoading = useSelector(getIsOrdersLoading);
+
+    const orders = useSelector(getOrders);
+
+    const isRecordedOnWebinar = useMemo(() => {
+        return !!orders.find((order) =>
+            order.lineItems.nodes.some(
+                (item) => item.product.id === webinar.webinar.id
+            )
+        );
+    }, [webinar.webinar, orders]);
 
     const { onLogin, onRegister, isLoading } = useAuth();
     const { isOpen, onOpen, onClose } = useTogglable();
 
-    const [createOrder, { loading }] = useMutation<
-        CreateOrderMutationProps,
-        CreateOrderMutationQueryProps
-    >(CreateOrderMutation);
+    const [createOrder, { loading }] = useCreateOrderMutation();
 
     const onSubmitOrder = useCallback(
         async (user?: ViewerProps) => {
@@ -68,21 +77,18 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
                             },
                             lineItems: [
                                 {
-                                    id: webinar.webinar.id,
                                     productId: webinar.webinar.databaseId,
                                     name: webinar.webinar.name,
                                     quantity: 1,
                                 },
                             ],
+                            status: OrderStatusEnum.ON_HOLD,
                         },
                     },
                 });
 
-                if (response.data?.checkout.order) {
-                    localStorage.setItem(
-                        'authToken',
-                        response.data.checkout.order.customer.jwtAuthToken
-                    );
+                if (response.data?.createOrder.order) {
+                    dispatch(addOrder(response.data.createOrder.order));
 
                     if (user) {
                         await router.reload();
@@ -92,7 +98,7 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
                 console.log(e);
             }
         },
-        [profile, webinar, createOrder, router]
+        [profile, webinar, createOrder, router, dispatch]
     );
 
     const onClick = useCallback(() => {
@@ -106,6 +112,8 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
     const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
         onLogin(data, onSubmitOrder);
 
+    const showTime = dayjs(webinar.time).isAfter(dayjs());
+
     return (
         <Container className={className}>
             <ImageWrapper>
@@ -113,15 +121,27 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
             </ImageWrapper>
 
             <Footer>
-                <ClientOnly>
-                    <WebinarTime time={webinar.time}>
-                        <span>До трансляции</span>
-                    </WebinarTime>
-                </ClientOnly>
+                {showTime && (
+                    <ClientOnly>
+                        <WebinarTime time={webinar.time}>
+                            <span>До трансляции</span>
+                        </WebinarTime>
+                    </ClientOnly>
+                )}
 
-                <Button onClick={onClick} isLoading={isLoading || loading}>
-                    Записаться
-                </Button>
+                {isLoggedIn && isOrdersLoading ? (
+                    <Skeleton variant="rectangular" />
+                ) : (
+                    <Button
+                        onClick={onClick}
+                        isLoading={isLoading || loading}
+                        disabled={!showTime || isRecordedOnWebinar}
+                    >
+                        {isRecordedOnWebinar
+                            ? 'Успешно записаны'
+                            : 'Записаться'}
+                    </Button>
+                )}
             </Footer>
 
             <Modal isOpen={isOpen} onClose={onClose}>

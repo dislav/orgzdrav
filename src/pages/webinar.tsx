@@ -27,6 +27,7 @@ const Webinar: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 title,
                 image,
             }}
+            hideFooter
         >
             {image && webinar.webinarMain && (
                 <WebinarPreview image={image} webinar={webinar.webinarMain} />

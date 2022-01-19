@@ -12,6 +12,7 @@ import ShopFooter from '@components/ShopFooter/ShopFooter';
 import { fetchCart } from '@redux/cart/actions';
 import { fetchProfile } from '@redux/profile/actions';
 import { getToken } from '@graphql/utils';
+import { fetchOrders } from "@redux/orders/actions"
 
 export interface ILayout {
     className?: string;
@@ -31,13 +32,16 @@ const Layout: React.FC<ILayout> = ({
 }) => {
     const dispatch = useDispatch();
 
-    const authToken = getToken();
-
     useEffect(() => {
         dispatch(fetchCart());
 
-        if (authToken) dispatch(fetchProfile());
-    }, [dispatch, authToken]);
+        const authToken = getToken();
+
+        if (authToken) {
+            dispatch(fetchProfile());
+            dispatch(fetchOrders());
+        }
+    }, [dispatch]);
 
     return (
         <>

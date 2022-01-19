@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 import {
     BillingProps,
     OrderFragment,
-    OrderProps,
-} from '@graphql/fragments/order';
+    OrderProps, OrderStatusEnum,
+} from "@graphql/fragments/order"
 
 export const CreateOrderMutation = gql`
     ${OrderFragment}
@@ -32,11 +32,12 @@ export interface CreateOrderMutationQueryProps {
             productId: number;
             quantity: number;
         }>[];
+        status?: OrderStatusEnum;
     };
 }
 
 export interface CreateOrderMutationProps {
-    checkout: {
+    createOrder: {
         order: OrderProps;
     };
 }

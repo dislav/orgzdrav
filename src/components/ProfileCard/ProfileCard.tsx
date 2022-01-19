@@ -1,15 +1,18 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { ViewerProps } from '@graphql/fragments/viewer';
 import { Container, Content, Avatar, Info } from './ProfileCard.styled';
 import ButtonLink from '@components/ButtonLink/ButtonLink';
 
+import { getProfile } from '@redux/profile/selectors';
+
 interface IProfileCard {
     className?: string;
-    profile: ViewerProps;
 }
 
-const ProfileCard: React.FC<IProfileCard> = ({ className, profile }) => {
+const ProfileCard: React.FC<IProfileCard> = ({ className }) => {
+    const profile = useSelector(getProfile);
+
     const fullName = `${profile.firstName}${
         profile.lastName ? ` ${profile.lastName}` : ''
     }`;
