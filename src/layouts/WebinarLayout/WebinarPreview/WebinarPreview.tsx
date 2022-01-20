@@ -50,7 +50,7 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
     const orders = useSelector(getOrders);
 
     const isRecordedOnWebinar = useMemo(() => {
-        return !!orders.find((order) =>
+        return !!orders?.find((order) =>
             order.lineItems.nodes.some(
                 (item) => item.product.id === webinar.webinar.id
             )
