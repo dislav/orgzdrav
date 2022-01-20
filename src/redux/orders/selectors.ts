@@ -13,3 +13,8 @@ export const getOrders = createSelector(
 export const getIsOrdersLoading = createSelector(getOrdersState, (state) =>
     [PromiseStatus.Idle, PromiseStatus.Loading].includes(state.status)
 );
+
+export const getIsOrdersLoaded = createSelector(
+    getOrdersState,
+    (state) => state.status === PromiseStatus.Success
+);

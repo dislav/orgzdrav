@@ -61,6 +61,7 @@ export const afterware = new ApolloLink((operation, forward) => {
 });
 
 export default new ApolloClient({
+    ssrMode: typeof window === 'undefined',
     link: middleware.concat(
         afterware.concat(
             createHttpLink({
@@ -71,7 +72,7 @@ export default new ApolloClient({
     cache: new InMemoryCache(),
     defaultOptions: {
         query: {
-            fetchPolicy: 'no-cache'
-        }
-    }
+            fetchPolicy: 'no-cache',
+        },
+    },
 });

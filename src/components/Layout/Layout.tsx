@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
 
@@ -12,7 +12,9 @@ import ShopFooter from '@components/ShopFooter/ShopFooter';
 import { fetchCart } from '@redux/cart/actions';
 import { fetchProfile } from '@redux/profile/actions';
 import { getToken } from '@graphql/utils';
-import { fetchOrders } from "@redux/orders/actions"
+import { fetchOrders } from '@redux/orders/actions';
+import { getIsProfileLoaded } from '@redux/profile/selectors';
+import { getIsOrdersLoaded } from '@redux/orders/selectors';
 
 export interface ILayout {
     className?: string;
@@ -32,16 +34,18 @@ const Layout: React.FC<ILayout> = ({
 }) => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    const isProfileLoaded = useSelector(getIsProfileLoaded);
+    const isOrdersLoaded = useSelector(getIsOrdersLoaded);
+
+    useMemo(() => {
         dispatch(fetchCart());
 
         const authToken = getToken();
 
-        if (authToken) {
-            dispatch(fetchProfile());
-            dispatch(fetchOrders());
-        }
-    }, [dispatch]);
+        if (authToken && !isProfileLoaded) dispatch(fetchProfile());
+
+        if (!isOrdersLoaded) dispatch(fetchOrders());
+    }, [dispatch, isProfileLoaded, isOrdersLoaded]);
 
     return (
         <>

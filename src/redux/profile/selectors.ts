@@ -13,3 +13,8 @@ export const getIsLoggedIn = createSelector(
 export const getIsProfileLoading = createSelector(getProfile, (profile) =>
     [PromiseStatus.Idle, PromiseStatus.Loading].includes(profile.status)
 );
+
+export const getIsProfileLoaded = createSelector(
+    getProfile,
+    (profile) => profile.status === PromiseStatus.Success
+);

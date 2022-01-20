@@ -129,7 +129,7 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
                     </ClientOnly>
                 )}
 
-                {isLoggedIn && isOrdersLoading ? (
+                {isOrdersLoading ? (
                     <Skeleton variant="rectangular" />
                 ) : (
                     <Button
