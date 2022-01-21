@@ -10,11 +10,12 @@ export const getIsLoggedIn = createSelector(
     (profile) => profile.isLoggedIn
 );
 
-export const getIsProfileLoading = createSelector(getProfile, (profile) =>
-    [PromiseStatus.Idle, PromiseStatus.Loading].includes(profile.status)
+export const getProfileStatus = createSelector(
+    getProfile,
+    (profile) => profile.status
 );
 
-export const getIsProfileLoaded = createSelector(
-    getProfile,
-    (profile) => profile.status === PromiseStatus.Success
+export const getIsProfileLoading = createSelector(
+    getProfileStatus,
+    (status) => status === PromiseStatus.Loading
 );

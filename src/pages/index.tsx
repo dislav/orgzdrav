@@ -147,10 +147,12 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 export const getStaticProps = async () => {
     const { data: reviews } = await client.query<GetReviewsQueryProps>({
         query: GetReviewsQuery,
+        fetchPolicy: 'no-cache',
     });
 
     const { data: partners } = await client.query<GetPartnersQueryProps>({
         query: GetPartnersQuery,
+        fetchPolicy: 'no-cache',
     });
 
     return {

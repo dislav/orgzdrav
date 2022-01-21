@@ -62,6 +62,7 @@ export const getStaticProps = async () => {
         }>
     >({
         query: GetProductsQuery,
+        fetchPolicy: 'no-cache',
         variables: {
             where: {
                 orderby: [
@@ -70,7 +71,7 @@ export const getStaticProps = async () => {
                         order: 'ASC',
                     },
                 ],
-                category: 'dokumenty'
+                category: 'dokumenty',
             },
             first: 100,
         },

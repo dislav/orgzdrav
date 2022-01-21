@@ -10,8 +10,9 @@ export const getOrders = createSelector(
     (state) => state.orders
 );
 
-export const getIsOrdersLoading = createSelector(getOrdersState, (state) =>
-    [PromiseStatus.Idle, PromiseStatus.Loading].includes(state.status)
+export const getIsOrdersLoading = createSelector(
+    getOrdersState,
+    (state) => state.status === PromiseStatus.Loading
 );
 
 export const getIsOrdersLoaded = createSelector(

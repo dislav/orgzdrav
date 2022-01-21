@@ -47,6 +47,7 @@ const Webinar: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 export const getStaticProps = async () => {
     const { data: webinar } = await client.query<GetWebinarQueryProps>({
         query: GetWebinarQuery,
+        fetchPolicy: 'no-cache',
     });
 
     return {

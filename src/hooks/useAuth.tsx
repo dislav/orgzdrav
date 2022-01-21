@@ -46,7 +46,10 @@ export const useAuth = () => {
     );
 
     const onRegister = useCallback(
-        async (data: UnpackNestedValue<RegisterUserMutationInputs>) => {
+        async (
+            data: UnpackNestedValue<RegisterUserMutationInputs>,
+            onSubmit?: (user?: ViewerProps) => Promise<void>
+        ) => {
             try {
                 const { confirmPassword, ...input } = data;
 
@@ -60,7 +63,7 @@ export const useAuth = () => {
                         response.data.registerUser.user.jwtAuthToken
                     );
 
-                    await router.reload();
+                    await onSubmit?.(response.data?.registerUser.user);
                 }
             } catch (e) {
                 const errors = (e as ApolloError)?.graphQLErrors.map(

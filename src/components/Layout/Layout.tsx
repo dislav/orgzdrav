@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
@@ -13,8 +13,7 @@ import { fetchCart } from '@redux/cart/actions';
 import { fetchProfile } from '@redux/profile/actions';
 import { getToken } from '@graphql/utils';
 import { fetchOrders } from '@redux/orders/actions';
-import { getIsProfileLoaded } from '@redux/profile/selectors';
-import { getIsOrdersLoaded } from '@redux/orders/selectors';
+import { getIsCartLoaded } from '@redux/cart/selectors';
 
 export interface ILayout {
     className?: string;
@@ -34,18 +33,16 @@ const Layout: React.FC<ILayout> = ({
 }) => {
     const dispatch = useDispatch();
 
-    const isProfileLoaded = useSelector(getIsProfileLoaded);
-    const isOrdersLoaded = useSelector(getIsOrdersLoaded);
+    const isCartLoaded = useSelector(getIsCartLoaded);
 
-    useMemo(() => {
-        dispatch(fetchCart());
+    useEffect(() => {
+        if (!isCartLoaded) dispatch(fetchCart());
 
-        const authToken = getToken();
-
-        if (authToken && !isProfileLoaded) dispatch(fetchProfile());
-
-        if (!isOrdersLoaded) dispatch(fetchOrders());
-    }, [dispatch, isProfileLoaded, isOrdersLoaded]);
+        if (getToken()) {
+            dispatch(fetchProfile());
+            dispatch(fetchOrders());
+        }
+    }, [dispatch]);
 
     return (
         <>

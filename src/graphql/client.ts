@@ -70,9 +70,4 @@ export default new ApolloClient({
         )
     ),
     cache: new InMemoryCache(),
-    defaultOptions: {
-        query: {
-            fetchPolicy: 'no-cache',
-        },
-    },
 });

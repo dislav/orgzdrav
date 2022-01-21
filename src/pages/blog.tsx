@@ -22,6 +22,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 export const getStaticProps = async () => {
     const { data: posts } = await client.query<GetPostsQueryProps>({
         query: GetPostsQuery,
+        fetchPolicy: 'no-cache',
     });
 
     return {

@@ -11,6 +11,7 @@ import {
     getIsProfileLoading,
     getProfile,
 } from '@redux/profile/selectors';
+import { getToken } from '@graphql/utils';
 
 const Profile = () => {
     const router = useRouter();
@@ -20,10 +21,8 @@ const Profile = () => {
     const profile = useSelector(getProfile);
 
     useEffect(() => {
-        if (!isLoading && !isLoggedIn) {
-            router.push('/');
-        }
-    }, [isLoading, isLoggedIn]);
+        if (!getToken() && !isLoading && !isLoggedIn) router.push('/');
+    }, [isLoading, isLoggedIn, router]);
 
     const title = useMemo(() => {
         if (!isLoading && !isLoggedIn) return '';
@@ -36,7 +35,7 @@ const Profile = () => {
     return (
         <Layout meta={{ title }} hideFooter>
             {isLoading && <Spinner />}
-            {!isLoading && <ProfileCard />}
+            {!isLoading && isLoggedIn && <ProfileCard />}
         </Layout>
     );
 };

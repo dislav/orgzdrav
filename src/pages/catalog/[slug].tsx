@@ -51,6 +51,7 @@ export const getStaticPaths = async () => {
         }>
     >({
         query: GetProductsQuery,
+        fetchPolicy: 'no-cache',
         variables: {
             where: {
                 category: 'dokumenty',
@@ -73,6 +74,7 @@ export const getStaticProps = async ({
 }: GetStaticPropsContext<{ slug: string }>) => {
     const { data: product } = await client.query<GetProductQueryProps>({
         query: GetProductQuery,
+        fetchPolicy: 'no-cache',
         variables: {
             id: params?.slug,
         },

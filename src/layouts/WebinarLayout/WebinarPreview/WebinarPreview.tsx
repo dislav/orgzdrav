@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import { ViewerProps } from '@graphql/fragments/viewer';
 import { LoginMutationOptions } from '@graphql/mutations/login';
 import { WebinarProps } from '@graphql/queries/webinar';
+import { OrderStatusEnum } from '@graphql/fragments/order';
+import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
 
 import {
     Container,
@@ -21,13 +23,13 @@ import WebinarTime from '@layouts/WebinarLayout/WebinarTime/WebinarTime';
 import AuthForm from '@components/AuthForm/AuthForm';
 import Modal from '@components/Modal/Modal';
 
-import { useCreateOrderMutation } from '@hooks/useCreateOrderMutation';
 import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
 import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';
 import { useAuth } from '@hooks/useAuth';
 import { useTogglable } from '@hooks/useTogglable';
-import { OrderStatusEnum } from '@graphql/fragments/order';
 import { addOrder } from '@redux/orders/actions';
+import { useOrdersQuery } from '@hooks/useOrdersQuery';
+import { useCreateOrderMutation } from '@hooks/useCreateOrderMutation';
 
 interface IWebinarPreview {
     className?: string;
@@ -60,45 +62,60 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
     const { onLogin, onRegister, isLoading } = useAuth();
     const { isOpen, onOpen, onClose } = useTogglable();
 
+    const { refetch: fetchOrders } = useOrdersQuery();
+
     const [createOrder, { loading }] = useCreateOrderMutation();
 
     const onSubmitOrder = useCallback(
         async (user?: ViewerProps) => {
             try {
-                const response = await createOrder({
-                    variables: {
-                        input: {
-                            billing: {
-                                firstName:
-                                    user?.firstName || profile?.firstName || '',
-                                lastName:
-                                    user?.lastName || profile?.lastName || '',
-                                email: user?.email || profile?.email || '',
-                            },
-                            lineItems: [
-                                {
-                                    productId: webinar.webinar.databaseId,
-                                    name: webinar.webinar.name,
-                                    quantity: 1,
+                const orders = await fetchOrders();
+
+                const findOrder =
+                    orders?.data?.orders?.nodes?.find((order) =>
+                        order.lineItems.nodes.some(
+                            (item) =>
+                                item.productId === webinar.webinar.databaseId
+                        )
+                    ) || null;
+
+                if (!findOrder) {
+                    const response = await createOrder({
+                        variables: {
+                            input: {
+                                billing: {
+                                    firstName:
+                                        user?.firstName ||
+                                        profile?.firstName ||
+                                        '',
+                                    lastName:
+                                        user?.lastName ||
+                                        profile?.lastName ||
+                                        '',
+                                    email: user?.email || profile?.email || '',
                                 },
-                            ],
-                            status: OrderStatusEnum.ON_HOLD,
+                                lineItems: [
+                                    {
+                                        productId: webinar.webinar.databaseId,
+                                        name: webinar.webinar.name,
+                                        quantity: 1,
+                                    },
+                                ],
+                                status: OrderStatusEnum.ON_HOLD,
+                            },
                         },
-                    },
-                });
+                    });
 
-                if (response.data?.createOrder.order) {
-                    dispatch(addOrder(response.data.createOrder.order));
-
-                    if (user) {
-                        await router.reload();
-                    }
+                    if (response.data?.createOrder.order)
+                        dispatch(addOrder(response.data.createOrder.order));
                 }
+
+                if (user) await router.reload();
             } catch (e) {
                 console.log(e);
             }
         },
-        [profile, webinar, createOrder, router, dispatch]
+        [router, profile, webinar, createOrder, fetchOrders, dispatch]
     );
 
     const onClick = useCallback(() => {
@@ -111,6 +128,10 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
 
     const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
         onLogin(data, onSubmitOrder);
+
+    const onRegisterHandler = (
+        data: UnpackNestedValue<RegisterUserMutationInputs>
+    ) => onRegister(data, onSubmitOrder);
 
     const showTime = dayjs(webinar.time).isAfter(dayjs());
 
@@ -129,23 +150,28 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
                     </ClientOnly>
                 )}
 
-                {isOrdersLoading ? (
-                    <Skeleton variant="rectangular" />
-                ) : (
-                    <Button
-                        onClick={onClick}
-                        isLoading={isLoading || loading}
-                        disabled={!showTime || isRecordedOnWebinar}
-                    >
-                        {isRecordedOnWebinar
-                            ? 'Успешно записаны'
-                            : 'Записаться'}
-                    </Button>
-                )}
+                <ClientOnly>
+                    {isOrdersLoading ? (
+                        <Skeleton variant="rectangular" />
+                    ) : (
+                        <Button
+                            onClick={onClick}
+                            isLoading={isLoading || loading}
+                            disabled={!showTime || isRecordedOnWebinar}
+                        >
+                            {isRecordedOnWebinar
+                                ? 'Успешно записаны'
+                                : 'Записаться'}
+                        </Button>
+                    )}
+                </ClientOnly>
             </Footer>
 
             <Modal isOpen={isOpen} onClose={onClose}>
-                <AuthForm onLogin={onLoginHandler} onRegister={onRegister} />
+                <AuthForm
+                    onLogin={onLoginHandler}
+                    onRegister={onRegisterHandler}
+                />
             </Modal>
         </Container>
     );

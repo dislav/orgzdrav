@@ -29,6 +29,7 @@ const PrivacyPolicy: React.FC<
 export const getStaticProps = async () => {
     const { data: page } = await client.query<GetPageQueryProps>({
         query: GetPageQuery,
+        fetchPolicy: 'no-cache',
         variables: { id: 'privacy-policy' },
     });
 

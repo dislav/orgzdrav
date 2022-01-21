@@ -46,19 +46,20 @@ const OrderCard: React.FC<OrderProps> = ({
             </Header>
 
             <Group>
-                <span>
-                    {billing.firstName} {billing.lastName}
-                </span>
-
                 <Grid>
-                    <Row>
-                        <Cell>E-mail</Cell>
-                        <Cell>{billing.email}</Cell>
-                    </Row>
-                    <Row>
-                        <Cell>Телефон</Cell>
-                        <Cell>{billing.phone}</Cell>
-                    </Row>
+                    {billing?.email && (
+                        <Row>
+                            <Cell>E-mail</Cell>
+                            <Cell>{billing.email}</Cell>
+                        </Row>
+                    )}
+
+                    {billing?.phone && (
+                        <Row>
+                            <Cell>Телефон</Cell>
+                            <Cell>{billing.phone}</Cell>
+                        </Row>
+                    )}
                 </Grid>
             </Group>
 

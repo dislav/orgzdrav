@@ -28,6 +28,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 export const getStaticPaths = async () => {
     const { data } = await client.query<GetPostsQueryProps>({
         query: GetPostsQuery,
+        fetchPolicy: 'no-cache',
     });
 
     const paths = data.posts.nodes.map((post) => ({
@@ -42,6 +43,7 @@ export const getStaticProps = async ({
 }: GetStaticPropsContext<{ slug: string }>) => {
     const { data: post } = await client.query<GetPostQueryProps>({
         query: GetPostQuery,
+        fetchPolicy: 'no-cache',
         variables: { id: params?.slug },
     });
 

@@ -1,23 +1,22 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
 
-import { ViewerProps } from '@graphql/fragments/viewer';
-import {
-    UpdateUserInputProps,
-    UpdateUserMutation,
-    UpdateUserMutationProps,
-} from '@graphql/mutations/updateUser';
+import { UpdateUserInputProps } from '@graphql/mutations/updateUser';
+
 import { Container, Input, Button } from './ProfileForm.styled';
+import { useUpdateUserMutation } from '@hooks/useUpdateUserMutation';
+import { getProfile } from '@redux/profile/selectors';
 
 interface IProfileForm {
     className?: string;
-    profile: ViewerProps;
 }
 
-const ProfileForm: React.FC<IProfileForm> = ({ className, profile }) => {
+const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
     const router = useRouter();
+
+    const profile = useSelector(getProfile);
     const { firstName, lastName, email } = profile;
 
     const { handleSubmit, register } = useForm<UpdateUserInputProps['input']>({
@@ -28,10 +27,7 @@ const ProfileForm: React.FC<IProfileForm> = ({ className, profile }) => {
         },
     });
 
-    const [updateUser, { loading }] = useMutation<
-        UpdateUserMutationProps,
-        UpdateUserInputProps
-    >(UpdateUserMutation);
+    const [updateUser, { loading }] = useUpdateUserMutation();
 
     const onSubmit: SubmitHandler<UpdateUserInputProps['input']> = async (
         data
@@ -42,7 +38,7 @@ const ProfileForm: React.FC<IProfileForm> = ({ className, profile }) => {
             });
 
             if (response.data?.updateUser.user) {
-                router.push('/profile');
+                await router.push('/profile');
             }
         } catch (e) {
             console.log(e);
@@ -55,7 +51,11 @@ const ProfileForm: React.FC<IProfileForm> = ({ className, profile }) => {
             <Input label="Фамилия" name="lastName" register={register} />
             <Input label="E-mail" name="email" register={register} />
 
-            <Button isLoading={loading}>Сохранить</Button>
+            <Button onClick={() => router.push('/profile')}>Назад</Button>
+
+            <Button type="submit" isLoading={loading}>
+                Сохранить
+            </Button>
         </Container>
     );
 };

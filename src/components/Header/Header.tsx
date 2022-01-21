@@ -15,6 +15,7 @@ import Profile from '@components/Profile/Profile';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
 import AuthModal from '@components/Header/AuthModal/AuthModal';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
+
 import { useConfig } from '@context/configProvider';
 import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
 

@@ -29,6 +29,7 @@ const PublicOffer: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 export const getStaticProps = async () => {
     const { data: page } = await client.query<GetPageQueryProps>({
         query: GetPageQuery,
+        fetchPolicy: 'no-cache',
         variables: { id: 'public-offer' },
     });
 

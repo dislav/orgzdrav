@@ -11,6 +11,11 @@ export const getIsCartLoading = createSelector(
     (status) => status === PromiseStatus.Loading
 );
 
+export const getIsCartLoaded = createSelector(
+    getCartStatus,
+    (status) => status === PromiseStatus.Success
+);
+
 export const getCartProducts = createSelector(
     getCart,
     (cart) => cart.contents.nodes
