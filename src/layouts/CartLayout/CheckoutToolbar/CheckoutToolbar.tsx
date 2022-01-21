@@ -6,17 +6,18 @@ import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 
 import { ViewerProps } from '@graphql/fragments/viewer';
 import { LoginMutationOptions } from '@graphql/mutations/login';
+import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
 
 import { Container, Button, Wrapper } from './CheckoutToolbar.styled';
 import Modal from '@components/Modal/Modal';
 import AuthForm from '@components/AuthForm/AuthForm';
 
-import { useCheckoutMutation } from "@hooks/useCheckoutMutation"
+import { useCheckoutMutation } from '@hooks/useCheckoutMutation';
 import { useTogglable } from '@hooks/useTogglable';
 import { useAuth } from '@hooks/useAuth';
 import { useConfig } from '@context/configProvider';
 import { getCartTotalPrice } from '@redux/cart/selectors';
-import { getIsLoggedIn, getProfile } from "@redux/profile/selectors"
+import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
 
 interface ICheckoutForm {
     className?: string;
@@ -78,6 +79,10 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
         onLogin(data, onSubmitOrder);
 
+    const onRegisterHandler = (
+        data: UnpackNestedValue<RegisterUserMutationInputs>
+    ) => onRegister(data);
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsEntity(e.target.checked);
     };
@@ -115,7 +120,10 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
             </Wrapper>
 
             <Modal isOpen={isOpen} onClose={onClose}>
-                <AuthForm onLogin={onLoginHandler} onRegister={onRegister} />
+                <AuthForm
+                    onLogin={onLoginHandler}
+                    onRegister={onRegisterHandler}
+                />
             </Modal>
         </Container>
     );
