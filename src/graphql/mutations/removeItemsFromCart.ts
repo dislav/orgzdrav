@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { CartFragment, CartProps } from "@graphql/fragments/cart"
+import { CartFragment, CartProps } from '@graphql/fragments/cart';
 
 export const RemoveItemsFromCartMutation = gql`
     ${CartFragment}

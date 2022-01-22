@@ -4,83 +4,83 @@ import { up } from 'styled-breakpoints';
 import ButtonComponent from '@components/Button/Button';
 
 export const Container = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  height: 64px;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: 0 16px;
-  z-index: 10;
-  
-  ${up('xl')} {
-    height: 80px;
-    padding: 0;
-  }
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    height: 64px;
+    background-color: ${({ theme }) => theme.colors.white};
+    padding: 0 16px;
+    z-index: 10;
+
+    ${up('xl')} {
+        height: 80px;
+        padding: 0;
+    }
 `;
 
 export const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  max-width: 1100px;
-  width: 100%;
-  margin: 0 auto;
-
-  > a {
-    flex: 1 1 48%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    min-height: 50px;
-    color: ${({ theme }) => theme.colors.black};
-    background-color: ${({ theme }) => theme.colors.gray05};
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 20px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
 
-    > svg {
-      width: 20px;
-      height: 20px;
-    }
+    > a {
+        flex: 1 1 48%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        color: ${({ theme }) => theme.colors.black};
+        background-color: ${({ theme }) => theme.colors.gray05};
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 20px;
 
-    > span {
-      margin-right: 8px;
+        > svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        > span {
+            margin-right: 8px;
+        }
     }
-  }
 `;
 
 export const Button = styled(ButtonComponent)`
-  flex: 1 1 48%;
-  min-height: 50px;
+    flex: 1 1 48%;
+    min-height: 50px;
 `;
 
 export const CartButton = styled.div`
-  position: relative;
-  width: 20px;
-  height: 20px;
+    position: relative;
+    width: 20px;
+    height: 20px;
 
-  > svg {
-    width: 100%;
-    height: 100%;
-  }
+    > svg {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 export const CartCounter = styled.span`
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 12px;
-  line-height: 1;
-  min-width: 16px;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.red};
-  border-radius: 10px;
-  padding: 2px 4px;
-  transform: translate(35%, -35%);
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1;
+    min-width: 16px;
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.red};
+    border-radius: 10px;
+    padding: 2px 4px;
+    transform: translate(35%, -35%);
 `;

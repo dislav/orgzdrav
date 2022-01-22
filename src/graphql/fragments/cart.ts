@@ -1,6 +1,9 @@
 import { gql } from '@apollo/client';
-import { SimpleProductFragment, SimpleProductProps } from "@graphql/fragments/simpleProduct"
-import { CouponProps } from "@graphql/queries/cart"
+import {
+    SimpleProductFragment,
+    SimpleProductProps,
+} from '@graphql/fragments/simpleProduct';
+import { CouponProps } from '@graphql/queries/cart';
 
 export const CartFragment = gql`
     ${SimpleProductFragment}

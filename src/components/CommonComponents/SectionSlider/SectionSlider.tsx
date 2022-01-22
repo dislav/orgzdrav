@@ -11,7 +11,7 @@ import {
     Slide,
     SlideButton,
 } from './SectionSlider.styled';
-import { ArrowRight, ArrowsDown } from "@icons/icons"
+import { ArrowRight, ArrowsDown } from '@icons/icons';
 
 const SectionSlider: React.FC<CommonComponentsProps> = ({ gallery }) => {
     const [currentIndex, setCurrentIndex] = useState(0);

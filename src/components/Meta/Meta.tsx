@@ -45,7 +45,7 @@ const Meta: React.FC<IMeta> = ({ title, description, image }) => {
                 </>
             )}
 
-          <link rel="icon" type="image/png" href="/favicon.jpeg" />
+            <link rel="icon" type="image/png" href="/favicon.jpeg" />
         </Head>
     );
 };

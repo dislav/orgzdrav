@@ -5,15 +5,17 @@ import client from '@graphql/client';
 import { GetPostsQuery, GetPostsQueryProps } from '@graphql/queries/posts';
 
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
-import Meta from '@components/Meta/Meta';
 import BlogList from '@layouts/BlogLayout/BlogList/BlogList';
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     posts,
 }) => {
     return (
-        <BlogLayout>
-            <Meta title="Блог" />
+        <BlogLayout
+            meta={{
+                title: 'Блог',
+            }}
+        >
             <BlogList posts={posts} />
         </BlogLayout>
     );

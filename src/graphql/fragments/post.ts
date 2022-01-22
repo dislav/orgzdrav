@@ -19,6 +19,14 @@ export const ArticleFragment = gql`
             }
         }
         postMain {
+            files {
+                file {
+                    title
+                    mediaItemUrl
+                    mimeType
+                    fileSize
+                }
+            }
             content {
                 ... on Post_Postmain_Content_SectionText {
                     title
@@ -58,6 +66,15 @@ export const ArticleFragment = gql`
     }
 `;
 
+export interface PostFileProps {
+    file: {
+        title: string;
+        mediaItemUrl: string;
+        mimeType: string;
+        fileSize: number;
+    };
+}
+
 export interface PostProps {
     id: string;
     slug: string;
@@ -69,6 +86,7 @@ export interface PostProps {
         };
     };
     postMain: {
+        files: PostFileProps[];
         content: WithFieldGroupName<{
             title?: Maybe<string>;
             text?: string;

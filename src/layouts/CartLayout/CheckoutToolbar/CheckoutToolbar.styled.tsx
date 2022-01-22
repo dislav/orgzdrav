@@ -23,8 +23,5 @@ export const Wrapper = styled.div`
     display: flex;
     align-items: center;
     max-width: 1100px;
-
-    ${up('xl')} {
-        margin: 0 auto;
-    }
+    margin: 0 auto;
 `;

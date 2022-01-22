@@ -99,6 +99,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
         <Container className={className}>
             <Wrapper>
                 <Tooltip
+                    open={isUnavailablePrice}
                     title="Минимальныая сумма заказа для юр. лиц составляет 10 000 ₽"
                     placement="top"
                 >

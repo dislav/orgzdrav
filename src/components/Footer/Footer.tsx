@@ -14,9 +14,9 @@ const Footer: React.FC = () => {
             <Link href="/privacy-policy">Политика конфиденциальности</Link>
             <Text>
                 &reg; ORGZDRAV 2019 – {dayjs().year()}
-                <br/>
+                <br />
                 &copy; Назимкин Иван Игоревич
-                <br/>
+                <br />
                 All rights reserved.
             </Text>
             <GradientLine />

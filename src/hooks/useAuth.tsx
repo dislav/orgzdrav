@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { useRouter } from 'next/router';
 import { UnpackNestedValue } from 'react-hook-form';
 import { ApolloError } from '@apollo/client';
 
@@ -10,8 +9,6 @@ import { useLoginMutation } from '@hooks/useLoginMutation';
 import { useRegisterMutation } from '@hooks/useRegisterMutation';
 
 export const useAuth = () => {
-    const router = useRouter();
-
     const [login, { loading: loginLoading }] = useLoginMutation();
     const [registerUser, { loading: registerLoading }] = useRegisterMutation();
 
@@ -30,6 +27,8 @@ export const useAuth = () => {
                     );
 
                     await onSubmit?.(response.data.login.user);
+
+                    return response;
                 }
             } catch (e) {
                 const errors = (e as ApolloError)?.graphQLErrors.map(
@@ -64,6 +63,8 @@ export const useAuth = () => {
                     );
 
                     await onSubmit?.(response.data?.registerUser.user);
+
+                    return response;
                 }
             } catch (e) {
                 const errors = (e as ApolloError)?.graphQLErrors.map(
@@ -76,7 +77,7 @@ export const useAuth = () => {
                     };
             }
         },
-        [registerUser, router]
+        [registerUser]
     );
 
     return {

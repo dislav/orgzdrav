@@ -55,6 +55,6 @@ export interface SimpleProductProps {
     productAdditional: {
         content: WithFieldGroupName<CommonComponentsProps>[];
         hasAdditionalOptions: boolean;
-        options: Maybe<ProductOption[]>
+        options: Maybe<ProductOption[]>;
     };
 }

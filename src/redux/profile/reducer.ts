@@ -40,7 +40,7 @@ export const profileReducer = (
                 ...state,
                 ...action.payload,
                 status: PromiseStatus.Success,
-                isLoggedIn: true
+                isLoggedIn: true,
             };
         case FETCH_PROFILE_FAILED:
             return {

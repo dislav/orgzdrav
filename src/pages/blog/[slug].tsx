@@ -1,6 +1,5 @@
 import React from 'react';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import Image from 'next/image';
 
 import client from '@graphql/client';
 import { GetPostsQuery, GetPostsQueryProps } from '@graphql/queries/posts';
@@ -8,6 +7,7 @@ import { GetPostQuery, GetPostQueryProps } from '@graphql/queries/post';
 
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
+import DownloadFiles from '@layouts/BlogLayout/DownloadFiles/DownloadFiles';
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     post,
@@ -20,7 +20,13 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 image: post.featuredImage.node.sourceUrl,
             }}
         >
-            <CommonComponents components={post.postMain.content} />
+            {post.postMain?.files?.length > 0 && (
+                <DownloadFiles files={post.postMain.files} />
+            )}
+
+            {post.postMain?.content && (
+                <CommonComponents components={post.postMain.content} />
+            )}
         </BlogLayout>
     );
 };

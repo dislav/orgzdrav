@@ -34,7 +34,7 @@ const WebinarTime: React.FC<IWebinarTime> = ({ className, children, time }) => {
 
     const getUnitByCount = (value: number, unitsMap: Map<number[], string>) => {
         return Array.from(unitsMap.entries()).find(([keys]) =>
-          keys.includes(value)
+            keys.includes(value)
         )?.[1];
     };
 

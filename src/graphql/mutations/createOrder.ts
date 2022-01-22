@@ -2,8 +2,9 @@ import { gql } from '@apollo/client';
 import {
     BillingProps,
     OrderFragment,
-    OrderProps, OrderStatusEnum,
-} from "@graphql/fragments/order"
+    OrderProps,
+    OrderStatusEnum,
+} from '@graphql/fragments/order';
 
 export const CreateOrderMutation = gql`
     ${OrderFragment}
