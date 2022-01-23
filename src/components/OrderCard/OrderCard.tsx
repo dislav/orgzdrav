@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { OrderProps, OrderStatusEnum } from '@graphql/fragments/order';
+import { OrderProps } from '@graphql/fragments/order';
 import {
     Container,
     Header,
     Number,
-    Status,
     Group,
     Grid,
     Cell,
@@ -15,6 +14,7 @@ import {
 } from './OrderCard.styled';
 import Document from '@components/OrderCard/Document/Document';
 import Product from '@components/OrderCard/Product/Product';
+import Status from '@components/OrderCard/Status/Status';
 
 const OrderCard: React.FC<OrderProps> = ({
     databaseId,
@@ -25,16 +25,6 @@ const OrderCard: React.FC<OrderProps> = ({
     downloadableItems,
     lineItems,
 }) => {
-    const orderStatus = {
-        [OrderStatusEnum.COMPLETED]: 'Выполнен',
-        [OrderStatusEnum.CANCELLED]: 'Отменен',
-        [OrderStatusEnum.FAILED]: 'Не удался',
-        [OrderStatusEnum.ON_HOLD]: 'На удержании',
-        [OrderStatusEnum.PROCESSING]: 'Обработка',
-        [OrderStatusEnum.PENDING]: 'Ожидает оплаты',
-        [OrderStatusEnum.REFUNDED]: 'Возвращен',
-    };
-
     return (
         <Container>
             <Header>
@@ -42,7 +32,7 @@ const OrderCard: React.FC<OrderProps> = ({
                     Заказ #{databaseId} —{' '}
                     <span dangerouslySetInnerHTML={{ __html: total }} />
                 </Number>
-                <Status status={status}>{orderStatus[status]}</Status>
+                <Status status={status} />
             </Header>
 
             <Group>

@@ -49,7 +49,7 @@ export const profileReducer = (
                 error: action.payload,
             };
         case SET_PROFILE:
-            return action.payload;
+            return { ...state, ...action.payload };
         case CLEAR_PROFILE:
             return state;
         default:

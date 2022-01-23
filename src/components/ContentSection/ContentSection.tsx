@@ -23,6 +23,10 @@ export const ContentSection = styled.div`
         color: ${({ theme }) => theme.colors.orange};
         text-decoration: underline;
     }
+
+    .has-text-align-center {
+        text-align: center;
+    }
 `;
 
 export default ContentSection;

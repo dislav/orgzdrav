@@ -19,3 +19,8 @@ export const getIsProfileLoading = createSelector(
     getProfileStatus,
     (status) => status === PromiseStatus.Loading
 );
+
+export const getIsProfileLoaded = createSelector(
+    getProfileStatus,
+    (status) => status === PromiseStatus.Success
+);

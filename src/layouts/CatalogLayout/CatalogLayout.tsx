@@ -1,8 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { Skeleton } from '@mui/material';
 
-import { Container, ImageWrapper } from './CatalogLayout.styled';
+import { Container, ImageWrapper, Price } from './CatalogLayout.styled';
 
 import { ILayout } from '@components/Layout/Layout';
 
@@ -17,6 +16,15 @@ const CatalogLayout: React.FC<ILayout> = ({ children, product, ...props }) => {
                         layout="fill"
                     />
                 </ImageWrapper>
+            )}
+
+            {product?.name && <h2>{product.name}</h2>}
+
+            {product?.regularPrice && (
+                <Price
+                    regularPrice={product.regularPrice}
+                    salePrice={product.salePrice}
+                />
             )}
 
             {children}

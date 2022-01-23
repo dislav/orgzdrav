@@ -25,8 +25,6 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             product={product}
             hideFooter
         >
-            <h2>{product.name}</h2>
-
             <CommonComponents components={product.productAdditional.content} />
 
             {product.productAdditional.hasAdditionalOptions &&

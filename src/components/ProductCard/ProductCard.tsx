@@ -4,16 +4,24 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { SimpleProductProps } from '@graphql/types';
-import { Container, ImageWrapper, Button, Price } from './ProductCard.styled';
+import {
+    Container,
+    ImageWrapper,
+    Footer,
+    Button,
+    FooterWrapper,
+} from './ProductCard.styled';
 
 import { useCart } from '@hooks/useCart';
 import { getCartProducts } from '@redux/cart/selectors';
+import Price from '@components/Price/Price';
 
 const ProductCard: React.FC<SimpleProductProps> = ({
     slug,
     name,
     image,
-    price,
+    regularPrice,
+    salePrice,
     databaseId,
 }) => {
     const cartProducts = useSelector(getCartProducts);
@@ -52,13 +60,23 @@ const ProductCard: React.FC<SimpleProductProps> = ({
                         <Image src={image.sourceUrl} alt={name} layout="fill" />
                     </ImageWrapper>
                 )}
-                <h2>{name}</h2>
 
-                {price && <Price dangerouslySetInnerHTML={{ __html: price }} />}
+                <Footer>
+                    <h2>{name}</h2>
 
-                <Button onClick={onClickHandler} isLoading={isLoading}>
-                    {!productKey ? 'В корзину' : 'Убрать из корзины'}
-                </Button>
+                    <FooterWrapper>
+                        {regularPrice && (
+                            <Price
+                                regularPrice={regularPrice}
+                                salePrice={salePrice}
+                            />
+                        )}
+
+                        <Button onClick={onClickHandler} isLoading={isLoading}>
+                            {!productKey ? 'В корзину' : 'Убрать из корзины'}
+                        </Button>
+                    </FooterWrapper>
+                </Footer>
             </Container>
         </Link>
     );

@@ -11,6 +11,7 @@ import {
 import WebinarLayout from '@layouts/WebinarLayout/WebinarLayout';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
 import WebinarPreview from '@layouts/WebinarLayout/WebinarPreview/WebinarPreview';
+import ContentSection from '@components/ContentSection/ContentSection';
 
 const Webinar: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     webinar,
@@ -31,6 +32,12 @@ const Webinar: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         >
             {image && webinar.webinarMain && (
                 <WebinarPreview image={image} webinar={webinar.webinarMain} />
+            )}
+
+            {webinar.content && (
+                <ContentSection
+                    dangerouslySetInnerHTML={{ __html: webinar.content }}
+                />
             )}
 
             {webinar.webinarMain?.webinar && (
@@ -54,6 +61,7 @@ export const getStaticProps = async () => {
         props: {
             webinar: webinar.page,
         },
+        revalidate: 1,
     };
 };
 

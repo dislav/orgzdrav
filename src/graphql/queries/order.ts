@@ -3,8 +3,8 @@ import { OrderFragment, OrderProps } from '@graphql/fragments/order';
 
 export const GetOrderQuery = gql`
     ${OrderFragment}
-    query GetOrder($id: ID) {
-        order(id: $id) {
+    query GetOrder($id: ID, $idType: OrderIdTypeEnum = DATABASE_ID) {
+        order(id: $id, idType: $idType) {
             ...OrderFragment
         }
     }

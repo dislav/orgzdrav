@@ -1,5 +1,4 @@
 import { ViewerProps } from '@graphql/fragments/viewer';
-import { ProfileState } from '@redux/profile/reducer';
 
 export const FETCH_PROFILE_REQUESTED = 'FETCH_PROFILE_REQUESTED';
 export const FETCH_PROFILE_SUCCEEDED = 'FETCH_PROFILE_SUCCEEDED';
@@ -24,7 +23,7 @@ interface FetchProfileFailedAction {
 
 interface SetProfileAction {
     type: typeof SET_PROFILE;
-    payload: ProfileState;
+    payload: ViewerProps;
 }
 
 interface ClearProfileAction {
@@ -56,7 +55,7 @@ export const fetchProfileFailed = (
     payload,
 });
 
-export const setProfile = (payload: ProfileState): SetProfileAction => ({
+export const setProfile = (payload: ViewerProps): SetProfileAction => ({
     type: SET_PROFILE,
     payload,
 });

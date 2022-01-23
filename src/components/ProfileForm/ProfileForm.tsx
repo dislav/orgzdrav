@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -8,6 +8,7 @@ import { UpdateUserInputProps } from '@graphql/mutations/updateUser';
 import { Container, Input, Button } from './ProfileForm.styled';
 import { useUpdateUserMutation } from '@hooks/useUpdateUserMutation';
 import { getProfile } from '@redux/profile/selectors';
+import { setProfile } from '@redux/profile/actions';
 
 interface IProfileForm {
     className?: string;
@@ -15,6 +16,7 @@ interface IProfileForm {
 
 const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
     const { firstName, lastName, email } = profile;
@@ -39,6 +41,8 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
 
             if (response.data?.updateUser.user) {
                 await router.push('/profile');
+
+                dispatch(setProfile(response.data.updateUser.user));
             }
         } catch (e) {
             console.log(e);

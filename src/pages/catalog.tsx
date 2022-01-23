@@ -1,25 +1,19 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
 
 import client from '@graphql/client';
-import { RootQueryToProductTypeConnectionWhereArgs } from '@graphql/graphql';
 import { GetProductsQuery, GetProductsQueryProps } from '@graphql/types';
 
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import ProductList from '@layouts/CatalogLayout/ProductList/ProductList';
 import SearchForm from '@components/SearchForm/SearchForm';
 import { setProducts } from '@redux/products/actions';
+import { useProductsQuery } from "@hooks/useProductsQuery"
 
 const Catalog: React.FC = () => {
     const dispatch = useDispatch();
 
-    const { refetch: fetchProducts } = useQuery<
-        GetProductsQueryProps,
-        { where: RootQueryToProductTypeConnectionWhereArgs }
-    >(GetProductsQuery, {
-        skip: true,
-    });
+    const { refetch: fetchProducts } = useProductsQuery({ skip: true });
 
     const onSearch = useCallback(
         async (search: string) => {

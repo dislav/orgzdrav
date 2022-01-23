@@ -14,6 +14,8 @@ import { fetchProfile } from '@redux/profile/actions';
 import { getToken } from '@graphql/utils';
 import { fetchOrders } from '@redux/orders/actions';
 import { getIsCartLoaded } from '@redux/cart/selectors';
+import { getIsOrdersLoaded } from '@redux/orders/selectors';
+import { getIsProfileLoaded } from '@redux/profile/selectors';
 
 export interface ILayout {
     className?: string;
@@ -34,13 +36,15 @@ const Layout: React.FC<ILayout> = ({
     const dispatch = useDispatch();
 
     const isCartLoaded = useSelector(getIsCartLoaded);
+    const isProfileLoaded = useSelector(getIsProfileLoaded);
+    const isOrdersLoaded = useSelector(getIsOrdersLoaded);
 
     useEffect(() => {
         if (!isCartLoaded) dispatch(fetchCart());
 
         if (getToken()) {
-            dispatch(fetchProfile());
-            dispatch(fetchOrders());
+            if (!isProfileLoaded) dispatch(fetchProfile());
+            if (!isOrdersLoaded) dispatch(fetchOrders());
         }
     }, [dispatch]);
 

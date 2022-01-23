@@ -15,6 +15,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             meta={{
                 title: 'Блог',
             }}
+            hideFooter
         >
             <BlogList posts={posts} />
         </BlogLayout>
@@ -31,6 +32,7 @@ export const getStaticProps = async () => {
         props: {
             posts: posts.posts.nodes,
         },
+        revalidate: 1,
     };
 };
 

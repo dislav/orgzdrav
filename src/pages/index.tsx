@@ -160,6 +160,7 @@ export const getStaticProps = async () => {
             partners: partners.partners.nodes,
             reviews: reviews.peopleReviews.nodes,
         },
+        revalidate: 1,
     };
 };
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 import { rgba } from 'polished';
 
 import ButtonComponent from '@components/Button/Button';
@@ -6,20 +7,12 @@ import ButtonComponent from '@components/Button/Button';
 export const Container = styled.a`
     display: flex;
     flex-direction: column;
-
-    h2 {
-        color: ${({ theme }) => rgba(theme.colors.white, 0.6)};
-        font-size: 14px;
-        line-height: 1.4;
-        margin-bottom: 6px;
-    }
 `;
 
 export const ImageWrapper = styled.div`
     position: relative;
     padding-top: 100%;
-    margin-bottom: 12px;
-    border-radius: 4px;
+    border-radius: 4px 4px 0 0;
     overflow: hidden;
 
     &:after {
@@ -40,17 +33,52 @@ export const ImageWrapper = styled.div`
     }
 `;
 
-export const Button = styled(ButtonComponent)`
-    && {
-        height: 40px;
-        margin-top: auto;
+export const Footer = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.white};
+    border-radius: 0 0 4px 4px;
+    padding: 8px;
+
+    ${up('md')} {
+        padding: 14px;
+    }
+
+    & > h2 {
+        width: 100%;
+        color: ${({ theme }) => theme.colors.primary};
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 20px;
+
+        ${up('md')} {
+            font-size: 16px;
+        }
     }
 `;
 
-export const Price = styled.span`
-    color: ${({ theme }) => theme.colors.white};
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 700;
-    margin-bottom: 20px;
+export const FooterWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+
+    ${up('md')} {
+        align-items: center;
+        flex-direction: row;
+    }
+`;
+
+export const Button = styled(ButtonComponent)`
+    && {
+        height: 46px;
+        margin-top: 10px;
+
+        ${up('md')} {
+            margin-left: auto;
+            margin-top: 0;
+        }
+    }
 `;

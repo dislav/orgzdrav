@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UnpackNestedValue } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Switch, FormControlLabel, Tooltip } from '@mui/material';
@@ -18,6 +18,7 @@ import { useAuth } from '@hooks/useAuth';
 import { useConfig } from '@context/configProvider';
 import { getCartTotalPrice } from '@redux/cart/selectors';
 import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
+import { addOrder } from '@redux/orders/actions';
 
 interface ICheckoutForm {
     className?: string;
@@ -25,6 +26,7 @@ interface ICheckoutForm {
 
 const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
     const isLoggedIn = useSelector(getIsLoggedIn);
@@ -62,8 +64,10 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
 
                 if (response.data?.checkout.result === 'success') {
                     await router.push(
-                        `/orders/${response.data.checkout.order.id}`
+                        `/order-success/${response.data.checkout.order.databaseId}`
                     );
+
+                    dispatch(addOrder(response.data.checkout.order));
 
                     if (user) {
                         await router.reload();
@@ -73,7 +77,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 console.log(e);
             }
         },
-        [profile, checkout, router]
+        [profile, router, checkout, dispatch]
     );
 
     const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
