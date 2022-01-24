@@ -51,6 +51,7 @@ export const getStaticProps = async () => {
             where: {
                 orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
                 category?: string;
+                categoryNotIn?: string;
             };
             first: number;
         }>
@@ -65,7 +66,7 @@ export const getStaticProps = async () => {
                         order: 'ASC',
                     },
                 ],
-                category: 'dokumenty',
+                categoryNotIn: 'vebinary',
             },
             first: 100,
         },
