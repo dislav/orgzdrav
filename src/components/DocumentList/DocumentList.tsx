@@ -39,11 +39,11 @@ const DocumentList: React.FC<IDocumentList> = ({ className, documents }) => {
             setIsLoading(true);
 
             try {
-                const { data } = await fetchDocument({ id: slug });
+                const response = await fetchDocument({ id: slug });
 
-                if (data.document?.documentMain?.file?.mediaItemUrl)
+                if (response.data?.document?.documentMain?.file?.mediaItemUrl)
                     await router.push(
-                        data.document.documentMain.file.mediaItemUrl
+                        response.data.document.documentMain.file.mediaItemUrl
                     );
             } catch (e) {
                 console.log(e);
