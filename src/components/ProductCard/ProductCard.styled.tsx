@@ -11,7 +11,7 @@ export const Container = styled.a`
 
 export const ImageWrapper = styled.div`
     position: relative;
-    padding-top: 100%;
+    padding-top: 36%;
     border-radius: 4px 4px 0 0;
     overflow: hidden;
 

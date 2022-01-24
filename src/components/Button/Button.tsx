@@ -4,7 +4,7 @@ import { ButtonProps } from '@mui/material';
 import { Container } from './Button.styled';
 import Spinner from '@components/Spinner/Spinner';
 
-interface IButton extends ButtonProps {
+export interface IButton extends ButtonProps {
     className?: string;
     icon?: React.ReactNode;
     isLoading?: boolean;

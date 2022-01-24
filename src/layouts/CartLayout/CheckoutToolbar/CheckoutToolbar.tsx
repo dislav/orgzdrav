@@ -1,23 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UnpackNestedValue } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 
 import { ViewerProps } from '@graphql/fragments/viewer';
-import { LoginMutationOptions } from '@graphql/mutations/login';
-import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
 
-import { Container, Button, Wrapper } from './CheckoutToolbar.styled';
-import Modal from '@components/Modal/Modal';
-import AuthForm from '@components/AuthForm/AuthForm';
+import { Container, Wrapper, AuthButton } from './CheckoutToolbar.styled';
 
 import { useCheckoutMutation } from '@hooks/useCheckoutMutation';
-import { useTogglable } from '@hooks/useTogglable';
-import { useAuth } from '@hooks/useAuth';
 import { useConfig } from '@context/configProvider';
 import { getCartTotalPrice } from '@redux/cart/selectors';
-import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
+import { getProfile } from '@redux/profile/selectors';
 import { addOrder } from '@redux/orders/actions';
 
 interface ICheckoutForm {
@@ -29,10 +22,6 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
-    const isLoggedIn = useSelector(getIsLoggedIn);
-
-    const { isOpen, onOpen, onClose } = useTogglable();
-    const { onLogin, onRegister } = useAuth();
 
     const [isEntity, setIsEntity] = useState(false);
 
@@ -80,23 +69,8 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
         [profile, router, checkout, dispatch]
     );
 
-    const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
-        onLogin(data, onSubmitOrder);
-
-    const onRegisterHandler = (
-        data: UnpackNestedValue<RegisterUserMutationInputs>
-    ) => onRegister(data);
-
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsEntity(e.target.checked);
-    };
-
-    const onClick = () => {
-        if (isLoggedIn) {
-            onSubmitOrder();
-        } else {
-            onOpen();
-        }
     };
 
     return (
@@ -115,21 +89,15 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                     />
                 </Tooltip>
 
-                <Button
+                <AuthButton
+                    onClick={onSubmitOrder}
+                    onSuccessAuth={onSubmitOrder}
                     isLoading={loading}
                     disabled={isUnavailablePrice}
-                    onClick={onClick}
                 >
                     Оформить заказ
-                </Button>
+                </AuthButton>
             </Wrapper>
-
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <AuthForm
-                    onLogin={onLoginHandler}
-                    onRegister={onRegisterHandler}
-                />
-            </Modal>
         </Container>
     );
 };

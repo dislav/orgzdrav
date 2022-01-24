@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
 import {
     GetProductsQuery,
@@ -10,10 +10,26 @@ import { QueryHookOptions } from '@apollo/client/react/types/types';
 export const useProductsQuery = (
     options?: QueryHookOptions<
         GetProductsQueryProps,
-        { where: RootQueryToProductTypeConnectionWhereArgs }
+        Partial<{
+            where: {
+                search?: string;
+                orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
+                category?: string;
+                categoryNotIn?: string;
+            };
+            first: number;
+        }>
     >
 ) =>
-    useQuery<
+    useLazyQuery<
         GetProductsQueryProps,
-        { where: RootQueryToProductTypeConnectionWhereArgs }
+        Partial<{
+            where: {
+                search?: string;
+                orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
+                category?: string;
+                categoryNotIn?: string;
+            };
+            first: number;
+        }>
     >(GetProductsQuery, options);

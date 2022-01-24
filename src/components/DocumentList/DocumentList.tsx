@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { DocumentProps } from '@graphql/queries/documents';
@@ -7,16 +6,12 @@ import { DocumentProps } from '@graphql/queries/documents';
 import {
     Container,
     Document,
-    Button,
     DocumentContent,
     DocumentDescription,
+    AuthButton,
 } from './DocumentList.styled';
-import Modal from '@components/Modal/Modal';
-import AuthModal from '@components/Header/AuthModal/AuthModal';
 
 import { useDocumentQuery } from '@hooks/useDocumentQuery';
-import { useTogglable } from '@hooks/useTogglable';
-import { getIsLoggedIn } from '@redux/profile/selectors';
 
 interface IDocumentList {
     className?: string;
@@ -26,41 +21,27 @@ interface IDocumentList {
 const DocumentList: React.FC<IDocumentList> = ({ className, documents }) => {
     const router = useRouter();
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    const isLoggedIn = useSelector(getIsLoggedIn);
-
-    const { isOpen, onOpen, onClose } = useTogglable();
-
-    const { refetch: fetchDocument } = useDocumentQuery({ skip: true });
+    const [fetchDocument, { loading }] = useDocumentQuery({ skip: true });
 
     const onDownload = useCallback(
         async (slug: string) => {
-            setIsLoading(true);
-
             try {
-                const response = await fetchDocument({ id: slug });
+                const { data } = await fetchDocument({
+                    variables: { id: slug },
+                });
 
-                if (response.data?.document?.documentMain?.file?.mediaItemUrl)
+                if (data?.document?.documentMain?.file?.mediaItemUrl)
                     await router.push(
-                        response.data.document.documentMain.file.mediaItemUrl
+                        data.document.documentMain.file.mediaItemUrl
                     );
             } catch (e) {
                 console.log(e);
-            } finally {
-                setIsLoading(false);
             }
         },
         [fetchDocument, router]
     );
 
-    const onDownloadHandler = (slug: string) => () => {
-        if (isLoggedIn) {
-            onDownload(slug);
-        } else {
-            onOpen();
-        }
-    };
+    const onDownloadHandler = (slug: string) => () => onDownload(slug);
 
     const getFileSize = (size: number) => (size / 1024).toFixed();
 
@@ -77,19 +58,16 @@ const DocumentList: React.FC<IDocumentList> = ({ className, documents }) => {
                         />
                     </DocumentContent>
 
-                    <Button
-                        isLoading={isLoading}
+                    <AuthButton
                         onClick={onDownloadHandler(document.slug)}
+                        onSuccessAuth={router.reload}
+                        isLoading={loading}
                     >
                         Скачать (
                         {getFileSize(document.documentMain.file.fileSize)} Кб)
-                    </Button>
+                    </AuthButton>
                 </Document>
             ))}
-
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <AuthModal />
-            </Modal>
         </Container>
     );
 };

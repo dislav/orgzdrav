@@ -21,7 +21,7 @@ export const GetDocumentQuery = gql`
 
 export interface GetDocumentQueryVariables {
     id: string;
-    idType: string;
+    idType?: string;
 }
 
 export interface GetDocumentQueryProps {

@@ -10,7 +10,7 @@ import { InferGetStaticPropsType } from 'next';
 import Layout from '@components/Layout/Layout';
 import DocumentList from '@components/DocumentList/DocumentList';
 
-const Documents: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const Information: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     documents,
 }) => {
     return (
@@ -42,4 +42,4 @@ export const getStaticProps = async () => {
     };
 };
 
-export default Documents;
+export default Information;

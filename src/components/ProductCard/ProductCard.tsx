@@ -57,7 +57,12 @@ const ProductCard: React.FC<SimpleProductProps> = ({
             <Container>
                 {image?.sourceUrl && (
                     <ImageWrapper>
-                        <Image src={image.sourceUrl} alt={name} layout="fill" />
+                        <Image
+                            src={image.sourceUrl}
+                            alt={name}
+                            layout="fill"
+                            objectFit="cover"
+                        />
                     </ImageWrapper>
                 )}
 
@@ -73,7 +78,7 @@ const ProductCard: React.FC<SimpleProductProps> = ({
                         )}
 
                         <Button onClick={onClickHandler} isLoading={isLoading}>
-                            {!productKey ? 'В корзину' : 'Убрать из корзины'}
+                            {!productKey ? 'В корзину' : 'Добавлено'}
                         </Button>
                     </FooterWrapper>
                 </Footer>

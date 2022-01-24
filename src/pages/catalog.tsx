@@ -8,22 +8,34 @@ import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import ProductList from '@layouts/CatalogLayout/ProductList/ProductList';
 import SearchForm from '@components/SearchForm/SearchForm';
 import { setProducts } from '@redux/products/actions';
-import { useProductsQuery } from "@hooks/useProductsQuery"
+import { useProductsQuery } from '@hooks/useProductsQuery';
 
 const Catalog: React.FC = () => {
     const dispatch = useDispatch();
 
-    const { refetch: fetchProducts } = useProductsQuery({ skip: true });
+    const [fetchProducts] = useProductsQuery();
 
     const onSearch = useCallback(
         async (search: string) => {
             try {
-                const response = await fetchProducts({ where: { search } });
+                const { data } = await fetchProducts({
+                    variables: {
+                        where: {
+                            search,
+                            orderby: [
+                                {
+                                    field: 'MENU_ORDER',
+                                    order: 'ASC',
+                                },
+                            ],
+                            categoryNotIn: 'vebinary',
+                        },
+                        first: 100,
+                    },
+                });
 
-                console.log(response);
-
-                if (response?.data?.products)
-                    dispatch(setProducts(response.data.products.nodes));
+                if (data?.products?.nodes)
+                    dispatch(setProducts(data.products.nodes));
             } catch (e) {
                 console.log(e);
             }
@@ -38,7 +50,7 @@ const Catalog: React.FC = () => {
             }}
             hideFooter
         >
-            {/*<SearchForm onChange={onSearch} />*/}
+            <SearchForm onChange={onSearch} />
             <ProductList />
         </CatalogLayout>
     );

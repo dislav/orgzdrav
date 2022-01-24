@@ -9,7 +9,7 @@ export const productsReducer = (
 ): SimpleProductProps[] => {
     switch (action.type) {
         case SET_PRODUCTS:
-            return { ...state, ...action.payload };
+            return action.payload;
         default:
             return state;
     }

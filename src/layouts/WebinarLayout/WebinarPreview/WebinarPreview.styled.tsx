@@ -3,7 +3,7 @@ import { up } from 'styled-breakpoints';
 import { Skeleton as SkeletonComponent } from '@mui/material';
 
 import { Container as StyledWebinarTime } from '@layouts/WebinarLayout/WebinarTime/WebinarTime.styled';
-import ButtonComponent from '@components/Button/Button';
+import AuthButtonComponent from '@components/AuthButton/AuthButton';
 
 export const Container = styled.div`
     display: flex;
@@ -50,7 +50,7 @@ export const Footer = styled.div`
     }
 `;
 
-export const Button = styled(ButtonComponent)`
+export const AuthButton = styled(AuthButtonComponent)`
     && {
         height: 40px;
 

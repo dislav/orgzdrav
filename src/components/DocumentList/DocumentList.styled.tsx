@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { up } from 'styled-breakpoints';
 
-import ButtonComponent from '@components/Button/Button';
+import AuthButtonComponent from '@components/AuthButton/AuthButton';
 
 export const Container = styled.div`
     display: grid;
@@ -33,7 +33,7 @@ export const DocumentDescription = styled.div`
     margin-top: 10px;
 `;
 
-export const Button = styled(ButtonComponent)`
+export const AuthButton = styled(AuthButtonComponent)`
     && {
         height: 40px;
     }

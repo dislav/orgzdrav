@@ -28,12 +28,16 @@ const defaultConfig: IConfig = {
                 href: '/blog',
             },
             {
-                title: 'Документы',
-                href: '/documents',
+                title: 'Информация',
+                href: '/information',
             },
             {
-                title: 'Запись на вебинар',
+                title: 'Вебинары',
                 href: '/webinar',
+            },
+            {
+                title: 'Семинары',
+                href: '/seminars',
             },
         ],
     },

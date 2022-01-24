@@ -7,6 +7,6 @@ export const Container = styled.div`
     gap: 20px;
 
     ${up('xl')} {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { Container } from './SearchForm.styled';
+import { Container as Input } from '@components/Input/Input.styled';
 
 interface ISearchForm {
     className?: string;
@@ -18,7 +19,13 @@ const SearchForm: React.FC<ISearchForm> = ({ className, onChange }) => {
 
     return (
         <Container className={className}>
-            <input name="search" onChange={onChangeHandler} />
+            <Input>
+                <input
+                    name="search"
+                    onChange={onChangeHandler}
+                    placeholder="Поиск"
+                />
+            </Input>
         </Container>
     );
 };

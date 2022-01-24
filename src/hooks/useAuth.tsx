@@ -15,7 +15,7 @@ export const useAuth = () => {
     const onLogin = useCallback(
         async (
             data: UnpackNestedValue<LoginMutationOptions>,
-            onSubmit?: (user?: ViewerProps) => Promise<void>
+            onSubmit?: (user: ViewerProps) => Promise<void> | void
         ) => {
             try {
                 const response = await login({ variables: data });
@@ -47,7 +47,7 @@ export const useAuth = () => {
     const onRegister = useCallback(
         async (
             data: UnpackNestedValue<RegisterUserMutationInputs>,
-            onSubmit?: (user?: ViewerProps) => Promise<void>
+            onSubmit?: (user: ViewerProps) => Promise<void> | void
         ) => {
             try {
                 const { confirmPassword, ...input } = data;
@@ -62,7 +62,7 @@ export const useAuth = () => {
                         response.data.registerUser.user.jwtAuthToken
                     );
 
-                    await onSubmit?.(response.data?.registerUser.user);
+                    await onSubmit?.(response.data.registerUser.user);
 
                     return response;
                 }

@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import {
@@ -10,29 +11,24 @@ import {
     SandwichIcon,
     SandwichModal,
 } from './Header.styled';
-import Modal from '@components/Modal/Modal';
 import Profile from '@components/Profile/Profile';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
-import AuthModal from '@components/Header/AuthModal/AuthModal';
+import AuthButton from '@components/AuthButton/AuthButton';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 
 import { useConfig } from '@context/configProvider';
 import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
+import { useTogglable } from '@hooks/useTogglable';
 
 const Header: React.FC = () => {
+    const router = useRouter();
+
     const links = useConfig().header.links;
 
     const profile = useSelector(getProfile);
     const isLoggedIn = useSelector(getIsLoggedIn);
 
-    const [isLoginModal, setIsLoginModal] = useState(false);
-    const [isMobileMenu, setIsMobileMenu] = useState(false);
-
-    const openLoginModal = () => setIsLoginModal(true);
-    const closeLoginModal = () => setIsLoginModal(false);
-
-    const openMobileMenu = () => setIsMobileMenu(true);
-    const closeMobileMenu = () => setIsMobileMenu(false);
+    const { isOpen, onOpen, onClose } = useTogglable();
 
     const renderLinks = useCallback(
         () =>
@@ -54,25 +50,26 @@ const Header: React.FC = () => {
                         {isLoggedIn ? (
                             <Profile {...profile} />
                         ) : (
-                            <Login onClick={openLoginModal}>
-                                Войти / Зарегистрироваться
-                            </Login>
+                            <AuthButton
+                                onSuccessAuth={router.reload}
+                                renderButton={(onClick) => (
+                                    <Login onClick={onClick}>
+                                        Войти / Зарегистрироваться
+                                    </Login>
+                                )}
+                            />
                         )}
                     </ClientOnly>
                 </Links>
 
-                <SandwichIcon onClick={openMobileMenu}>
+                <SandwichIcon onClick={onOpen}>
                     <span />
                 </SandwichIcon>
             </Wrapper>
 
-            <SandwichModal isOpen={isMobileMenu} onClose={closeMobileMenu}>
+            <SandwichModal isOpen={isOpen} onClose={onClose}>
                 <MobileMenu profile={profile}>{renderLinks()}</MobileMenu>
             </SandwichModal>
-
-            <Modal isOpen={isLoginModal} onClose={closeLoginModal}>
-                <AuthModal />
-            </Modal>
         </Container>
     );
 };

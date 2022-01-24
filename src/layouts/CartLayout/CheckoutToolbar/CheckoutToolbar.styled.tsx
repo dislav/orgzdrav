@@ -1,14 +1,6 @@
 import styled from 'styled-components';
-import { up } from 'styled-breakpoints';
 
-import ButtonComponent from '@components/Button/Button';
-
-export const Button = styled(ButtonComponent)`
-    && {
-        height: 48px;
-        margin-left: auto;
-    }
-`;
+import AuthButtonComponent from '@components/AuthButton/AuthButton';
 
 export const Container = styled.div`
     position: fixed;
@@ -24,4 +16,11 @@ export const Wrapper = styled.div`
     align-items: center;
     max-width: 1100px;
     margin: 0 auto;
+`;
+
+export const AuthButton = styled(AuthButtonComponent)`
+    && {
+        height: 48px;
+        margin-left: auto;
+    }
 `;

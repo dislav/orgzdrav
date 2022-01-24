@@ -1,34 +1,27 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UnpackNestedValue } from 'react-hook-form';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import dayjs from 'dayjs';
 
 import { ViewerProps } from '@graphql/fragments/viewer';
-import { LoginMutationOptions } from '@graphql/mutations/login';
 import { WebinarProps } from '@graphql/queries/webinar';
 import { OrderStatusEnum } from '@graphql/fragments/order';
-import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
 
 import {
     Container,
     ImageWrapper,
     Footer,
-    Button,
+    AuthButton,
     Skeleton,
 } from './WebinarPreview.styled';
-import ClientOnly from '@components/ClientOnly/ClientOnly';
 import WebinarTime from '@layouts/WebinarLayout/WebinarTime/WebinarTime';
-import AuthForm from '@components/AuthForm/AuthForm';
-import Modal from '@components/Modal/Modal';
+import ClientOnly from '@components/ClientOnly/ClientOnly';
 
-import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
+import { getProfile } from '@redux/profile/selectors';
 import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';
-import { useAuth } from '@hooks/useAuth';
-import { useTogglable } from '@hooks/useTogglable';
 import { addOrder } from '@redux/orders/actions';
-import { useOrdersQuery } from '@hooks/useOrdersQuery';
+import { useOrderLazyQuery } from '@hooks/useOrdersQuery';
 import { useCreateOrderMutation } from '@hooks/useCreateOrderMutation';
 
 interface IWebinarPreview {
@@ -46,7 +39,6 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
     const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
-    const isLoggedIn = useSelector(getIsLoggedIn);
     const isOrdersLoading = useSelector(getIsOrdersLoading);
 
     const orders = useSelector(getOrders);
@@ -59,11 +51,7 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
         );
     }, [webinar.webinar, orders]);
 
-    const { onLogin, onRegister, isLoading } = useAuth();
-    const { isOpen, onOpen, onClose } = useTogglable();
-
-    const { refetch: fetchOrders } = useOrdersQuery();
-
+    const [fetchOrders, { loading: ordersLoading }] = useOrderLazyQuery();
     const [createOrder, { loading }] = useCreateOrderMutation();
 
     const onSubmitOrder = useCallback(
@@ -118,21 +106,6 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
         [router, profile, webinar, createOrder, fetchOrders, dispatch]
     );
 
-    const onClick = useCallback(() => {
-        if (isLoggedIn) {
-            onSubmitOrder();
-        } else {
-            onOpen();
-        }
-    }, [isLoggedIn, onSubmitOrder, onOpen]);
-
-    const onLoginHandler = (data: UnpackNestedValue<LoginMutationOptions>) =>
-        onLogin(data, onSubmitOrder);
-
-    const onRegisterHandler = (
-        data: UnpackNestedValue<RegisterUserMutationInputs>
-    ) => onRegister(data, onSubmitOrder);
-
     const showTime = dayjs(webinar.time).isAfter(dayjs());
 
     return (
@@ -154,25 +127,19 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
                     {isOrdersLoading ? (
                         <Skeleton variant="rectangular" />
                     ) : (
-                        <Button
-                            onClick={onClick}
-                            isLoading={isLoading || loading}
+                        <AuthButton
+                            onClick={onSubmitOrder}
+                            onSuccessAuth={onSubmitOrder}
+                            isLoading={loading || ordersLoading}
                             disabled={!showTime || isRecordedOnWebinar}
                         >
                             {isRecordedOnWebinar
                                 ? 'Успешно записаны'
                                 : 'Записаться'}
-                        </Button>
+                        </AuthButton>
                     )}
                 </ClientOnly>
             </Footer>
-
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <AuthForm
-                    onLogin={onLoginHandler}
-                    onRegister={onRegisterHandler}
-                />
-            </Modal>
         </Container>
     );
 };

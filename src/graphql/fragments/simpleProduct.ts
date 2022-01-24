@@ -20,12 +20,19 @@ export const SimpleProductFragment = gql`
             }
         }
         productAdditional {
+            mail
             content {
                 ... on Product_Productadditional_Content_SectionText {
                     title
                     text
                     fieldGroupName
                 }
+            }
+        }
+        productCategories {
+            nodes {
+                slug
+                name
             }
         }
     }
@@ -53,8 +60,13 @@ export interface SimpleProductProps {
         }[];
     };
     productAdditional: {
+        mail: string;
         content: WithFieldGroupName<CommonComponentsProps>[];
-        hasAdditionalOptions: boolean;
-        options: Maybe<ProductOption[]>;
+    };
+    productCategories: {
+        nodes: {
+            slug: string;
+            name: string;
+        }[];
     };
 }
