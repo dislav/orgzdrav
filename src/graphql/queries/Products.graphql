@@ -1,0 +1,9 @@
+#import "../fragments/SimpleProduct.graphql"
+
+query GetProducts($first: Int, $where: RootQueryToProductConnectionWhereArgs) {
+    products(first: $first, where: $where) {
+        nodes {
+            ...SimpleProduct
+        }
+    }
+}

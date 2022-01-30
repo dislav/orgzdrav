@@ -2,13 +2,11 @@ import React, { useCallback } from 'react';
 import { UnpackNestedValue } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { LoginMutationOptions } from '@graphql/mutations/login';
-import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
-import { ViewerProps } from '@graphql/fragments/viewer';
+import { ViewerFragment, LoginInput } from '@graphql';
+import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
+import { Modal, AuthForm } from './AuthButton.styled';
 import Button, { IButton } from '@components/Button/Button';
-import Modal from '@components/Modal/Modal';
-import AuthForm from '@components/AuthForm/AuthForm';
 
 import { useTogglable } from '@hooks/useTogglable';
 import { getIsLoggedIn } from '@redux/profile/selectors';
@@ -16,7 +14,7 @@ import { useAuth } from '@hooks/useAuth';
 
 interface IAuthButton extends IButton {
     renderButton?: (onClick?: React.DispatchWithoutAction) => React.ReactNode;
-    onSuccessAuth?: (user: ViewerProps) => Promise<void> | void;
+    onSuccessAuth?: (user: ViewerFragment) => Promise<void> | void;
     onClick?: React.DispatchWithoutAction;
 }
 
@@ -31,7 +29,12 @@ const AuthButton: React.FC<IAuthButton> = ({
     const isLoggedIn = useSelector(getIsLoggedIn);
 
     const { isOpen, onOpen, onClose } = useTogglable();
-    const { onLogin, onRegister, isLoading: loading } = useAuth();
+    const {
+        onLogin,
+        onRegister,
+        onPasswordReset,
+        isLoading: loading,
+    } = useAuth();
 
     const onClickHandler = useCallback(() => {
         if (isLoggedIn) {
@@ -42,7 +45,7 @@ const AuthButton: React.FC<IAuthButton> = ({
     }, [isLoggedIn, onClick, onOpen]);
 
     const onSuccessHandler = useCallback(
-        (user: ViewerProps) => {
+        (user: ViewerFragment) => {
             onClose();
 
             return onSuccessAuth?.(user);
@@ -51,13 +54,13 @@ const AuthButton: React.FC<IAuthButton> = ({
     );
 
     const onLoginHandler = useCallback(
-        (data: UnpackNestedValue<LoginMutationOptions>) =>
+        (data: UnpackNestedValue<LoginInput>) =>
             onLogin(data, onSuccessHandler),
         [onLogin, onSuccessHandler]
     );
 
     const onRegisterHandler = useCallback(
-        (data: UnpackNestedValue<RegisterUserMutationInputs>) =>
+        (data: UnpackNestedValue<RegisterUserInputProps>) =>
             onRegister(data, onSuccessHandler),
         [onRegister, onSuccessHandler]
     );
@@ -80,6 +83,7 @@ const AuthButton: React.FC<IAuthButton> = ({
                 <AuthForm
                     onLogin={onLoginHandler}
                     onRegister={onRegisterHandler}
+                    onRestore={onPasswordReset}
                 />
             </Modal>
         </>

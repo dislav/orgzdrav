@@ -1,0 +1,10 @@
+#import "../fragments/Viewer.graphql"
+
+mutation RegisterUser($input: RegisterUserInput!) {
+    registerUser(input: $input) {
+        user {
+            ...Viewer
+            jwtAuthToken
+        }
+    }
+}

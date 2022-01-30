@@ -1,0 +1,10 @@
+#import "../fragments/Order.graphql"
+
+mutation Checkout($input: CheckoutInput!) {
+    checkout(input: $input) {
+        result
+        order {
+            ...Order
+        }
+    }
+}

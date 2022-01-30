@@ -1,0 +1,10 @@
+#import "./ProductDownload.graphql"
+
+fragment DownloadableItem on DownloadableItem {
+    name
+    accessExpires
+    url
+    download {
+        ...ProductDownload
+    }
+}

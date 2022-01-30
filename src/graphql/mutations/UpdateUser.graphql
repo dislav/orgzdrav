@@ -1,0 +1,9 @@
+#import "../fragments/Viewer.graphql"
+
+mutation updateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+        user {
+            ...Viewer
+        }
+    }
+}

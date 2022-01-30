@@ -1,0 +1,6 @@
+fragment Picture on MediaItem {
+    sourceUrl
+    fileSize
+    mimeType
+    altText
+}

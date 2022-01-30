@@ -2,19 +2,20 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { ApolloError, ApolloQueryResult } from '@apollo/client';
 
 import client from '@graphql/client';
+import { GetCartDocument, GetCartQuery } from '@graphql';
+
 import {
     CART_FETCH_REQUESTED,
     fetchCartFailed,
     fetchCartSucceeded,
 } from '@redux/cart/actions';
-import { GetCartQuery, GetCartQueryProps } from '@graphql/queries/cart';
 
 function* fetchCart() {
     try {
-        const { data }: ApolloQueryResult<GetCartQueryProps> = yield call(
+        const { data }: ApolloQueryResult<GetCartQuery> = yield call(
             client.query,
             {
-                query: GetCartQuery,
+                query: GetCartDocument,
             }
         );
 

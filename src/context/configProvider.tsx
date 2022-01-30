@@ -33,7 +33,7 @@ const defaultConfig: IConfig = {
             },
             {
                 title: 'Вебинары',
-                href: '/webinar',
+                href: '/webinars',
             },
             {
                 title: 'Семинары',

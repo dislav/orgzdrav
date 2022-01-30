@@ -1,0 +1,9 @@
+#import "../fragment/Order.graphql"
+
+query GetOrders {
+    orders {
+        nodes {
+            ...Order
+        }
+    }
+}

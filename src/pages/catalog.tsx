@@ -1,19 +1,29 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import client from '@graphql/client';
-import { GetProductsQuery, GetProductsQueryProps } from '@graphql/types';
+import {
+    GetProductsDocument,
+    GetProductsQuery,
+    GetProductsQueryVariables,
+    OrderEnum,
+    ProductsOrderByEnum,
+    useGetProductsLazyQuery,
+} from '@graphql';
 
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
-import ProductList from '@layouts/CatalogLayout/ProductList/ProductList';
+import ProductList from '@components/ProductList/ProductList';
 import SearchForm from '@components/SearchForm/SearchForm';
+
 import { setProducts } from '@redux/products/actions';
-import { useProductsQuery } from '@hooks/useProductsQuery';
+import { getProducts } from '@redux/products/selectors';
 
 const Catalog: React.FC = () => {
     const dispatch = useDispatch();
 
-    const [fetchProducts] = useProductsQuery();
+    const products = useSelector(getProducts);
+
+    const [fetchProducts] = useGetProductsLazyQuery();
 
     const onSearch = useCallback(
         async (search: string) => {
@@ -24,11 +34,11 @@ const Catalog: React.FC = () => {
                             search,
                             orderby: [
                                 {
-                                    field: 'MENU_ORDER',
-                                    order: 'ASC',
+                                    field: ProductsOrderByEnum.MenuOrder,
+                                    order: OrderEnum.Asc,
                                 },
                             ],
-                            categoryNotIn: 'vebinary',
+                            categoryNotIn: ['vebinary'],
                         },
                         first: 100,
                     },
@@ -51,34 +61,27 @@ const Catalog: React.FC = () => {
             hideFooter
         >
             <SearchForm onChange={onSearch} />
-            <ProductList />
+            <ProductList products={products} />
         </CatalogLayout>
     );
 };
 
 export const getStaticProps = async () => {
     const { data: products } = await client.query<
-        GetProductsQueryProps,
-        Partial<{
-            where: {
-                orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
-                category?: string;
-                categoryNotIn?: string;
-            };
-            first: number;
-        }>
+        GetProductsQuery,
+        GetProductsQueryVariables
     >({
-        query: GetProductsQuery,
+        query: GetProductsDocument,
         fetchPolicy: 'no-cache',
         variables: {
             where: {
                 orderby: [
                     {
-                        field: 'MENU_ORDER',
-                        order: 'ASC',
+                        field: ProductsOrderByEnum.MenuOrder,
+                        order: OrderEnum.Asc,
                     },
                 ],
-                categoryNotIn: 'vebinary',
+                categoryNotIn: ['vebinary'],
             },
             first: 100,
         },
@@ -87,7 +90,7 @@ export const getStaticProps = async () => {
     return {
         props: {
             initialReduxState: {
-                products: products.products.nodes,
+                products: products.products?.nodes || [],
             },
         },
         revalidate: 1,

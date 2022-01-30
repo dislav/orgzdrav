@@ -2,7 +2,7 @@ import React from 'react';
 import { InferGetStaticPropsType } from 'next';
 
 import client from '@graphql/client';
-import { GetPostsQuery, GetPostsQueryProps } from '@graphql/queries/posts';
+import { GetPostsDocument, GetPostsQuery } from '@graphql';
 
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
 import BlogList from '@layouts/BlogLayout/BlogList/BlogList';
@@ -23,14 +23,14 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 };
 
 export const getStaticProps = async () => {
-    const { data: posts } = await client.query<GetPostsQueryProps>({
-        query: GetPostsQuery,
+    const { data: posts } = await client.query<GetPostsQuery>({
+        query: GetPostsDocument,
         fetchPolicy: 'no-cache',
     });
 
     return {
         props: {
-            posts: posts.posts.nodes,
+            posts: posts.posts?.nodes || [],
         },
         revalidate: 1,
     };

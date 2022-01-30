@@ -1,0 +1,9 @@
+#import "../fragments/Document.graphql"
+
+query GetDocuments($first: Int) {
+    documents(first: $first) {
+        nodes {
+            ...Document
+        }
+    }
+}

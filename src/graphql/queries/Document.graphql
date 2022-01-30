@@ -1,0 +1,13 @@
+#import "../fragments/MediaItem.graphql"
+
+query GetDocument($id: ID!, $idType: DocumentIdType = SLUG) {
+    document(id: $id, idType: $idType) {
+        ...Document
+        documentMain {
+            file {
+                ...MediaItem
+                mediaItemUrl
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+#import "../fragments/SimpleProduct.graphql"
+
+query GetProductCategories {
+    productCategories {
+        nodes {
+            slug
+            name
+            products {
+                nodes {
+                    ...SimpleProduct
+                }
+            }
+        }
+    }
+}

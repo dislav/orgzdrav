@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --config .prettierrc --write ./src/**/*"
+    "format": "prettier --config .prettierrc --write ./src/**/*",
+    "build:graphql": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.4.11",
@@ -34,6 +35,11 @@
     "use-debounce": "^7.0.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.4.0",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.2",
+    "@graphql-codegen/typescript-operations": "2.2.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.4",
     "@types/graphql": "^14.5.0",
     "@types/react": "17.0.21",
     "@types/react-dom": "^17.0.9",

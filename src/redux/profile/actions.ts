@@ -1,4 +1,4 @@
-import { ViewerProps } from '@graphql/fragments/viewer';
+import { ViewerFragment } from '@graphql';
 
 export const FETCH_PROFILE_REQUESTED = 'FETCH_PROFILE_REQUESTED';
 export const FETCH_PROFILE_SUCCEEDED = 'FETCH_PROFILE_SUCCEEDED';
@@ -13,7 +13,7 @@ interface FetchProfileRequestedAction {
 
 interface FetchProfileSucceededAction {
     type: typeof FETCH_PROFILE_SUCCEEDED;
-    payload: ViewerProps;
+    payload: ViewerFragment;
 }
 
 interface FetchProfileFailedAction {
@@ -23,7 +23,7 @@ interface FetchProfileFailedAction {
 
 interface SetProfileAction {
     type: typeof SET_PROFILE;
-    payload: ViewerProps;
+    payload: ViewerFragment;
 }
 
 interface ClearProfileAction {
@@ -42,7 +42,7 @@ export const fetchProfile = (): FetchProfileRequestedAction => ({
 });
 
 export const fetchProfileSucceeded = (
-    payload: ViewerProps
+    payload: ViewerFragment
 ): FetchProfileSucceededAction => ({
     type: FETCH_PROFILE_SUCCEEDED,
     payload,
@@ -55,7 +55,7 @@ export const fetchProfileFailed = (
     payload,
 });
 
-export const setProfile = (payload: ViewerProps): SetProfileAction => ({
+export const setProfile = (payload: ViewerFragment): SetProfileAction => ({
     type: SET_PROFILE,
     payload,
 });

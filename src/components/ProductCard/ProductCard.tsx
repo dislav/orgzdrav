@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { SimpleProductProps } from '@graphql/types';
+import { SimpleProductFragment } from '@graphql';
+
 import {
     Container,
     ImageWrapper,
@@ -16,13 +17,14 @@ import { useCart } from '@hooks/useCart';
 import { getCartProducts } from '@redux/cart/selectors';
 import Price from '@components/Price/Price';
 
-const ProductCard: React.FC<SimpleProductProps> = ({
+const ProductCard: React.FC<SimpleProductFragment> = ({
     slug,
     name,
     image,
     regularPrice,
     salePrice,
     databaseId,
+    shortDescription,
 }) => {
     const cartProducts = useSelector(getCartProducts);
 
@@ -33,7 +35,9 @@ const ProductCard: React.FC<SimpleProductProps> = ({
         if (cartProducts.length)
             return (
                 cartProducts.find(
-                    (product) => product.product.node.databaseId === databaseId
+                    (product) =>
+                        (product?.product?.node as SimpleProductFragment)
+                            .databaseId === databaseId
                 )?.key || null
             );
 
@@ -59,7 +63,7 @@ const ProductCard: React.FC<SimpleProductProps> = ({
                     <ImageWrapper>
                         <Image
                             src={image.sourceUrl}
-                            alt={name}
+                            alt={name || ''}
                             layout="fill"
                             objectFit="cover"
                         />
@@ -68,6 +72,14 @@ const ProductCard: React.FC<SimpleProductProps> = ({
 
                 <Footer>
                     <h2>{name}</h2>
+
+                    {shortDescription && (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: shortDescription,
+                            }}
+                        />
+                    )}
 
                     <FooterWrapper>
                         {regularPrice && (

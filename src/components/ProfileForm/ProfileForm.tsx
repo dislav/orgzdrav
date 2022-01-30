@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { UpdateUserInputProps } from '@graphql/mutations/updateUser';
+import { UpdateUserInput, useUpdateUserMutation } from '@graphql';
 
-import { Container, Input, Button } from './ProfileForm.styled';
-import { useUpdateUserMutation } from '@hooks/useUpdateUserMutation';
+import { Container, Input, Footer, Button } from './ProfileForm.styled';
 import { getProfile } from '@redux/profile/selectors';
 import { setProfile } from '@redux/profile/actions';
 
@@ -19,9 +18,9 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
     const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
-    const { firstName, lastName, email } = profile;
+    const { id, firstName, lastName, email } = profile;
 
-    const { handleSubmit, register } = useForm<UpdateUserInputProps['input']>({
+    const { handleSubmit, control } = useForm<UpdateUserInput>({
         defaultValues: {
             firstName,
             lastName,
@@ -31,15 +30,13 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
 
     const [updateUser, { loading }] = useUpdateUserMutation();
 
-    const onSubmit: SubmitHandler<UpdateUserInputProps['input']> = async (
-        data
-    ) => {
+    const onSubmit: SubmitHandler<UpdateUserInput> = async (data) => {
         try {
             const response = await updateUser({
-                variables: { input: { ...data, id: profile.id } },
+                variables: { input: { ...data, id } },
             });
 
-            if (response.data?.updateUser.user) {
+            if (response.data?.updateUser?.user) {
                 await router.push('/profile');
 
                 dispatch(setProfile(response.data.updateUser.user));
@@ -51,15 +48,17 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
 
     return (
         <Container className={className} onSubmit={handleSubmit(onSubmit)}>
-            <Input label="Имя" name="firstName" register={register} />
-            <Input label="Фамилия" name="lastName" register={register} />
-            <Input label="E-mail" name="email" register={register} />
+            <Input label="Имя" name="firstName" control={control} />
+            <Input label="Фамилия" name="lastName" control={control} />
+            <Input label="E-mail" name="email" control={control} />
 
-            <Button onClick={() => router.push('/profile')}>Назад</Button>
+            <Footer>
+                <Button onClick={() => router.push('/profile')}>Назад</Button>
 
-            <Button type="submit" isLoading={loading}>
-                Сохранить
-            </Button>
+                <Button type="submit" isLoading={loading}>
+                    Сохранить
+                </Button>
+            </Footer>
         </Container>
     );
 };

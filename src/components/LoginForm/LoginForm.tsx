@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { LoginMutationOptions } from '@graphql/mutations/login';
+import { LoginInput } from '@graphql';
 import { AuthType } from '@components/AuthForm/AuthForm';
 
-import { Container, Input, Button } from './LoginForm.styled';
-import FormErrors from '@components/FormErrors/FormErrors';
+import {
+    Container,
+    Input,
+    FormErrors,
+    Footer,
+    Button, Link,
+} from "./LoginForm.styled"
 
 interface ILoginForm {
     setType: (type: AuthType) => void;
-    onSubmit: SubmitHandler<LoginMutationOptions>;
+    onSubmit: SubmitHandler<LoginInput>;
 }
 
 const LoginForm: React.FC<ILoginForm> = ({ setType, onSubmit }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm<LoginMutationOptions>();
+    const { handleSubmit, control } = useForm<LoginInput>();
 
-    const onSubmitHandler: SubmitHandler<LoginMutationOptions> = async (
-        data
-    ) => {
+    const onSubmitHandler: SubmitHandler<LoginInput> = async (data) => {
         setIsLoading(true);
         setErrorMessages([]);
 
@@ -47,38 +46,42 @@ const LoginForm: React.FC<ILoginForm> = ({ setType, onSubmit }) => {
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
             <Input
                 name="username"
-                placeholder="Имя пользователя"
-                register={register}
-                options={{
+                label="Имя пользователя"
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                 }}
-                error={errors?.['username']?.message}
             />
             <Input
                 name="password"
                 type="password"
-                placeholder="Пароль"
-                register={register}
-                options={{
+                label="Пароль"
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                 }}
-                error={errors?.['password']?.message}
             />
 
             {errorMessages?.length > 0 && (
                 <FormErrors messages={errorMessages} />
             )}
 
-            <Button type="submit" isLoading={isLoading}>
-                Войти
-            </Button>
+            <Footer>
+                <Button type="submit" isLoading={isLoading}>
+                    Войти
+                </Button>
 
-            <p>
-                Нет аккаунта?{' '}
-                <span onClick={onChangeType(AuthType.Register)}>
-                    Зарегистрироваться
+                <span>
+                    Нет аккаунта?{' '}
+                    <Link onClick={onChangeType(AuthType.Register)}>
+                        Зарегистрироваться
+                    </Link>
                 </span>
-            </p>
+
+                <Link onClick={onChangeType(AuthType.Restore)}>
+                    Забыли пароль?
+                </Link>
+            </Footer>
         </Container>
     );
 };

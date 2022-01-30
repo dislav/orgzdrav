@@ -1,22 +1,25 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { ApolloError, ApolloQueryResult } from '@apollo/client';
+
+import client from '@graphql/client';
+import { GetOrdersDocument, GetOrdersQuery, OrderFragment } from '@graphql';
 
 import {
     FETCH_ORDERS_REQUESTED,
     fetchOrdersFailed,
     fetchOrdersSucceeded,
 } from '@redux/orders/actions';
-import client from '@graphql/client';
-import { GetOrdersQuery, GetOrdersQueryProps } from '@graphql/queries/orders';
-import { ApolloError, ApolloQueryResult } from '@apollo/client';
 
 function* fetchOrders() {
     try {
-        const { data }: ApolloQueryResult<GetOrdersQueryProps> = yield call(
+        const { data }: ApolloQueryResult<GetOrdersQuery> = yield call(
             client.query,
-            { query: GetOrdersQuery }
+            { query: GetOrdersDocument }
         );
 
-        yield put(fetchOrdersSucceeded(data.orders.nodes));
+        yield put(
+            fetchOrdersSucceeded((data.orders?.nodes || []) as OrderFragment[])
+        );
     } catch (e) {
         const error = e as ApolloError;
 

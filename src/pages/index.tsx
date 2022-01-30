@@ -5,23 +5,21 @@ import { useTheme } from 'styled-components';
 
 import client from '@graphql/client';
 import {
+    GetPartnersDocument,
     GetPartnersQuery,
-    GetPartnersQueryProps,
-    GetReviewsQuery,
-    GetReviewsQueryProps,
-} from '@graphql/types';
+    GetPeopleReviewsDocument,
+    GetPeopleReviewsQuery,
+} from '@graphql';
 
 import HomeLayout from '@layouts/HomeLayout/HomeLayout';
 import ReviewsSection from '@layouts/HomeLayout/ReviewsSection/ReviewsSection';
 import PartnersSection from '@layouts/HomeLayout/PartnersSection/PartnersSection';
 import SocialsSection from '@layouts/HomeLayout/SocialsSection/SocialsSection';
 import QuestionsSection from '@layouts/HomeLayout/QuestionsSection/QuestionsSection';
-
 import TextSection from '@components/TextSection/TextSection';
 import GradientLine from '@components/GradientLine/GradientLine';
-
-import { ArrowsDown, Telegram } from '@icons/icons';
 import ButtonLink from '@components/ButtonLink/ButtonLink';
+import { ArrowsDown, Telegram } from '@icons/icons';
 
 const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     reviews,
@@ -145,20 +143,20 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 };
 
 export const getStaticProps = async () => {
-    const { data: reviews } = await client.query<GetReviewsQueryProps>({
-        query: GetReviewsQuery,
+    const { data: reviews } = await client.query<GetPeopleReviewsQuery>({
+        query: GetPeopleReviewsDocument,
         fetchPolicy: 'no-cache',
     });
 
-    const { data: partners } = await client.query<GetPartnersQueryProps>({
-        query: GetPartnersQuery,
+    const { data: partners } = await client.query<GetPartnersQuery>({
+        query: GetPartnersDocument,
         fetchPolicy: 'no-cache',
     });
 
     return {
         props: {
-            partners: partners.partners.nodes,
-            reviews: reviews.peopleReviews.nodes,
+            partners: partners.partners?.nodes || [],
+            reviews: reviews.peopleReviews?.nodes || [],
         },
         revalidate: 1,
     };

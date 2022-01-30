@@ -1,0 +1,58 @@
+#import "./SimpleProduct.graphql"
+
+fragment Post on Post {
+    id
+    slug
+    title
+    excerpt
+    featuredImage {
+        node {
+            sourceUrl
+        }
+    }
+    postMain {
+        files {
+            file {
+                title
+                mediaItemUrl
+                mimeType
+                fileSize
+            }
+        }
+        content {
+            ... on Post_Postmain_Content_SectionText {
+                title
+                text
+                fieldGroupName
+            }
+            ... on Post_Postmain_Content_SectionSlider {
+                gallery {
+                    sourceUrl
+                }
+                fieldGroupName
+            }
+            ... on Post_Postmain_Content_SectionLink {
+                post {
+                    ... on Post {
+                        id
+                        slug
+                        title
+                        excerpt
+                        featuredImage {
+                            node {
+                                sourceUrl
+                            }
+                        }
+                    }
+                }
+                fieldGroupName
+            }
+            ... on Post_Postmain_Content_SectionProduct {
+                product {
+                    ...SimpleProduct
+                }
+                fieldGroupName
+            }
+        }
+    }
+}

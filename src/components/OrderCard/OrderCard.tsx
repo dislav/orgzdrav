@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { OrderProps } from '@graphql/fragments/order';
+import { OrderFragment } from '@graphql';
+
 import {
     Container,
     Header,
@@ -16,12 +17,11 @@ import Document from '@components/OrderCard/Document/Document';
 import Product from '@components/OrderCard/Product/Product';
 import Status from '@components/OrderCard/Status/Status';
 
-const OrderCard: React.FC<OrderProps> = ({
+const OrderCard: React.FC<OrderFragment> = ({
     databaseId,
     total,
     status,
     billing,
-    hasDownloadableItem,
     downloadableItems,
     lineItems,
 }) => {
@@ -32,7 +32,7 @@ const OrderCard: React.FC<OrderProps> = ({
                     Заказ #{databaseId} —{' '}
                     <span dangerouslySetInnerHTML={{ __html: total }} />
                 </Number>
-                <Status status={status} />
+                {status && <Status status={status} />}
             </Header>
 
             <Group>
@@ -53,7 +53,7 @@ const OrderCard: React.FC<OrderProps> = ({
                 </Grid>
             </Group>
 
-            {lineItems.nodes.length > 0 && (
+            {lineItems?.nodes?.length > 0 && (
                 <Group>
                     <span>Товары в заказе</span>
                     <Products>
@@ -67,7 +67,7 @@ const OrderCard: React.FC<OrderProps> = ({
                 </Group>
             )}
 
-            {hasDownloadableItem && downloadableItems.nodes.length > 0 && (
+            {downloadableItems && downloadableItems?.nodes?.length > 0 && (
                 <Group>
                     <span>Доступные материалы</span>
                     <Documents>

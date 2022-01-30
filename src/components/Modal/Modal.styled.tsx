@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { up } from 'styled-breakpoints';
 
 export const Container = styled.div`
     position: fixed;
@@ -28,13 +29,12 @@ export const Content = styled.div`
 
 export const Close = styled.div`
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: 10px;
+    right: 10px;
     width: 36px;
     height: 36px;
-    background: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.gray15};
     border-radius: 50%;
-    transform: translate(100%, -100%);
     cursor: pointer;
 
     &:before,
@@ -51,5 +51,12 @@ export const Close = styled.div`
 
     &:after {
         transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    ${up('md')} {
+        top: -10px;
+        right: -10px;
+        background: ${({ theme }) => theme.colors.white};
+        transform: translate(100%, -100%);
     }
 `;

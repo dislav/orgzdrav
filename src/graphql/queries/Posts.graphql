@@ -1,0 +1,9 @@
+#import "../fragments/Post.graphql"
+
+query GetPosts {
+    posts {
+        nodes {
+            ...Post
+        }
+    }
+}

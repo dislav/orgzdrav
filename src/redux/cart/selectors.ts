@@ -18,15 +18,15 @@ export const getIsCartLoaded = createSelector(
 
 export const getCartProducts = createSelector(
     getCart,
-    (cart) => cart.contents.nodes
+    (cart) => cart.contents?.nodes || []
 );
 
 export const getCartItemCount = createSelector(
     getCart,
-    (cart) => cart.contents.itemCount
+    (cart) => cart.contents?.itemCount || 0
 );
 
-export const getCartTotalPrice = createSelector(getCart, (cart) => cart.total);
+export const getCartTotalPrice = createSelector(getCart, (cart) => cart.total || '0');
 
 export const getCartCoupons = createSelector(
     getCart,

@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { RegisterUserMutationQueryProps } from '@graphql/mutations/registerUser';
 import { AuthType } from '@components/AuthForm/AuthForm';
+import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
 import { emailRegex } from '@constants/constants';
-import { Container, Input, Button } from './RegisterForm.styled';
-import FormErrors from '@components/FormErrors/FormErrors';
+import {
+    Container,
+    Input,
+    FormErrors,
+    Footer,
+    Button,
+    Link,
+} from './RegisterForm.styled';
 
 interface IRegisterForm {
     setType: (type: AuthType) => void;
-    onSubmit: SubmitHandler<RegisterUserMutationInputs>;
+    onSubmit: SubmitHandler<RegisterUserInputProps>;
 }
-
-export type RegisterUserMutationInputs =
-    RegisterUserMutationQueryProps['input'] & {
-        confirmPassword: string;
-    };
 
 const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-    const {
-        handleSubmit,
-        register,
-        watch,
-        formState: { errors },
-    } = useForm<RegisterUserMutationInputs>();
+    const { handleSubmit, control, watch } = useForm<RegisterUserInputProps>();
 
     const password = watch('password', '');
 
-    const onSubmitHandler: SubmitHandler<RegisterUserMutationInputs> = async (
+    const onSubmitHandler: SubmitHandler<RegisterUserInputProps> = async (
         data
     ) => {
         setIsLoading(true);
@@ -56,83 +52,79 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
             <Input
                 name="username"
-                placeholder="Имя пользователя"
-                register={register}
-                options={{
+                label="Имя пользователя"
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                 }}
-                error={errors.username?.message}
             />
             <Input
                 name="email"
-                placeholder="E-mail"
-                register={register}
-                options={{
+                label="E-mail"
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                     pattern: {
                         value: emailRegex,
                         message: 'Неверный формат почты',
                     },
                 }}
-                error={errors.email?.message}
             />
             <Input
                 name="firstName"
-                placeholder="Имя"
-                register={register}
-                options={{
+                label="Имя"
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                 }}
-                error={errors.firstName?.message}
             />
             <Input
                 name="lastName"
-                placeholder="Фамилия"
-                register={register}
-                options={{
+                label="Фамилия"
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                 }}
-                error={errors.lastName?.message}
             />
             <Input
                 name="password"
-                placeholder="Пароль"
+                label="Пароль"
                 type="password"
-                register={register}
-                options={{
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                     minLength: {
                         value: 6,
                         message: 'Пароль должен содержать больше 6 символов',
                     },
                 }}
-                error={errors.password?.message}
             />
             <Input
                 name="confirmPassword"
-                placeholder="Подтверждение пароля"
+                label="Подтверждение пароля"
                 type="password"
-                register={register}
-                options={{
+                control={control}
+                rules={{
                     required: 'Обязательное поле',
                     validate: (value) =>
                         value === password || 'Пароли не совпадают',
                 }}
-                error={errors.confirmPassword?.message}
             />
 
             {errorMessages.length > 0 && (
                 <FormErrors messages={errorMessages} />
             )}
 
-            <Button type="submit" isLoading={isLoading}>
-                Зарегистрироваться
-            </Button>
+            <Footer>
+                <Button type="submit" isLoading={isLoading}>
+                    Зарегистрироваться
+                </Button>
 
-            <p>
-                Есть аккаунт?{' '}
-                <span onClick={onChangeType(AuthType.Login)}>Войти</span>
-            </p>
+                <span>
+                    Есть аккаунт?{' '}
+                    <Link onClick={onChangeType(AuthType.Login)}>Войти</Link>
+                </span>
+            </Footer>
         </Container>
     );
 };

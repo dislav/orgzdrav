@@ -1,0 +1,42 @@
+#import "../fragments/Picture.graphql"
+#import "../fragments/ProductContent.graphql"
+#import "../fragments/MediaItem.graphql"
+
+fragment SimpleProduct on SimpleProduct {
+    id
+    databaseId
+    name
+    slug
+    price
+    regularPrice
+    salePrice
+    shortDescription
+    image {
+        ...Picture
+    }
+    galleryImages {
+        nodes {
+            ...Picture
+        }
+    }
+    productAdditional {
+        mail
+        broadcastDate
+        programm {
+            mediaItemUrl
+        }
+        content {
+            ... on Product_Productadditional_Content_SectionText {
+                title
+                text
+                fieldGroupName
+            }
+        }
+    }
+    productCategories {
+        nodes {
+            slug
+            name
+        }
+    }
+}

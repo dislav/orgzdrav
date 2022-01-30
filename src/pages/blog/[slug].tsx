@@ -2,8 +2,13 @@ import React from 'react';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 
 import client from '@graphql/client';
-import { GetPostsQuery, GetPostsQueryProps } from '@graphql/queries/posts';
-import { GetPostQuery, GetPostQueryProps } from '@graphql/queries/post';
+import {
+    GetPostDocument,
+    GetPostQuery,
+    GetPostQueryVariables,
+    GetPostsDocument,
+    GetPostsQuery,
+} from '@graphql';
 
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
@@ -15,16 +20,16 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     return (
         <BlogLayout
             meta={{
-                title: post.title,
-                description: post.excerpt,
-                image: post.featuredImage.node.sourceUrl,
+                title: post?.title || '',
+                description: post?.excerpt || '',
+                image: post?.featuredImage?.node?.sourceUrl,
             }}
         >
-            {post.postMain?.files?.length > 0 && (
+            {post?.postMain?.files && post.postMain.files.length > 0 && (
                 <DownloadFiles files={post.postMain.files} />
             )}
 
-            {post.postMain?.content && (
+            {post?.postMain?.content && post.postMain.content.length > 0 && (
                 <CommonComponents components={post.postMain.content} />
             )}
         </BlogLayout>
@@ -32,14 +37,15 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 };
 
 export const getStaticPaths = async () => {
-    const { data } = await client.query<GetPostsQueryProps>({
-        query: GetPostsQuery,
+    const { data } = await client.query<GetPostsQuery>({
+        query: GetPostsDocument,
         fetchPolicy: 'no-cache',
     });
 
-    const paths = data.posts.nodes.map((post) => ({
-        params: { slug: post.slug },
-    }));
+    const paths =
+        data.posts?.nodes?.map((post) => ({
+            params: { slug: post?.slug },
+        })) || [];
 
     return { paths, fallback: false };
 };
@@ -47,10 +53,13 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({
     params,
 }: GetStaticPropsContext<{ slug: string }>) => {
-    const { data: post } = await client.query<GetPostQueryProps>({
-        query: GetPostQuery,
+    const { data: post } = await client.query<
+        GetPostQuery,
+        GetPostQueryVariables
+    >({
+        query: GetPostDocument,
         fetchPolicy: 'no-cache',
-        variables: { id: params?.slug },
+        variables: { id: params?.slug || '' },
     });
 
     return {

@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { ApolloError, useMutation } from '@apollo/client';
+import { ApolloError } from '@apollo/client';
 import {
-    ApplyCouponMutation,
-    ApplyCouponMutationProps,
-    ApplyCouponMutationQueryProps,
-} from '@graphql/mutations/applyCoupon';
-import {
-    RemoveCouponsMutation,
-    RemoveCouponsMutationProps,
-    RemoveCouponsMutationQueryProps,
-} from '@graphql/mutations/removeCoupons';
+    ApplyCouponInput,
+    useApplyCouponMutation,
+    useRemoveCouponsMutation,
+} from '@graphql';
 
 import {
     Container,
@@ -44,26 +39,13 @@ const PromoCode: React.FC<IPromoCode> = ({ className }) => {
     const [isPromoCode, setIsPromoCode] = useState(false);
     const [error, setError] = useState('');
 
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-        setValue,
-    } = useForm<ApplyCouponMutationQueryProps['input']>();
+    const { handleSubmit, control, setValue } = useForm<ApplyCouponInput>();
 
-    const [applyCoupon, { loading }] = useMutation<
-        ApplyCouponMutationProps,
-        ApplyCouponMutationQueryProps
-    >(ApplyCouponMutation);
+    const [applyCoupon, { loading }] = useApplyCouponMutation();
 
-    const [deleteCoupon] = useMutation<
-        RemoveCouponsMutationProps,
-        RemoveCouponsMutationQueryProps
-    >(RemoveCouponsMutation);
+    const [deleteCoupon] = useRemoveCouponsMutation();
 
-    const onSubmit: SubmitHandler<
-        ApplyCouponMutationQueryProps['input']
-    > = async ({ code }) => {
+    const onSubmit: SubmitHandler<ApplyCouponInput> = async ({ code }) => {
         setError('');
 
         try {
@@ -71,7 +53,7 @@ const PromoCode: React.FC<IPromoCode> = ({ className }) => {
                 variables: { input: { code: code.toLowerCase() } },
             });
 
-            if (response.data?.applyCoupon.cart) {
+            if (response.data?.applyCoupon?.cart) {
                 dispatch(setCart(response.data.applyCoupon.cart));
                 setValue('code', '');
             }
@@ -82,13 +64,13 @@ const PromoCode: React.FC<IPromoCode> = ({ className }) => {
         }
     };
 
-    const onDeleteCoupon = async (code: string) => {
+    const onDeleteCoupon = (code: string) => async () => {
         try {
             const response = await deleteCoupon({
                 variables: { input: { codes: [code] } },
             });
 
-            if (response.data?.removeCoupons.cart)
+            if (response.data?.removeCoupons?.cart)
                 dispatch(setCart(response.data.removeCoupons.cart));
         } catch (e) {
             if ((e as ApolloError)?.graphQLErrors.length) {
@@ -107,13 +89,13 @@ const PromoCode: React.FC<IPromoCode> = ({ className }) => {
                     {isPromoCode ? 'Скрыть' : 'Активировать'} промокод
                 </ApplyPromoCode>
 
-                {coupons.length > 0 && (
+                {coupons && coupons.length > 0 && (
                     <Coupons>
-                        {coupons.map((coupon) => (
-                            <Coupon key={coupon.code}>
-                                {coupon.code}
+                        {coupons.map((coupon, index) => (
+                            <Coupon key={index}>
+                                {coupon?.code}
                                 <DeleteCoupon
-                                    onClick={() => onDeleteCoupon(coupon.code)}
+                                    onClick={onDeleteCoupon(coupon?.code || '')}
                                 />
                             </Coupon>
                         ))}
@@ -125,13 +107,15 @@ const PromoCode: React.FC<IPromoCode> = ({ className }) => {
                 <InputWrapper>
                     <Input
                         name="code"
-                        register={register}
-                        options={{
+                        label="Промо код"
+                        control={control}
+                        rules={{
                             required: 'Обязательное поле',
                         }}
-                        error={errors.code?.message || error}
                     />
-                    <Button isLoading={loading}>Применить</Button>
+                    <Button type="submit" isLoading={loading}>
+                        Применить
+                    </Button>
                 </InputWrapper>
             )}
         </Container>

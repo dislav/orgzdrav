@@ -1,3 +1,5 @@
+import { CartFragment } from '@graphql';
+import { PromiseStatus } from '@redux/types';
 import {
     CART_FETCH_REQUESTED,
     CART_FETCH_SUCCEEDED,
@@ -5,10 +7,8 @@ import {
     SET_CART,
     CartActionTypes,
 } from './actions';
-import { PromiseStatus } from '@redux/types';
-import { CartProps } from '@graphql/fragments/cart';
 
-export interface CartState extends CartProps {
+export interface CartState extends CartFragment {
     status: PromiseStatus;
     error: null | string;
 }

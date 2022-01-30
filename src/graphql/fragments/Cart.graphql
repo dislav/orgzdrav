@@ -1,0 +1,28 @@
+#import "./SimpleProduct.graphql"
+
+fragment Cart on Cart {
+    isEmpty
+    total
+    shippingTotal
+    contentsTotal
+    discountTotal
+    appliedCoupons {
+        code
+        discountAmount
+        discountTax
+    }
+    contents {
+        itemCount
+        productCount
+        nodes {
+            key
+            total
+            quantity
+            product {
+                node {
+                    ...SimpleProduct
+                }
+            }
+        }
+    }
+}

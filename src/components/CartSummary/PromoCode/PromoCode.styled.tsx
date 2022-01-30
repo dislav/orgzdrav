@@ -42,20 +42,22 @@ export const ApplyPromoCode = styled.span`
 
 export const InputWrapper = styled.div`
     display: flex;
+    flex: 0 1 50%;
     margin-left: auto;
 `;
 
 export const Input = styled(InputComponent)`
-    margin-right: 14px;
-
-    input {
-        min-height: 40px;
+    && {
+        flex: 1;
+        margin-right: 14px;
     }
 `;
 
 export const Button = styled(ButtonComponent)`
-    height: 40px;
-    border-radius: 4px;
+    && {
+        min-width: 140px;
+        height: 56px;
+    }
 `;
 
 export const Coupons = styled.div`

@@ -1,5 +1,4 @@
-import { ViewerProps } from '@graphql/fragments/viewer';
-
+import { ViewerFragment } from '@graphql';
 import { PromiseStatus } from '@redux/types';
 import {
     CLEAR_PROFILE,
@@ -10,7 +9,7 @@ import {
     SET_PROFILE,
 } from '@redux/profile/actions';
 
-export interface ProfileState extends ViewerProps {
+export interface ProfileState extends ViewerFragment {
     status: PromiseStatus;
     error: null | string;
     isLoggedIn: boolean;

@@ -2,25 +2,37 @@ import React, { useCallback } from 'react';
 import { UnpackNestedValue } from 'react-hook-form';
 import { ApolloError } from '@apollo/client';
 
-import { LoginMutationOptions } from '@graphql/mutations/login';
-import { RegisterUserMutationInputs } from '@components/RegisterForm/RegisterForm';
-import { ViewerProps } from '@graphql/fragments/viewer';
-import { useLoginMutation } from '@hooks/useLoginMutation';
-import { useRegisterMutation } from '@hooks/useRegisterMutation';
+import {
+    LoginInput,
+    SendPasswordResetEmailInput,
+    useLoginMutation,
+    useRegisterUserMutation,
+    useSendPasswordResetEmailMutation,
+    ViewerFragment,
+} from '@graphql';
+import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
 export const useAuth = () => {
     const [login, { loading: loginLoading }] = useLoginMutation();
-    const [registerUser, { loading: registerLoading }] = useRegisterMutation();
+
+    const [registerUser, { loading: registerLoading }] =
+        useRegisterUserMutation();
+
+    const [passwordReset, { loading: passwordResetLoading }] =
+        useSendPasswordResetEmailMutation();
 
     const onLogin = useCallback(
         async (
-            data: UnpackNestedValue<LoginMutationOptions>,
-            onSubmit?: (user: ViewerProps) => Promise<void> | void
+            data: UnpackNestedValue<LoginInput>,
+            onSubmit?: (user: ViewerFragment) => Promise<void> | void
         ) => {
             try {
-                const response = await login({ variables: data });
+                const response = await login({ variables: { input: data } });
 
-                if (response.data?.login) {
+                if (
+                    response.data?.login?.user &&
+                    response.data.login.authToken
+                ) {
                     localStorage.setItem(
                         'authToken',
                         response.data.login.authToken
@@ -46,8 +58,8 @@ export const useAuth = () => {
 
     const onRegister = useCallback(
         async (
-            data: UnpackNestedValue<RegisterUserMutationInputs>,
-            onSubmit?: (user: ViewerProps) => Promise<void> | void
+            data: UnpackNestedValue<RegisterUserInputProps>,
+            onSubmit?: (user: ViewerFragment) => Promise<void> | void
         ) => {
             try {
                 const { confirmPassword, ...input } = data;
@@ -56,7 +68,10 @@ export const useAuth = () => {
                     variables: { input },
                 });
 
-                if (response.data?.registerUser) {
+                if (
+                    response.data?.registerUser?.user &&
+                    response.data.registerUser.user.jwtAuthToken
+                ) {
                     localStorage.setItem(
                         'authToken',
                         response.data.registerUser.user.jwtAuthToken
@@ -80,9 +95,35 @@ export const useAuth = () => {
         [registerUser]
     );
 
+    const onPasswordReset = useCallback(
+        async (data: UnpackNestedValue<SendPasswordResetEmailInput>) => {
+            try {
+                const response = await passwordReset({
+                    variables: { input: data },
+                });
+
+                if (response.data?.sendPasswordResetEmail)
+                    return {
+                        status: true,
+                    };
+            } catch (e) {
+                const errors = (e as ApolloError)?.graphQLErrors.map(
+                    ({ message }) => message
+                );
+
+                if (errors)
+                    return {
+                        errors,
+                    };
+            }
+        },
+        [passwordReset]
+    );
+
     return {
         onLogin,
         onRegister,
-        isLoading: loginLoading || registerLoading,
+        onPasswordReset,
+        isLoading: loginLoading || registerLoading || passwordResetLoading,
     };
 };

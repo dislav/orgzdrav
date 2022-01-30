@@ -3,15 +3,16 @@ import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 
 import client from '@graphql/client';
 import {
+    GetProductDocument,
     GetProductQuery,
-    GetProductQueryProps,
+    GetProductsDocument,
     GetProductsQuery,
-    GetProductsQueryProps,
-} from '@graphql/types';
+    GetProductsQueryVariables,
+    SimpleProductFragment,
+} from '@graphql';
 
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import CommonComponents from '@components/CommonComponents/CommonComponents';
-import SectionOptions from '@layouts/CatalogLayout/SectionOptions/SectionOptions';
 
 const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     product,
@@ -19,36 +20,27 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     return (
         <CatalogLayout
             meta={{
-                title: product.name,
+                title: product.name || '',
                 image: product.image?.sourceUrl,
             }}
             product={product}
             hideFooter
         >
-            <CommonComponents components={product.productAdditional.content} />
-
-            {product.productAdditional.hasAdditionalOptions &&
-                product.productAdditional.options && (
-                    <SectionOptions
-                        options={product.productAdditional.options}
-                    />
-                )}
+            {product.productAdditional?.content && (
+                <CommonComponents
+                    components={product.productAdditional.content}
+                />
+            )}
         </CatalogLayout>
     );
 };
 
 export const getStaticPaths = async () => {
     const { data: products } = await client.query<
-        GetProductsQueryProps,
-        Partial<{
-            where: {
-                orderby?: { field: string; order?: 'ASC' | 'DESC' }[];
-                category?: string;
-            };
-            first: number;
-        }>
+        GetProductsQuery,
+        GetProductsQueryVariables
     >({
-        query: GetProductsQuery,
+        query: GetProductsDocument,
         fetchPolicy: 'no-cache',
         variables: {
             where: {
@@ -57,9 +49,10 @@ export const getStaticPaths = async () => {
         },
     });
 
-    const paths = products.products.nodes.map((product) => ({
-        params: { slug: product.slug },
-    }));
+    const paths =
+        products.products?.nodes?.map((product) => ({
+            params: { slug: (product as SimpleProductFragment)?.slug },
+        })) || [];
 
     return {
         paths,
@@ -70,8 +63,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({
     params,
 }: GetStaticPropsContext<{ slug: string }>) => {
-    const { data: product } = await client.query<GetProductQueryProps>({
-        query: GetProductQuery,
+    const { data: product } = await client.query<GetProductQuery>({
+        query: GetProductDocument,
         fetchPolicy: 'no-cache',
         variables: {
             id: params?.slug,
@@ -80,7 +73,7 @@ export const getStaticProps = async ({
 
     return {
         props: {
-            product: product.product,
+            product: product.product as SimpleProductFragment,
         },
         revalidate: 1,
     };

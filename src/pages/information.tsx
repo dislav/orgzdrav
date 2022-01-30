@@ -1,11 +1,13 @@
 import React from 'react';
+import { InferGetStaticPropsType } from 'next';
 
 import client from '@graphql/client';
 import {
+    GetDocumentsDocument,
     GetDocumentsQuery,
-    GetDocumentsQueryProps,
-} from '@graphql/queries/documents';
-import { InferGetStaticPropsType } from 'next';
+    GetDocumentsQueryVariables,
+    DocumentFragment,
+} from '@graphql';
 
 import Layout from '@components/Layout/Layout';
 import DocumentList from '@components/DocumentList/DocumentList';
@@ -15,28 +17,27 @@ const Information: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
     return (
         <Layout meta={{ title: 'Документы' }} hideFooter>
-            {documents.length > 0 && <DocumentList documents={documents} />}
+            {documents && documents.length > 0 && (
+                <DocumentList documents={documents} />
+            )}
         </Layout>
     );
 };
 
 export const getStaticProps = async () => {
     const { data: documents } = await client.query<
-        GetDocumentsQueryProps,
-        Partial<{
-            first: number;
-        }>
+        GetDocumentsQuery,
+        GetDocumentsQueryVariables
     >({
-        query: GetDocumentsQuery,
+        query: GetDocumentsDocument,
         fetchPolicy: 'no-cache',
-        variables: {
-            first: 100,
-        },
+        variables: { first: 100 },
     });
 
     return {
         props: {
-            documents: documents.documents.nodes,
+            documents: ((documents.documents?.nodes as DocumentFragment) ||
+                []) as DocumentFragment[],
         },
         revalidate: 1,
     };

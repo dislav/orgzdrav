@@ -1,0 +1,7 @@
+#import "../fragments/SimpleProduct.graphql"
+
+query GetProduct($id: ID!, $idType: ProductIdTypeEnum = SLUG) {
+    product(id: $id, idType: $idType) {
+        ...SimpleProduct
+    }
+}

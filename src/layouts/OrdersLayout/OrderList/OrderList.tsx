@@ -17,7 +17,7 @@ const OrderList: React.FC<IOrderList> = ({ className }) => {
 
     const sortedOrders = useMemo(() => {
         return [...orders]
-            .filter((order) => order.billing && order.date && order.total)
+            .filter((order) => order.billing && order.date)
             .sort((orderA, orderB) => {
                 const orderADate = dayjs(orderA.date);
                 const orderBDate = dayjs(orderB.date);

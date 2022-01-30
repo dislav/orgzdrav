@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { OrderStatusEnum } from '@graphql/fragments/order';
 import { Container as StyledProduct } from '@components/OrderCard/Product/Product.styled';
 import { Container as StyledDocument } from '@components/OrderCard/Document/Document.styled';
 

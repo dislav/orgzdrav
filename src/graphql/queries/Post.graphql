@@ -1,0 +1,7 @@
+#import "../fragments/Post.graphql"
+
+query GetPost($id: ID!, $idType: PostIdType = SLUG) {
+    post(id: $id, idType: $idType) {
+        ...Post
+    }
+}

@@ -28,8 +28,17 @@
       "@context/*": [
         "context/*"
       ],
-      "@graphql/*": [
-        "graphql/*"
+      "@graphql": [
+        "graphql/graphql.tsx"
+      ],
+      "@graphql/client": [
+        "graphql/client.ts"
+      ],
+      "@graphql/utils": [
+        "graphql/utils.ts"
+      ],
+      "@graphql/guards": [
+        "graphql/guards.ts"
       ],
       "@hooks/*": [
         "hooks/*"

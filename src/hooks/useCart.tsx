@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { setCart } from '@redux/cart/actions';
-import { useAddToCartMutation } from '@hooks/useAddToCartMutation';
-import { useRemoveItemsFromCartMutation } from '@hooks/useRemoveItemsFromCartMutation';
+import { useAddToCartMutation, useRemoveItemsFromCartMutation } from '@graphql';
 
 export const useCart = () => {
     const dispatch = useDispatch();
 
     const [addToCart, { loading: addToCartLoading }] = useAddToCartMutation();
+
     const [removeItemsFromCart, { loading: removeItemsFromCartLoading }] =
         useRemoveItemsFromCartMutation();
 
     const onAddProductToCart = async (databaseId: number) => {
         try {
             const { data } = await addToCart({
-                variables: { productId: databaseId },
+                variables: { input: { productId: databaseId } },
             });
 
-            if (data?.addToCart.cart) dispatch(setCart(data.addToCart.cart));
+            if (data?.addToCart?.cart) dispatch(setCart(data.addToCart.cart));
         } catch (e) {
             console.log(e);
         }
@@ -31,7 +31,7 @@ export const useCart = () => {
                     variables: { input: { keys: [key] } },
                 });
 
-                if (data?.removeItemsFromCart.cart)
+                if (data?.removeItemsFromCart?.cart)
                     dispatch(setCart(data.removeItemsFromCart.cart));
             } catch (e) {
                 console.log(e);

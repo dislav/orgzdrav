@@ -2,7 +2,8 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { ApolloError, ApolloQueryResult } from '@apollo/client';
 
 import client from '@graphql/client';
-import { GetViewerQuery, GetViewerQueryProps } from '@graphql/queries/viewer';
+import { GetViewerDocument, GetViewerQuery, ViewerFragment } from '@graphql';
+
 import {
     FETCH_PROFILE_REQUESTED,
     fetchProfileFailed,
@@ -11,14 +12,14 @@ import {
 
 function* fetchProfile() {
     try {
-        const { data }: ApolloQueryResult<GetViewerQueryProps> = yield call(
+        const { data }: ApolloQueryResult<GetViewerQuery> = yield call(
             client.query,
             {
-                query: GetViewerQuery,
+                query: GetViewerDocument,
             }
         );
 
-        yield put(fetchProfileSucceeded(data.viewer));
+        yield put(fetchProfileSucceeded(data.viewer as ViewerFragment));
     } catch (e) {
         const apolloError = e as ApolloError;
 

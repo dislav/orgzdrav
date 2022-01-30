@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://api.orgzdrav2019.ru/graphql"
+documents: "src/graphql/**/*.graphql"
+generates:
+  src/graphql/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

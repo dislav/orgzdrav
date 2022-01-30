@@ -4,37 +4,38 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 
-import { ViewerProps } from '@graphql/fragments/viewer';
-import { WebinarProps } from '@graphql/queries/webinar';
-import { OrderStatusEnum } from '@graphql/fragments/order';
+import {
+    OrderStatusEnum,
+    SimpleProductFragment,
+    useCreateOrderMutation,
+    useGetOrdersLazyQuery,
+    ViewerFragment,
+} from '@graphql';
 
 import {
     Container,
     ImageWrapper,
+    Title,
+    Description,
     Footer,
     AuthButton,
     Skeleton,
+    Date,
+    Controls,
+    Button,
 } from './WebinarPreview.styled';
-import WebinarTime from '@layouts/WebinarLayout/WebinarTime/WebinarTime';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 
 import { getProfile } from '@redux/profile/selectors';
 import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';
 import { addOrder } from '@redux/orders/actions';
-import { useOrderLazyQuery } from '@hooks/useOrdersQuery';
-import { useCreateOrderMutation } from '@hooks/useCreateOrderMutation';
 
 interface IWebinarPreview {
     className?: string;
-    image: string;
-    webinar: WebinarProps;
+    webinar: SimpleProductFragment;
 }
 
-const WebinarPreview: React.FC<IWebinarPreview> = ({
-    className,
-    image,
-    webinar,
-}) => {
+const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -45,25 +46,25 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
 
     const isRecordedOnWebinar = useMemo(() => {
         return !!orders?.find((order) =>
-            order.lineItems.nodes.some(
-                (item) => item.product.id === webinar.webinar.id
+            order?.lineItems?.nodes?.some(
+                (item) =>
+                    (item?.product as SimpleProductFragment).id === webinar.id
             )
         );
-    }, [webinar.webinar, orders]);
+    }, [webinar, orders]);
 
-    const [fetchOrders, { loading: ordersLoading }] = useOrderLazyQuery();
+    const [fetchOrders, { loading: ordersLoading }] = useGetOrdersLazyQuery();
     const [createOrder, { loading }] = useCreateOrderMutation();
 
     const onSubmitOrder = useCallback(
-        async (user?: ViewerProps) => {
+        async (user?: ViewerFragment) => {
             try {
                 const orders = await fetchOrders();
 
                 const findOrder =
                     orders?.data?.orders?.nodes?.find((order) =>
-                        order.lineItems.nodes.some(
-                            (item) =>
-                                item.productId === webinar.webinar.databaseId
+                        order?.lineItems?.nodes?.some(
+                            (item) => item?.productId === webinar.databaseId
                         )
                     ) || null;
 
@@ -84,17 +85,17 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
                                 },
                                 lineItems: [
                                     {
-                                        productId: webinar.webinar.databaseId,
-                                        name: webinar.webinar.name,
+                                        productId: webinar.databaseId,
+                                        name: webinar.name,
                                         quantity: 1,
                                     },
                                 ],
-                                status: OrderStatusEnum.ON_HOLD,
+                                status: OrderStatusEnum.OnHold,
                             },
                         },
                     });
 
-                    if (response.data?.createOrder.order)
+                    if (response.data?.createOrder?.order)
                         dispatch(addOrder(response.data.createOrder.order));
                 }
 
@@ -106,39 +107,71 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({
         [router, profile, webinar, createOrder, fetchOrders, dispatch]
     );
 
-    const showTime = dayjs(webinar.time).isAfter(dayjs());
+    const onDownloadProgram = () => {
+        console.log(webinar.productAdditional?.programm);
+        if (webinar.productAdditional?.programm?.mediaItemUrl)
+            router.push(webinar.productAdditional.programm.mediaItemUrl);
+    };
+
+    const showTime =
+        webinar.productAdditional?.broadcastDate &&
+        dayjs(webinar.productAdditional.broadcastDate).isAfter(dayjs());
 
     return (
         <Container className={className}>
-            <ImageWrapper>
-                <Image src={image} alt="" layout="fill" />
-            </ImageWrapper>
+            {webinar.image?.sourceUrl && (
+                <ImageWrapper>
+                    <Image
+                        src={webinar.image.sourceUrl}
+                        alt=""
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                </ImageWrapper>
+            )}
 
             <Footer>
-                {showTime && (
-                    <ClientOnly>
-                        <WebinarTime time={webinar.time}>
-                            <span>До трансляции</span>
-                        </WebinarTime>
-                    </ClientOnly>
+                {webinar.name && <Title>{webinar.name}</Title>}
+
+                {webinar.shortDescription && (
+                    <Description
+                        dangerouslySetInnerHTML={{
+                            __html: webinar.shortDescription,
+                        }}
+                    />
                 )}
 
-                <ClientOnly>
-                    {isOrdersLoading ? (
-                        <Skeleton variant="rectangular" />
-                    ) : (
-                        <AuthButton
-                            onClick={onSubmitOrder}
-                            onSuccessAuth={onSubmitOrder}
-                            isLoading={loading || ordersLoading}
-                            disabled={!showTime || isRecordedOnWebinar}
-                        >
-                            {isRecordedOnWebinar
-                                ? 'Успешно записаны'
-                                : 'Записаться'}
-                        </AuthButton>
+                {webinar.productAdditional?.broadcastDate && (
+                    <Date>
+                        Начало трансляции{' '}
+                        {dayjs(webinar.productAdditional.broadcastDate).format(
+                            'DD.MM.YYYY, HH:mm'
+                        )}
+                    </Date>
+                )}
+
+                <Controls>
+                    {webinar.productAdditional?.programm?.mediaItemUrl && (
+                        <Button onClick={onDownloadProgram}>Программа</Button>
                     )}
-                </ClientOnly>
+
+                    <ClientOnly>
+                        {isOrdersLoading ? (
+                            <Skeleton variant="rectangular" />
+                        ) : (
+                            <AuthButton
+                                onClick={onSubmitOrder}
+                                onSuccessAuth={onSubmitOrder}
+                                isLoading={loading || ordersLoading}
+                                disabled={!showTime || isRecordedOnWebinar}
+                            >
+                                {isRecordedOnWebinar
+                                    ? 'Записаны'
+                                    : 'Записаться'}
+                            </AuthButton>
+                        )}
+                    </ClientOnly>
+                </Controls>
             </Footer>
         </Container>
     );

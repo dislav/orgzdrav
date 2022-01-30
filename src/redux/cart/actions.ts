@@ -1,4 +1,4 @@
-import { CartProps } from '@graphql/fragments/cart';
+import { CartFragment } from '@graphql';
 
 export const CART_FETCH_REQUESTED = 'CART_FETCH_REQUESTED';
 export const CART_FETCH_SUCCEEDED = 'CART_FETCH_SUCCEEDED';
@@ -12,7 +12,7 @@ interface FetchCartAction {
 
 interface FetchCartSucceededAction {
     type: typeof CART_FETCH_SUCCEEDED;
-    payload: CartProps;
+    payload: CartFragment;
 }
 
 interface FetchCartFailedAction {
@@ -22,7 +22,7 @@ interface FetchCartFailedAction {
 
 interface SetCartAction {
     type: typeof SET_CART;
-    payload: CartProps;
+    payload: CartFragment;
 }
 
 export type CartActionTypes =
@@ -35,7 +35,7 @@ export const fetchCart = (): CartActionTypes => ({
     type: CART_FETCH_REQUESTED,
 });
 
-export const fetchCartSucceeded = (payload: CartProps): CartActionTypes => ({
+export const fetchCartSucceeded = (payload: CartFragment): CartActionTypes => ({
     type: CART_FETCH_SUCCEEDED,
     payload,
 });
@@ -45,7 +45,7 @@ export const fetchCartFailed = (payload: string): CartActionTypes => ({
     payload,
 });
 
-export const setCart = (payload: CartProps): CartActionTypes => ({
+export const setCart = (payload: CartFragment): CartActionTypes => ({
     type: SET_CART,
     payload,
 });

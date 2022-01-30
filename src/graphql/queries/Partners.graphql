@@ -1,0 +1,16 @@
+query GetPartners {
+    partners {
+        nodes {
+            slug
+            title
+            partnerMain {
+                image {
+                    sourceUrl
+                }
+                description
+                city
+                link
+            }
+        }
+    }
+}

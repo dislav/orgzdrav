@@ -1,4 +1,4 @@
-import { OrderProps } from '@graphql/fragments/order';
+import { OrderFragment } from '@graphql';
 import { PromiseStatus } from '@redux/types';
 import {
     ADD_ORDER,
@@ -12,7 +12,7 @@ import {
 interface OrdersState {
     status: PromiseStatus;
     error: null | string;
-    orders: OrderProps[];
+    orders: OrderFragment[];
 }
 
 const initialState: OrdersState = {

@@ -1,0 +1,10 @@
+#import "../fragments/Viewer.graphql"
+
+mutation Login($input: LoginInput!) {
+    login(input: $input) {
+        authToken
+        user {
+            ...Viewer
+        }
+    }
+}

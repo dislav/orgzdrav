@@ -1,48 +1,34 @@
-import React, { useState } from 'react';
-import { UseFormRegister, RegisterOptions, Message } from 'react-hook-form';
+import React from 'react';
+import { useController, UseControllerProps } from 'react-hook-form';
+import { TextFieldProps } from '@mui/material';
 
-import { Container, Label, Error } from './Input.styled';
+import { Container } from './Input.styled';
 
-interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {
-    className?: string;
-    label?: string;
-    name: string;
-    register: UseFormRegister<any>;
-    options?: RegisterOptions;
-    error?: Message;
-}
-
-const Input: React.FC<IInput> = ({
-    className,
-    label,
-    register,
-    options,
-    error,
+const Input: React.FC<TextFieldProps & UseControllerProps<any>> = ({
+    control,
+    rules,
+    shouldUnregister,
     ...props
 }) => {
-    const [value, setValue] = useState('');
-    const { onChange, ...input } = register(props.name, options);
-
-    const onChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        await onChange(e);
-        setValue(e.target.value);
-    };
+    const {
+        field,
+        fieldState: { error },
+    } = useController({
+        name: props.name,
+        control,
+        defaultValue: props.defaultValue || '',
+        rules,
+        shouldUnregister,
+    });
 
     return (
         <Container
-            className={className}
-            isFill={!!value.length}
-            isError={!!error}
-        >
-            {label && (
-                <Label>
-                    {label}
-                    {options?.required ? <span>*</span> : ''}
-                </Label>
-            )}
-            <input {...input} {...props} onChange={onChangeHandler} />
-            {error && <Error>{error}</Error>}
-        </Container>
+            variant="outlined"
+            error={!!error}
+            helperText={error?.message}
+            {...field}
+            {...props}
+        />
     );
 };
 

@@ -1,0 +1,6 @@
+fragment ProductDownload on ProductDownload {
+    fileExt
+    fileExists
+    fileType
+    downloadId
+}

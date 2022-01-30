@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
-import { DocumentProps } from '@graphql/queries/documents';
+import { useGetDocumentLazyQuery, DocumentFragment } from '@graphql';
 
 import {
     Container,
@@ -11,17 +11,15 @@ import {
     AuthButton,
 } from './DocumentList.styled';
 
-import { useDocumentQuery } from '@hooks/useDocumentQuery';
-
 interface IDocumentList {
     className?: string;
-    documents: DocumentProps[];
+    documents: DocumentFragment[];
 }
 
 const DocumentList: React.FC<IDocumentList> = ({ className, documents }) => {
     const router = useRouter();
 
-    const [fetchDocument, { loading }] = useDocumentQuery({ skip: true });
+    const [fetchDocument, { loading }] = useGetDocumentLazyQuery();
 
     const onDownload = useCallback(
         async (slug: string) => {
@@ -50,22 +48,27 @@ const DocumentList: React.FC<IDocumentList> = ({ className, documents }) => {
             {documents.map((document, index) => (
                 <Document key={index}>
                     <DocumentContent>
-                        <span>{document.documentMain.file.title}</span>
-                        <DocumentDescription
-                            dangerouslySetInnerHTML={{
-                                __html: document.excerpt,
-                            }}
-                        />
+                        <span>{document.documentMain?.file?.title}</span>
+                        {document.excerpt && (
+                            <DocumentDescription
+                                dangerouslySetInnerHTML={{
+                                    __html: document.excerpt,
+                                }}
+                            />
+                        )}
                     </DocumentContent>
 
-                    <AuthButton
-                        onClick={onDownloadHandler(document.slug)}
-                        onSuccessAuth={router.reload}
-                        isLoading={loading}
-                    >
-                        Скачать (
-                        {getFileSize(document.documentMain.file.fileSize)} Кб)
-                    </AuthButton>
+                    {document.slug && document.documentMain?.file?.fileSize && (
+                        <AuthButton
+                            onClick={onDownloadHandler(document.slug)}
+                            onSuccessAuth={router.reload}
+                            isLoading={loading}
+                        >
+                            Скачать (
+                            {getFileSize(document.documentMain.file.fileSize)}{' '}
+                            Кб)
+                        </AuthButton>
+                    )}
                 </Document>
             ))}
         </Container>

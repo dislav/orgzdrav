@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 
-import { ViewerProps } from '@graphql/fragments/viewer';
+import { useCheckoutMutation, ViewerFragment } from '@graphql';
 
 import { Container, Wrapper, AuthButton } from './CheckoutToolbar.styled';
 
-import { useCheckoutMutation } from '@hooks/useCheckoutMutation';
 import { useConfig } from '@context/configProvider';
 import { getCartTotalPrice } from '@redux/cart/selectors';
 import { getProfile } from '@redux/profile/selectors';
@@ -34,7 +33,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const [checkout, { loading }] = useCheckoutMutation();
 
     const onSubmitOrder = useCallback(
-        async (user?: ViewerProps) => {
+        async (user?: ViewerFragment) => {
             try {
                 const response = await checkout({
                     variables: {
@@ -51,10 +50,11 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                     },
                 });
 
-                if (response.data?.checkout.result === 'success') {
-                    await router.push(
-                        `/order-success/${response.data.checkout.order.databaseId}`
-                    );
+                if (response.data?.checkout?.result === 'success') {
+                    if (response.data.checkout.order?.databaseId)
+                        await router.push(
+                            `/order-success/${response.data.checkout.order.databaseId}`
+                        );
 
                     dispatch(addOrder(response.data.checkout.order));
 

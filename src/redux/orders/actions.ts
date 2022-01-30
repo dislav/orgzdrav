@@ -1,4 +1,4 @@
-import { OrderProps } from '@graphql/fragments/order';
+import { OrderFragment } from '@graphql';
 
 export const FETCH_ORDERS_REQUESTED = 'FETCH_ORDERS_REQUESTED';
 export const FETCH_ORDERS_SUCCEEDED = 'FETCH_ORDERS_SUCCEEDED';
@@ -13,7 +13,7 @@ interface FetchOrdersRequestedAction {
 
 interface FetchOrdersSucceededAction {
     type: typeof FETCH_ORDERS_SUCCEEDED;
-    payload: OrderProps[];
+    payload: OrderFragment[];
 }
 
 interface FetchOrdersFailedAction {
@@ -23,12 +23,12 @@ interface FetchOrdersFailedAction {
 
 interface SetOrdersAction {
     type: typeof SET_ORDERS;
-    payload: OrderProps[];
+    payload: OrderFragment[];
 }
 
 interface AddOrderAction {
     type: typeof ADD_ORDER;
-    payload: OrderProps;
+    payload: OrderFragment;
 }
 
 export type OrdersActionTypes =
@@ -43,7 +43,7 @@ export const fetchOrders = (): FetchOrdersRequestedAction => ({
 });
 
 export const fetchOrdersSucceeded = (
-    payload: OrderProps[]
+    payload: OrderFragment[]
 ): FetchOrdersSucceededAction => ({
     type: FETCH_ORDERS_SUCCEEDED,
     payload,
@@ -56,12 +56,12 @@ export const fetchOrdersFailed = (
     payload,
 });
 
-export const setOrders = (payload: OrderProps[]): SetOrdersAction => ({
+export const setOrders = (payload: OrderFragment[]): SetOrdersAction => ({
     type: SET_ORDERS,
     payload,
 });
 
-export const addOrder = (payload: OrderProps): AddOrderAction => ({
+export const addOrder = (payload: OrderFragment): AddOrderAction => ({
     type: ADD_ORDER,
     payload,
 });

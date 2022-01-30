@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { OrderStatusEnum } from '@graphql/fragments/order';
+import { OrderStatusEnum } from '@graphql';
 
 import { Container } from './Status.styled';
 
@@ -11,13 +11,13 @@ interface IStatus {
 
 const Status: React.FC<IStatus> = ({ className, status }) => {
     const orderStatus = {
-        [OrderStatusEnum.COMPLETED]: 'Выполнен',
-        [OrderStatusEnum.CANCELLED]: 'Отменен',
-        [OrderStatusEnum.FAILED]: 'Не удался',
-        [OrderStatusEnum.ON_HOLD]: 'На удержании',
-        [OrderStatusEnum.PROCESSING]: 'Обработка',
-        [OrderStatusEnum.PENDING]: 'Ожидает оплаты',
-        [OrderStatusEnum.REFUNDED]: 'Возвращен',
+        [OrderStatusEnum.Completed]: 'Выполнен',
+        [OrderStatusEnum.Cancelled]: 'Отменен',
+        [OrderStatusEnum.Failed]: 'Не удался',
+        [OrderStatusEnum.OnHold]: 'На удержании',
+        [OrderStatusEnum.Processing]: 'Обработка',
+        [OrderStatusEnum.Pending]: 'Ожидает оплаты',
+        [OrderStatusEnum.Refunded]: 'Возвращен',
     };
 
     return (

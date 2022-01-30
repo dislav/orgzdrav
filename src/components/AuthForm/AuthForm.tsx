@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-import { LoginMutationOptions } from '@graphql/mutations/login';
+import { LoginInput, SendPasswordResetEmailInput } from '@graphql';
+import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
 import { Container } from './AuthForm.styled';
 import LoginForm from '@components/LoginForm/LoginForm';
-import RegisterForm, {
-    RegisterUserMutationInputs,
-} from '@components/RegisterForm/RegisterForm';
+import RegisterForm from '@components/RegisterForm/RegisterForm';
+import RestorePasswordForm from '@components/RestorePasswordForm/RestorePasswordForm';
 
 export enum AuthType {
     Login,
     Register,
+    Restore,
 }
 
 interface IAuthForm {
     className?: string;
     authType?: AuthType;
-    onLogin: SubmitHandler<LoginMutationOptions>;
-    onRegister: SubmitHandler<RegisterUserMutationInputs>;
+    onLogin: SubmitHandler<LoginInput>;
+    onRegister: SubmitHandler<RegisterUserInputProps>;
+    onRestore: SubmitHandler<SendPasswordResetEmailInput>;
 }
 
 const AuthForm: React.FC<IAuthForm> = ({
@@ -26,6 +28,7 @@ const AuthForm: React.FC<IAuthForm> = ({
     authType = AuthType.Login,
     onLogin,
     onRegister,
+    onRestore,
 }) => {
     const [type, setType] = useState(authType);
 
@@ -38,6 +41,12 @@ const AuthForm: React.FC<IAuthForm> = ({
                     ),
                     [AuthType.Register]: (
                         <RegisterForm setType={setType} onSubmit={onRegister} />
+                    ),
+                    [AuthType.Restore]: (
+                        <RestorePasswordForm
+                            setType={setType}
+                            onSubmit={onRestore}
+                        />
                     ),
                 }[type]
             }

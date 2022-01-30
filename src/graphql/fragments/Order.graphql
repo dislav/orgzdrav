@@ -1,0 +1,44 @@
+#import "./DownloadableItem.graphql"
+#import "./SimpleProduct.graphql"
+
+fragment Order on Order {
+    id
+    databaseId
+    status
+    total
+    discountTotal
+    hasBillingAddress
+    needsPayment
+    needsProcessing
+    paymentMethod
+    paymentMethodTitle
+    date
+    dateCompleted
+    datePaid
+    isDownloadPermitted
+    hasDownloadableItem
+    downloadableItems {
+        nodes {
+            ...DownloadableItem
+        }
+    }
+    lineItems {
+        nodes {
+            orderId
+            databaseId
+            productId
+            quantity
+            product {
+                ...SimpleProduct
+            }
+        }
+    }
+    billing {
+        firstName
+        lastName
+        company
+        city
+        email
+        phone
+    }
+}
