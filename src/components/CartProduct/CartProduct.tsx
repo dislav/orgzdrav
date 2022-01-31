@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
+import { SimpleProductFragment } from '@graphql';
 
 import {
     Container,
@@ -12,25 +12,25 @@ import {
     Remove,
 } from './CartProduct.styled';
 
-interface ICartProduct extends SimpleProductProps {
-    quantity: number;
-    totalPrice: string;
+interface ICartProduct extends SimpleProductFragment {
+    totalPrice?: string | null;
     onRemoveProduct?: React.DispatchWithoutAction;
 }
 
 const CartProduct: React.FC<ICartProduct> = ({
     image,
     name,
+    regularPrice,
     totalPrice,
     onRemoveProduct,
 }) => {
     return (
         <Container>
-            {image && (
+            {image?.sourceUrl && (
                 <ImageCover>
                     <Image
                         src={image.sourceUrl}
-                        alt={name}
+                        alt={name || ''}
                         layout="fill"
                         objectFit="cover"
                     />
@@ -38,7 +38,14 @@ const CartProduct: React.FC<ICartProduct> = ({
             )}
             <Text>{name}</Text>
             <RightWrapper>
-                <Price dangerouslySetInnerHTML={{ __html: totalPrice }} />
+                {regularPrice && (
+                    <Price
+                        regularPrice={regularPrice}
+                        salePrice={
+                            regularPrice !== totalPrice ? totalPrice : null
+                        }
+                    />
+                )}
                 <Remove onClick={onRemoveProduct} />
             </RightWrapper>
         </Container>

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
-import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
+import { SimpleProductFragment } from '@graphql';
 
 import {
     Container,
@@ -16,7 +16,7 @@ import { useCart } from '@hooks/useCart';
 import { getCartItemCount, getCartProducts } from '@redux/cart/selectors';
 
 interface IShopFooter {
-    product?: SimpleProductProps;
+    product?: SimpleProductFragment;
 }
 
 const ShopFooter: React.FC<IShopFooter> = ({ product }) => {
@@ -31,8 +31,8 @@ const ShopFooter: React.FC<IShopFooter> = ({ product }) => {
             return (
                 cartProducts.find(
                     (cartProduct) =>
-                        cartProduct.product.node.databaseId ===
-                        product.databaseId
+                        (cartProduct?.product?.node as SimpleProductFragment)
+                            ?.databaseId === product.databaseId
                 )?.key || null
             );
 

@@ -3,8 +3,14 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next';
 
 import client from '@graphql/client';
-import { GetPageQuery, GetPageQueryProps } from '@graphql/queries/page';
-import { GetOrderQuery, GetOrderQueryProps } from '@graphql/queries/order';
+import {
+    GetOrderDocument,
+    GetOrderQuery,
+    GetOrderQueryVariables,
+    GetPageDocument,
+    GetPageQuery,
+    GetPageQueryVariables,
+} from '@graphql';
 
 import OrdersLayout from '@layouts/OrdersLayout/OrdersLayout';
 import SocialsSection from '@layouts/HomeLayout/SocialsSection/SocialsSection';
@@ -13,7 +19,7 @@ import GradientLine from '@components/GradientLine/GradientLine';
 import ContactsCard from '@layouts/OrdersLayout/ContactsCard/ContactsCard';
 import ButtonLink from '@components/ButtonLink/ButtonLink';
 
-const Order: React.FC<{ page: GetPageQueryProps['page'] }> = ({ page }) => {
+const Order: React.FC<GetPageQuery> = ({ page }) => {
     const router = useRouter();
 
     return (
@@ -29,7 +35,7 @@ const Order: React.FC<{ page: GetPageQueryProps['page'] }> = ({ page }) => {
 
             <ButtonLink href="/orders">Перейти к заказу</ButtonLink>
 
-            {page.content && <ContactsCard content={page.content} />}
+            {page?.content && <ContactsCard content={page.content} />}
 
             <GradientLine />
 
@@ -41,17 +47,20 @@ const Order: React.FC<{ page: GetPageQueryProps['page'] }> = ({ page }) => {
 export const getServerSideProps = async (
     context: GetServerSidePropsContext
 ) => {
-    const { data: page } = await client.query<GetPageQueryProps>({
-        query: GetPageQuery,
+    const { data: page } = await client.query<
+        GetPageQuery,
+        GetPageQueryVariables
+    >({
+        query: GetPageDocument,
         fetchPolicy: 'no-cache',
         variables: { id: 'order-success' },
     });
 
     try {
-        await client.query<GetOrderQueryProps>({
-            query: GetOrderQuery,
+        await client.query<GetOrderQuery, GetOrderQueryVariables>({
+            query: GetOrderDocument,
             fetchPolicy: 'no-cache',
-            variables: { id: context.query?.id || '' },
+            variables: { id: context.query?.id as string },
         });
     } catch (e) {
         return {

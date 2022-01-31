@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { ViewerProps } from '@graphql/fragments/viewer';
+import { ViewerFragment } from '@graphql';
+
 import { Container, ProfileWrapper, Content } from './MobileMenu.styled';
 import Profile from '@components/Profile/Profile';
 
 interface IMobileMenu {
     className?: string;
-    profile?: ViewerProps;
+    profile?: ViewerFragment;
 }
 
 const MobileMenu: React.FC<IMobileMenu> = ({

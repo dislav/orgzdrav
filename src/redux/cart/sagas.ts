@@ -2,7 +2,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { ApolloError, ApolloQueryResult } from '@apollo/client';
 
 import client from '@graphql/client';
-import { GetCartDocument, GetCartQuery } from '@graphql';
+import { CartFragment, GetCartDocument, GetCartQuery } from '@graphql';
 
 import {
     CART_FETCH_REQUESTED,
@@ -19,7 +19,7 @@ function* fetchCart() {
             }
         );
 
-        yield put(fetchCartSucceeded(data.cart));
+        yield put(fetchCartSucceeded(data.cart as CartFragment));
     } catch (e) {
         const apolloError = e as ApolloError;
 

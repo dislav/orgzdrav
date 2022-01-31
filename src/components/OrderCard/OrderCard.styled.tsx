@@ -38,29 +38,6 @@ export const Group = styled.div`
     }
 `;
 
-export const Grid = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-export const Row = styled.div`
-    display: flex;
-    padding: 12px;
-
-    &:nth-child(odd) {
-        background-color: ${({ theme }) => theme.colors.gray05};
-    }
-`;
-
-export const Cell = styled.div`
-    flex: 1;
-    padding-right: 20px;
-
-    &:last-child {
-        padding-right: 0;
-    }
-`;
-
 export const Products = styled.div`
     display: flex;
     flex-wrap: wrap;

@@ -1,9 +1,13 @@
 import React from 'react';
 
-import { CommonComponentsProps } from '@graphql/types';
+import { Post_Postmain_Content_SectionText } from '@graphql';
+
 import { Container, Description } from './SectionText.styled';
 
-const SectionText: React.FC<CommonComponentsProps> = ({ title, text }) => {
+const SectionText: React.FC<Post_Postmain_Content_SectionText> = ({
+    title,
+    text,
+}) => {
     return (
         <Container>
             {title && <h3>{title}</h3>}

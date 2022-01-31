@@ -1,28 +1,16 @@
-#import "./SimpleProduct.graphql"
+#import "./AppliedCoupon.graphql"
+#import "./CartContentItem.graphql"
 
 fragment Cart on Cart {
     isEmpty
     total
-    shippingTotal
+    subtotal
     contentsTotal
     discountTotal
     appliedCoupons {
-        code
-        discountAmount
-        discountTax
+        ...AppliedCoupon
     }
     contents {
-        itemCount
-        productCount
-        nodes {
-            key
-            total
-            quantity
-            product {
-                node {
-                    ...SimpleProduct
-                }
-            }
-        }
+        ...CartContentItem
     }
 }

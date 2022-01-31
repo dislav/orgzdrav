@@ -4,7 +4,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { AuthType } from '@components/AuthForm/AuthForm';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
-import { emailRegex } from '@constants/constants';
 import {
     Container,
     Input,
@@ -14,6 +13,8 @@ import {
     Link,
 } from './RegisterForm.styled';
 
+import { useConfig } from "@context/configProvider"
+
 interface IRegisterForm {
     setType: (type: AuthType) => void;
     onSubmit: SubmitHandler<RegisterUserInputProps>;
@@ -22,6 +23,8 @@ interface IRegisterForm {
 const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
+
+    const emailRegex = useConfig().regex.email;
 
     const { handleSubmit, control, watch } = useForm<RegisterUserInputProps>();
 

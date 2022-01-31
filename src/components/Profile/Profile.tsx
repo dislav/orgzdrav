@@ -2,12 +2,16 @@ import React, { useState, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { ViewerProps } from '@graphql/fragments/viewer';
+import { ViewerFragment } from '@graphql';
 
 import { Container, Avatar, Menu, Logout } from './Profile.styled';
 import { useOnClickOutside } from '@hooks/useOnClickOutside';
 
-const Profile: React.FC<ViewerProps> = ({ firstName, lastName, username }) => {
+const Profile: React.FC<ViewerFragment> = ({
+    firstName,
+    lastName,
+    username,
+}) => {
     const router = useRouter();
 
     const menuContainer = useRef(null);
@@ -26,7 +30,7 @@ const Profile: React.FC<ViewerProps> = ({ firstName, lastName, username }) => {
             }`;
         }
 
-        return username[0];
+        return username?.[0] || '';
     }, [firstName, lastName, username]);
 
     const onLogout = () => {

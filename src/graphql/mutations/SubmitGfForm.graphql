@@ -1,0 +1,14 @@
+mutation SubmitGfForm($input: SubmitGfFormInput!) {
+    submitGfForm(input: $input){
+        entry {
+            ... on GfSubmittedEntry {
+                id
+                status
+                isSubmitted
+            }
+        }
+        errors {
+            message
+        }
+    }
+}

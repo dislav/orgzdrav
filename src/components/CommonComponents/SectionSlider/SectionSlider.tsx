@@ -3,7 +3,8 @@ import Image from 'next/image';
 import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { CommonComponentsProps } from '@graphql/types';
+import { Post_Postmain_Content_SectionSlider } from '@graphql';
+
 import {
     Container,
     Counter,
@@ -11,9 +12,11 @@ import {
     Slide,
     SlideButton,
 } from './SectionSlider.styled';
-import { ArrowRight, ArrowsDown } from '@icons/icons';
+import { ArrowsDown } from '@icons/icons';
 
-const SectionSlider: React.FC<CommonComponentsProps> = ({ gallery }) => {
+const SectionSlider: React.FC<Post_Postmain_Content_SectionSlider> = ({
+    gallery,
+}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [slider, setSlider] = useState<SwiperCore | null>(null);
 
@@ -47,7 +50,7 @@ const SectionSlider: React.FC<CommonComponentsProps> = ({ gallery }) => {
                         <SwiperSlide key={index}>
                             <Slide>
                                 <Image
-                                    src={slide.sourceUrl}
+                                    src={slide?.sourceUrl || ''}
                                     alt=""
                                     layout="fill"
                                     objectFit="cover"

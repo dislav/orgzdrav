@@ -112,6 +112,8 @@ const PromoCode: React.FC<IPromoCode> = ({ className }) => {
                         rules={{
                             required: 'Обязательное поле',
                         }}
+                        error={!!error.length}
+                        helperText={error}
                     />
                     <Button type="submit" isLoading={loading}>
                         Применить

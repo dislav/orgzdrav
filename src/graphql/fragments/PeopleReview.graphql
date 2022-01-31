@@ -1,0 +1,9 @@
+fragment PeopleReview on PeopleReview {
+    slug
+    title
+    reviewMain {
+        image {
+            sourceUrl
+        }
+    }
+}

@@ -45,19 +45,27 @@ export const Footer = styled.div`
     ${up('md')} {
         padding: 14px;
     }
+`;
 
-    & > h2 {
-        width: 100%;
-        color: ${({ theme }) => theme.colors.primary};
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 1.2;
-        margin-bottom: 20px;
+export const Title = styled.h2`
+    width: 100%;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
 
-        ${up('md')} {
-            font-size: 16px;
-        }
+    ${up('md')} {
+        font-size: 16px;
     }
+`;
+
+export const Description = styled.div`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 20px;
 `;
 
 export const FooterWrapper = styled.div`
@@ -79,6 +87,10 @@ export const Button = styled(ButtonComponent)`
         ${up('md')} {
             margin-left: auto;
             margin-top: 0;
+        }
+
+        &:only-child {
+            flex: 1;
         }
     }
 `;

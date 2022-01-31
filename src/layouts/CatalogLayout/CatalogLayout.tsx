@@ -19,11 +19,11 @@ const CatalogLayout: React.FC<ILayout> = ({ children, product, ...props }) => {
             {product && (
                 <Wrapper>
                     <ImageWrapper>
-                        {product?.image && (
+                        {product?.image?.sourceUrl && (
                             <ImageCover>
                                 <Image
                                     src={product.image.sourceUrl}
-                                    alt={product.name}
+                                    alt={product.name || ''}
                                     layout="fill"
                                     objectFit="cover"
                                 />
@@ -33,11 +33,12 @@ const CatalogLayout: React.FC<ILayout> = ({ children, product, ...props }) => {
 
                     <Content>
                         <Categories>
-                            {product?.productCategories?.nodes.length &&
+                            {product?.productCategories?.nodes &&
+                                product.productCategories.nodes.length > 0 &&
                                 product?.productCategories.nodes.map(
                                     (category) => (
-                                        <span key={category.slug}>
-                                            {category.name}
+                                        <span key={category?.slug}>
+                                            {category?.name}
                                         </span>
                                     )
                                 )}

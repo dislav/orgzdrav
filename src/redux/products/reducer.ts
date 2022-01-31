@@ -1,12 +1,12 @@
+import { SimpleProductFragment } from '@graphql';
 import { ProductsActionTypes, SET_PRODUCTS } from './actions';
-import { SimpleProductProps } from '@graphql/fragments/simpleProduct';
 
-const initialState: SimpleProductProps[] = [];
+const initialState: SimpleProductFragment[] = [];
 
 export const productsReducer = (
     state = initialState,
     action: ProductsActionTypes
-): SimpleProductProps[] => {
+): SimpleProductFragment[] => {
     switch (action.type) {
         case SET_PRODUCTS:
             return action.payload;

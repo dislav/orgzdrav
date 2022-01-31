@@ -3,7 +3,7 @@ import { InferGetStaticPropsType } from 'next';
 import Image from 'next/image';
 
 import client from '@graphql/client';
-import { GetPageQuery, GetPageQueryProps } from '@graphql/queries/page';
+import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
 import Layout from '@components/Layout/Layout';
 import ContentSection from '@components/ContentSection/ContentSection';
@@ -12,23 +12,29 @@ const PaymentMethods: React.FC<
     InferGetStaticPropsType<typeof getStaticProps>
 > = ({ page }) => {
     return (
-        <Layout meta={{ title: page.title }}>
+        <Layout meta={{ title: page?.title || 'Способы оплаты' }}>
             <Image
                 src="/images/pages/payment-methods.png"
-                alt={page.title}
+                alt={page?.title || ''}
                 width={1080}
                 height={579}
             />
-            <ContentSection
-                dangerouslySetInnerHTML={{ __html: page.content }}
-            />
+
+            {page?.content && (
+                <ContentSection
+                    dangerouslySetInnerHTML={{ __html: page.content }}
+                />
+            )}
         </Layout>
     );
 };
 
 export const getStaticProps = async () => {
-    const { data: page } = await client.query<GetPageQueryProps>({
-        query: GetPageQuery,
+    const { data: page } = await client.query<
+        GetPageQuery,
+        GetPageQueryVariables
+    >({
+        query: GetPageDocument,
         fetchPolicy: 'no-cache',
         variables: { id: 'payment-methods' },
     });

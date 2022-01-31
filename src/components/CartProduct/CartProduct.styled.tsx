@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import PriceComponent from "@components/Price/Price"
+
 export const Container = styled.div`
     display: flex;
     align-items: center;
@@ -29,7 +31,7 @@ export const RightWrapper = styled.div`
     align-items: center;
 `;
 
-export const Price = styled.span`
+export const Price = styled(PriceComponent)`
     margin-left: auto;
 `;
 

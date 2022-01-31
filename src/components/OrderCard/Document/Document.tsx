@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 
-import { DownloadableItemProps } from '@graphql/fragments/downloadableItem';
+import { DownloadableItemFragment } from '@graphql';
+
 import {
     Container,
     Name,
@@ -13,7 +14,7 @@ import {
 import Modal from '@components/Modal/Modal';
 import Video from '@components/Video/Video';
 
-interface IDocument extends DownloadableItemProps {
+interface IDocument extends DownloadableItemFragment {
     className?: string;
 }
 
@@ -27,9 +28,9 @@ const Document: React.FC<IDocument> = ({
     const [isOpen, setIsOpen] = useState(false);
 
     const onClickHandler = () => {
-        if (['mp4'].includes(download.fileExt)) {
+        if (download?.fileExt && ['mp4'].includes(download.fileExt)) {
             setIsOpen(true);
-        } else {
+        } else if (url) {
             window.open(url);
         }
     };
@@ -47,14 +48,14 @@ const Document: React.FC<IDocument> = ({
                                 .format('DD.MM.YYYY')}
                         </Date>
                     )}
-                    {download.fileExt && <Format>{download.fileExt}</Format>}
+                    {download?.fileExt && <Format>{download.fileExt}</Format>}
                 </Footer>
             </Container>
 
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <VideoModal>
                     <Video
-                        url={url}
+                        url={url || ''}
                         playing
                         controls
                         config={{

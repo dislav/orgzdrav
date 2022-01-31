@@ -1,0 +1,9 @@
+#import "./CartItem.graphql"
+
+fragment CartContentItem on CartToCartItemConnection {
+    itemCount
+    productCount
+    nodes {
+        ...CartItem
+    }
+}

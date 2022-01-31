@@ -24,7 +24,7 @@ const ProfileCard: React.FC<IProfileCard> = ({ className }) => {
             }`;
         }
 
-        return profile.username[0];
+        return profile?.username?.[0] || '';
     }, [profile]);
 
     return (

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { createStore, Store, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { logger } from 'redux-logger';
+// import { logger } from 'redux-logger';
 
 import rootSagas from './sagas';
 import rootReducer, { RootReducer } from './rootReducer';
@@ -14,7 +14,7 @@ export const makeStore = (initialState = {}) => {
     const store = createStore(
         rootReducer,
         initialState,
-        applyMiddleware(sagaMiddleware, logger)
+        applyMiddleware(sagaMiddleware)
     );
 
     sagaMiddleware.run(rootSagas);

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { SimpleProductFragment } from '@graphql';
+
 import {
     Container,
     Products,
     Footer,
+    Row,
     Price,
     Loader,
 } from './CartSummary.styled';
@@ -12,11 +15,12 @@ import CartProduct from '@components/CartProduct/CartProduct';
 import Spinner from '@components/Spinner/Spinner';
 import PromoCode from '@components/CartSummary/PromoCode/PromoCode';
 
-import { getCart } from '@redux/cart/selectors';
+import { getCart, getCartProducts } from '@redux/cart/selectors';
 import { useCart } from '@hooks/useCart';
 
 const CartSummary: React.FC = () => {
     const cart = useSelector(getCart);
+    const products = useSelector(getCartProducts);
 
     const { onRemoveProductFromCart, isLoading } = useCart();
 
@@ -30,26 +34,35 @@ const CartSummary: React.FC = () => {
                 </Loader>
             )}
 
-            <Products>
-                {cart.contents.nodes.map(
-                    ({ key: productKey, quantity, total, product }, index) => (
+            {products.length > 0 && (
+                <Products>
+                    {products.map((product, index) => (
                         <CartProduct
                             key={index}
-                            quantity={quantity}
-                            totalPrice={total}
-                            onRemoveProduct={onRemoveProduct(productKey)}
-                            {...product.node}
+                            onRemoveProduct={onRemoveProduct(
+                                product?.key || ''
+                            )}
+                            totalPrice={product?.total}
+                            {...(product?.product
+                                ?.node as SimpleProductFragment)}
                         />
-                    )
-                )}
-            </Products>
+                    ))}
+                </Products>
+            )}
 
             <PromoCode />
 
             <Footer>
-                <span>Итого:</span>
-                {cart.total && (
-                    <Price dangerouslySetInnerHTML={{ __html: cart.total }} />
+                <Row>
+                    <span>Итого:</span>
+                    {cart.subtotal && <Price regularPrice={cart.subtotal} />}
+                </Row>
+
+                {cart.discountTotal && cart.discountTotal !== '0&nbsp;₽' && (
+                    <Row>
+                        <span>Скидка:</span>
+                        <Price regularPrice={cart.discountTotal} />
+                    </Row>
                 )}
             </Footer>
         </Container>

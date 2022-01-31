@@ -1,0 +1,5 @@
+fragment AppliedCoupon on AppliedCoupon {
+    code
+    discountAmount
+    discountTax
+}

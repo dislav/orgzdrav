@@ -14,7 +14,7 @@ import {
     Link,
 } from './RestorePasswordForm.styled';
 
-import { emailRegex } from '@constants/constants';
+import { useConfig } from '@context/configProvider';
 
 interface IRestorePasswordForm {
     className?: string;
@@ -30,6 +30,8 @@ const RestorePasswordForm: React.FC<IRestorePasswordForm> = ({
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+    const emailRegex = useConfig().regex.email;
 
     const { handleSubmit, control } = useForm<SendPasswordResetEmailInput>();
 

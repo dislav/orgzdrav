@@ -11,6 +11,7 @@ import {
 } from './WebinarList.styled';
 import WebinarPreview from '@layouts/WebinarLayout/WebinarPreview/WebinarPreview';
 import ProductCard from '@components/ProductCard/ProductCard';
+import EmptyList from '@components/EmptyList/EmptyList';
 
 enum WebinarEnum {
     New,
@@ -46,19 +47,40 @@ const WebinarList: React.FC<IWebinarList> = ({ className, webinars }) => {
 
     return (
         <Container className={className}>
-            <Title>Предстоящие вебинары</Title>
-            <NewBroadcasts>
-                {webinarsByTypes.get(WebinarEnum.New)?.map((webinar, index) => (
-                    <WebinarPreview key={index} webinar={webinar} />
-                ))}
-            </NewBroadcasts>
+            {webinarsByTypes.size ? (
+                <>
+                    {webinarsByTypes.get(WebinarEnum.New) && (
+                        <>
+                            <Title>Предстоящие вебинары</Title>
+                            <NewBroadcasts>
+                                {webinarsByTypes
+                                    .get(WebinarEnum.New)
+                                    ?.map((webinar, index) => (
+                                        <WebinarPreview
+                                            key={index}
+                                            webinar={webinar}
+                                        />
+                                    ))}
+                            </NewBroadcasts>
+                        </>
+                    )}
 
-            <Title>Записанные вебинары</Title>
-            <OldBroadcasts>
-                {webinarsByTypes.get(WebinarEnum.Old)?.map((webinar, index) => (
-                    <ProductCard key={index} {...webinar} />
-                ))}
-            </OldBroadcasts>
+                    {webinarsByTypes.get(WebinarEnum.Old) && (
+                        <>
+                            <Title>Записанные вебинары</Title>
+                            <OldBroadcasts>
+                                {webinarsByTypes
+                                    .get(WebinarEnum.Old)
+                                    ?.map((webinar, index) => (
+                                        <ProductCard key={index} {...webinar} />
+                                    ))}
+                            </OldBroadcasts>
+                        </>
+                    )}
+                </>
+            ) : (
+                <EmptyList>Список вебинаров пуст</EmptyList>
+            )}
         </Container>
     );
 };

@@ -18,7 +18,6 @@ const initialState: CartState = {
     error: null,
     isEmpty: true,
     total: '0',
-    shippingTotal: '0',
     contentsTotal: '0',
     discountTotal: '0',
     appliedCoupons: [],

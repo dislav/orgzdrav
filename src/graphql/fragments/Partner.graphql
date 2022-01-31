@@ -1,0 +1,12 @@
+fragment Partner on Partner {
+    slug
+    title
+    partnerMain {
+        image {
+            sourceUrl
+        }
+        description
+        city
+        link
+    }
+}

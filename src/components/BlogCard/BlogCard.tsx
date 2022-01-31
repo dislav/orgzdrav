@@ -2,10 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { PostProps } from '@graphql/fragments/post';
+import { PostFragment } from '@graphql';
+
 import { Container, ImageWrapper, Content } from './BlogCard.styled';
 
-interface IBlogCard extends PostProps {
+interface IBlogCard extends PostFragment {
     className?: string;
 }
 
@@ -18,11 +19,11 @@ const BlogCard: React.FC<IBlogCard> = ({
     return (
         <Link href={`/blog/${slug}`} passHref>
             <Container className={className}>
-                {featuredImage.node.sourceUrl && (
+                {featuredImage?.node?.sourceUrl && (
                     <ImageWrapper>
                         <Image
                             src={featuredImage.node.sourceUrl}
-                            alt={title}
+                            alt={title || ''}
                             layout="fill"
                             objectFit="cover"
                         />

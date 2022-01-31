@@ -2,7 +2,7 @@ import React from 'react';
 import { InferGetStaticPropsType } from 'next';
 
 import client from '@graphql/client';
-import { GetPostsDocument, GetPostsQuery } from '@graphql';
+import { GetPostsDocument, GetPostsQuery, PostFragment } from '@graphql';
 
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
 import BlogList from '@layouts/BlogLayout/BlogList/BlogList';
@@ -17,7 +17,7 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             }}
             hideFooter
         >
-            <BlogList posts={posts} />
+            <BlogList posts={posts as PostFragment[]} />
         </BlogLayout>
     );
 };

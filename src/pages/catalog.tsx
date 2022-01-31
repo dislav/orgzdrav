@@ -8,6 +8,7 @@ import {
     GetProductsQueryVariables,
     OrderEnum,
     ProductsOrderByEnum,
+    SimpleProductFragment,
     useGetProductsLazyQuery,
 } from '@graphql';
 
@@ -45,7 +46,11 @@ const Catalog: React.FC = () => {
                 });
 
                 if (data?.products?.nodes)
-                    dispatch(setProducts(data.products.nodes));
+                    dispatch(
+                        setProducts(
+                            data.products.nodes as SimpleProductFragment[]
+                        )
+                    );
             } catch (e) {
                 console.log(e);
             }

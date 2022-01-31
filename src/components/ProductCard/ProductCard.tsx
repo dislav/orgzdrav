@@ -9,6 +9,8 @@ import {
     Container,
     ImageWrapper,
     Footer,
+    Title,
+    Description,
     Button,
     FooterWrapper,
 } from './ProductCard.styled';
@@ -71,10 +73,10 @@ const ProductCard: React.FC<SimpleProductFragment> = ({
                 )}
 
                 <Footer>
-                    <h2>{name}</h2>
+                    <Title>{name}</Title>
 
                     {shortDescription && (
-                        <div
+                        <Description
                             dangerouslySetInnerHTML={{
                                 __html: shortDescription,
                             }}

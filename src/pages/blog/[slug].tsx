@@ -8,6 +8,7 @@ import {
     GetPostQueryVariables,
     GetPostsDocument,
     GetPostsQuery,
+    Post_Postmain_Files,
 } from '@graphql';
 
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
@@ -26,7 +27,9 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             }}
         >
             {post?.postMain?.files && post.postMain.files.length > 0 && (
-                <DownloadFiles files={post.postMain.files} />
+                <DownloadFiles
+                    files={post.postMain.files as Post_Postmain_Files[]}
+                />
             )}
 
             {post?.postMain?.content && post.postMain.content.length > 0 && (

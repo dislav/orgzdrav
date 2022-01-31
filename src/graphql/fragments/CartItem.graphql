@@ -1,0 +1,12 @@
+#import "./SimpleProduct.graphql"
+
+fragment CartItem on CartItem {
+    key
+    total
+    quantity
+    product {
+        node {
+            ...SimpleProduct
+        }
+    }
+}

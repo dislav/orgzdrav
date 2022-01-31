@@ -9,6 +9,8 @@ import {
     GetPartnersQuery,
     GetPeopleReviewsDocument,
     GetPeopleReviewsQuery,
+    PartnerFragment,
+    PeopleReviewFragment,
 } from '@graphql';
 
 import HomeLayout from '@layouts/HomeLayout/HomeLayout';
@@ -106,13 +108,13 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 <ArrowsDown />
             </GradientLine>
 
-            <ReviewsSection reviews={reviews} />
+            <ReviewsSection reviews={reviews as PeopleReviewFragment[]} />
 
             <GradientLine>
                 <ArrowsDown />
             </GradientLine>
 
-            <PartnersSection partners={partners} />
+            <PartnersSection partners={partners as PartnerFragment[]} />
 
             <TextSection color={white} textAlign="center" margin="20px 0 40px">
                 <p>

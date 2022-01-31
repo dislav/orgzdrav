@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 import { Container as StyledCartProduct } from '@components/CartProduct/CartProduct.styled';
+import PriceComponent from '@components/Price/Price';
 
 export const Container = styled.div`
     position: relative;
@@ -18,12 +19,22 @@ export const Products = styled.div`
 
 export const Footer = styled.div`
     display: flex;
-    align-items: center;
+    flex-direction: column;
     background-color: ${({ theme }) => theme.colors.white};
     padding: 16px;
 `;
 
-export const Price = styled.div`
+export const Row = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+`;
+
+export const Price = styled(PriceComponent)`
     margin-left: auto;
 `;
 

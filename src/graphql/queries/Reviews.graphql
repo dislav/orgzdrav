@@ -1,13 +1,9 @@
+#import "../fragments/PeopleReview"
+
 query GetPeopleReviews {
     peopleReviews {
         nodes {
-            slug
-            title
-            reviewMain {
-                image {
-                    sourceUrl
-                }
-            }
+            ...PeopleReview
         }
     }
 }

@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Swiper, { SwiperOptions, Pagination, Keyboard } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
-import { PartnerProps } from '@graphql/queries/partners';
+import { PartnerFragment } from '@graphql';
+
 import {
     Container,
     Header,
@@ -15,7 +16,7 @@ import {
 import { ArrowRight, Link } from '@icons/icons';
 
 interface IReviewsSection {
-    partners: PartnerProps[];
+    partners: PartnerFragment[];
 }
 
 Swiper.use([Pagination, Keyboard]);
