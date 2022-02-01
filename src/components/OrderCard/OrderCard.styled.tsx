@@ -56,7 +56,7 @@ export const Documents = styled.div`
     flex-wrap: wrap;
 
     ${StyledDocument} {
-        width: 146px;
+        width: 80px;
         margin-right: 12px;
     }
 `;

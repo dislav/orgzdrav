@@ -1,48 +1,48 @@
 import styled from 'styled-components';
+import { Button } from '@mui/material';
 
-export const Container = styled.div`
-    position: relative;
+export const Container = styled(Button)`
+    && {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80px;
+        color: ${({ theme }) => theme.colors.primary};
+        background: ${({ theme }) => theme.colors.gray05};
+        border: 2px solid ${({ theme }) => theme.colors.gray15};
+        border-radius: 6px;
+        cursor: pointer;
+        overflow: hidden;
+        padding: 0 0 16px;
+
+        & > svg {
+            width: 50%;
+            height: 50%;
+        }
+
+        &:hover {
+            background: ${({ theme }) => theme.colors.gray15};
+        }
+    }
+`;
+
+export const TooltipContent = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    min-height: 90px;
-    background-color: ${({ theme }) => theme.colors.gray05};
-    border: 1px solid ${({ theme }) => theme.colors.gray15};
-    border-radius: 6px;
-    cursor: pointer;
-    overflow: hidden;
 `;
 
-export const Name = styled.div`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: 16px;
-    line-height: 1.2;
-    margin: auto;
-`;
-
-export const Footer = styled.div`
+export const Ext = styled.span`
+    position: absolute;
+    left: 0;
+    bottom: 8px;
     display: flex;
     align-items: center;
-    padding-left: 12px;
-`;
-
-export const Date = styled.span`
+    justify-content: center;
+    width: 100%;
     font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.black};
-    margin-right: 8px;
-`;
-
-export const Format = styled.span`
-    font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.primary};
-    border-radius: 6px 0 0 0;
-    padding: 4px 6px;
-    margin-left: auto;
 `;
 
 export const VideoModal = styled.div`

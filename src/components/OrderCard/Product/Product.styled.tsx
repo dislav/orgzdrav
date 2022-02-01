@@ -7,7 +7,7 @@ export const Container = styled.a`
     flex-direction: column;
     width: 100px;
     height: 100px;
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
 
     &:before {

@@ -38,10 +38,10 @@ const defaultConfig: IConfig = {
                 title: 'Вебинары',
                 href: '/webinars',
             },
-            {
-                title: 'Семинары',
-                href: '/seminars',
-            },
+            // {
+            //     title: 'Семинары',
+            //     href: '/seminars',
+            // },
         ],
     },
     order: {

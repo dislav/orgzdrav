@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { Tooltip } from '@mui/material';
 import dayjs from 'dayjs';
 
 import { DownloadableItemFragment } from '@graphql';
 
 import {
     Container,
-    Name,
-    Footer,
-    Date,
-    Format,
+    Ext,
+    TooltipContent,
     VideoModal,
 } from './Document.styled';
 import Modal from '@components/Modal/Modal';
 import Video from '@components/Video/Video';
+
+import { ArchiveFile, DefaultFile, ImageFile, MediaFile } from '@icons/icons';
 
 interface IDocument extends DownloadableItemFragment {
     className?: string;
@@ -27,8 +28,21 @@ const Document: React.FC<IDocument> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const fileExt = download?.fileExt || 'default';
+
+    const iconsMap = new Map<string[], React.ReactNode>([
+        // eslint-disable-next-line react/jsx-key
+        [['jpg', 'jpeg', 'png', 'webp'], <ImageFile />],
+        // eslint-disable-next-line react/jsx-key
+        [['mp4', 'mp3'], <MediaFile />],
+        // eslint-disable-next-line react/jsx-key
+        [['zip', 'rar'], <ArchiveFile />],
+        // eslint-disable-next-line react/jsx-key
+        [['pdf'], <DefaultFile />],
+    ]);
+
     const onClickHandler = () => {
-        if (download?.fileExt && ['mp4'].includes(download.fileExt)) {
+        if (['mp4'].includes(fileExt)) {
             setIsOpen(true);
         } else if (url) {
             window.open(url);
@@ -37,20 +51,36 @@ const Document: React.FC<IDocument> = ({
 
     return (
         <>
-            <Container className={className} onClick={onClickHandler}>
-                <Name>{name}</Name>
-
-                <Footer>
-                    {accessExpires && (
-                        <Date>
+            <Tooltip
+                placement="top"
+                title={
+                    <TooltipContent>
+                        {name && (
+                            <span>
+                                {name.length > 16
+                                    ? `Файл: ${name.slice(0, 16)}...${
+                                          download?.fileExt || ''
+                                      }`
+                                    : name}
+                            </span>
+                        )}
+                        <span>
+                            Доступен до{' '}
                             {dayjs(accessExpires)
                                 .utc(false)
                                 .format('DD.MM.YYYY')}
-                        </Date>
-                    )}
-                    {download?.fileExt && <Format>{download.fileExt}</Format>}
-                </Footer>
-            </Container>
+                        </span>
+                    </TooltipContent>
+                }
+            >
+                <Container className={className} onClick={onClickHandler}>
+                    {Array.from(iconsMap.entries()).find(([keys]) =>
+                        keys.includes(fileExt)
+                    )?.[1] || <DefaultFile />}
+
+                    {download?.fileExt && <Ext>{download.fileExt}</Ext>}
+                </Container>
+            </Tooltip>
 
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <VideoModal>
