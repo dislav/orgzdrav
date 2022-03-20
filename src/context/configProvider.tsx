@@ -1,6 +1,9 @@
 import React, { createContext, useContext } from 'react';
 
 interface IConfig {
+    global: {
+        defaultEmail: string;
+    };
     header: {
         links: {
             title: string;
@@ -12,10 +15,13 @@ interface IConfig {
     };
     regex: {
         email: RegExp;
-    }
+    };
 }
 
 const defaultConfig: IConfig = {
+    global: {
+        defaultEmail: 'nazimkin18@mail.ru',
+    },
     header: {
         links: [
             {
@@ -27,6 +33,18 @@ const defaultConfig: IConfig = {
                 href: '/catalog',
             },
             {
+                title: 'Услуги',
+                href: '/services',
+            },
+            {
+                title: 'Вебинары',
+                href: '/webinars',
+            },
+            {
+                title: 'Семинары',
+                href: '/seminars',
+            },
+            {
                 title: 'Статьи',
                 href: '/blog',
             },
@@ -35,13 +53,13 @@ const defaultConfig: IConfig = {
                 href: '/information',
             },
             {
-                title: 'Вебинары',
-                href: '/webinars',
+                title: 'Акции',
+                href: '/stocks',
             },
-            // {
-            //     title: 'Семинары',
-            //     href: '/seminars',
-            // },
+            {
+                title: 'Контакты',
+                href: '/contacts',
+            },
         ],
     },
     order: {

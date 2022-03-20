@@ -6,13 +6,13 @@ export const Container = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: column;
+    padding: 80px 0;
 `;
 
 export const Header = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: ${({ theme }) => theme.colors.white};
     margin-bottom: 40px;
 
     > h2 {
@@ -33,7 +33,7 @@ export const Slider = styled(Swiper)`
     padding-bottom: 40px;
 
     .swiper-slide {
-        max-width: 820px;
+        max-width: 360px;
         width: 100%;
         will-change: scale;
         transform: scale(0.9);
@@ -88,6 +88,7 @@ export const SlideText = styled.div`
     display: flex;
     flex-direction: column;
     border-top: 1px solid ${({ theme }) => theme.colors.gray10};
+    text-align: center;
     padding: 16px 20px;
 
     > span {
@@ -98,6 +99,7 @@ export const SlideText = styled.div`
 export const SlideTextHeader = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
 
     > h3 {
         font-size: 18px;
@@ -113,7 +115,7 @@ export const SlideTextHeader = styled.div`
         color: ${({ theme }) => theme.colors.text};
         background-color: ${({ theme }) => theme.colors.gray05};
         border-radius: 4px;
-        margin-left: auto;
+        margin-left: 10px;
 
         > svg {
             width: 60%;

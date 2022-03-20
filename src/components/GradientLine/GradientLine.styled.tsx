@@ -7,7 +7,6 @@ export const Container = styled.div<{ hasChildren?: boolean }>`
     justify-content: center;
     width: 100%;
     height: 1px;
-    color: ${({ theme }) => theme.colors.white};
     margin: 60px 0;
 
     &:before,
@@ -21,20 +20,12 @@ export const Container = styled.div<{ hasChildren?: boolean }>`
 
     &:before {
         left: 0;
-        background: linear-gradient(
-            to left,
-            ${({ theme }) => theme.colors.white},
-            transparent
-        );
+        background: linear-gradient(to left, currentColor, transparent);
     }
 
     &:after {
         right: 0;
-        background: linear-gradient(
-            to right,
-            ${({ theme }) => theme.colors.white},
-            transparent
-        );
+        background: linear-gradient(to right, currentColor, transparent);
     }
 
     > svg {

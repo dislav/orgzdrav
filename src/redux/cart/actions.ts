@@ -5,6 +5,7 @@ export const CART_FETCH_SUCCEEDED = 'CART_FETCH_SUCCEEDED';
 export const CART_FETCH_FAILED = 'CART_FETCH_FAILED';
 
 export const SET_CART = 'SET_CART';
+export const CLEAR_CART = 'CLEAR_CART';
 
 interface FetchCartAction {
     type: typeof CART_FETCH_REQUESTED;
@@ -23,6 +24,10 @@ interface FetchCartFailedAction {
 interface SetCartAction {
     type: typeof SET_CART;
     payload: CartFragment;
+}
+
+interface ClearCartAction {
+    type: typeof CLEAR_CART;
 }
 
 export type CartActionTypes =
@@ -48,4 +53,8 @@ export const fetchCartFailed = (payload: string): CartActionTypes => ({
 export const setCart = (payload: CartFragment): CartActionTypes => ({
     type: SET_CART,
     payload,
+});
+
+export const clearCart = (): ClearCartAction => ({
+    type: CLEAR_CART,
 });

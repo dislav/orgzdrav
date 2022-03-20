@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    color: ${({ theme }) => theme.colors.white};
-
     h3 {
         font-size: 24px;
         line-height: 1.2;

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { up } from 'styled-breakpoints';
+import { buttonClasses } from '@mui/material';
 
 import { Container as StyledProfile } from '@components/Profile/Profile.styled';
 import Modal from '@components/Modal/Modal';
+import AuthButton from '@components/AuthButton/AuthButton';
 import {
     Close as StyledModalClose,
     Content as StyledModalContent,
@@ -13,22 +15,22 @@ export const Container = styled.header`
     top: 0;
     display: flex;
     flex-direction: column;
-    height: 52px;
+    align-items: center;
+    height: 58px;
     background-color: ${({ theme }) => theme.colors.primary};
+    padding: 0 40px;
     z-index: 10;
 `;
 
-export const Wrapper = styled.div`
-    display: flex;
-    align-items: center;
-    max-width: 1100px;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 16px;
+export const Logo = styled.a`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
 
-    ${up('xl')} {
-        padding: 0;
+    img {
+        width: 100%;
+        height: 100%;
     }
 `;
 
@@ -41,12 +43,15 @@ export const Links = styled.div`
         display: flex;
         align-items: center;
     }
+    
+    ${Logo} {
+        margin-right: 26px;
+    }
 
     > a {
         font-size: 14px;
-        text-transform: uppercase;
         color: ${({ theme }) => theme.colors.white};
-        margin-right: 30px;
+        margin-right: 18px;
         cursor: pointer;
 
         &:last-child {
@@ -59,11 +64,10 @@ export const Links = styled.div`
     }
 `;
 
-export const Login = styled.div`
-    color: ${({ theme }) => theme.colors.white};
-    font-size: 14px;
-    margin-left: auto;
-    cursor: pointer;
+export const Login = styled(AuthButton)`
+    &.${buttonClasses.root} {
+        margin-left: auto;
+    }
 `;
 
 export const SandwichIcon = styled.div`

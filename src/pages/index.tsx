@@ -1,7 +1,6 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
 import Image from 'next/image';
-import { useTheme } from 'styled-components';
 
 import client from '@graphql/client';
 import {
@@ -27,10 +26,8 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     reviews,
     partners,
 }) => {
-    const { white } = useTheme().colors;
-
     return (
-        <HomeLayout>
+        <HomeLayout hideShopFooter>
             <Image src="/images/1.png" alt="" width={500} height={500} />
 
             <ButtonLink
@@ -43,12 +40,7 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Посмотреть каталог
             </ButtonLink>
 
-            <TextSection
-                title="ВНИМАНИЕ!!!"
-                color={white}
-                textAlign="center"
-                margin="40px 0"
-            >
+            <TextSection title="ВНИМАНИЕ!!!" textAlign="center" margin="40px 0">
                 <p>
                     В&nbsp;связи с&nbsp;большим количеством заявок
                     на&nbsp;обновление и приобретение Пакетов документов,
@@ -84,7 +76,7 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
             <Image src="/images/2.png" alt="" width={820} height={820} />
 
-            <TextSection color={white} textAlign="center">
+            <TextSection textAlign="center">
                 <p>*Оплата от организации возможна при заказе от 10.000 руб.</p>
             </TextSection>
 
@@ -104,41 +96,11 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
             <Image src="/images/5.png" alt="" width={500} height={440} />
 
-            <GradientLine>
-                <ArrowsDown />
-            </GradientLine>
-
             <ReviewsSection reviews={reviews as PeopleReviewFragment[]} />
-
-            <GradientLine>
-                <ArrowsDown />
-            </GradientLine>
 
             <PartnersSection partners={partners as PartnerFragment[]} />
 
-            <TextSection color={white} textAlign="center" margin="20px 0 40px">
-                <p>
-                    За текущий год мы отправили клиентам 2000 пакетов документов
-                </p>
-            </TextSection>
-
-            <ButtonLink
-                href="/catalog"
-                options={{
-                    fullWidth: true,
-                }}
-            >
-                Посмотреть каталог
-            </ButtonLink>
-
-            <GradientLine>
-                <ArrowsDown />
-            </GradientLine>
-
             <QuestionsSection />
-
-            <GradientLine />
-
             <SocialsSection />
         </HomeLayout>
     );

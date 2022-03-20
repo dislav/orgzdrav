@@ -5,15 +5,14 @@ import Link from 'next/link';
 
 import {
     Container,
-    Wrapper,
+    Logo,
     Links,
-    Login,
     SandwichIcon,
     SandwichModal,
+    Login,
 } from './Header.styled';
 import Profile from '@components/Profile/Profile';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
-import AuthButton from '@components/AuthButton/AuthButton';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 
 import { useConfig } from '@context/configProvider';
@@ -42,30 +41,27 @@ const Header: React.FC = () => {
 
     return (
         <Container>
-            <Wrapper>
-                <Links>
-                    {renderLinks()}
+            <Links>
+                <Link href="/" passHref>
+                    <Logo>
+                        <img src="/favicon.jpeg" alt="" />
+                    </Logo>
+                </Link>
 
-                    <ClientOnly>
-                        {isLoggedIn ? (
-                            <Profile {...profile} />
-                        ) : (
-                            <AuthButton
-                                onSuccessAuth={router.reload}
-                                renderButton={(onClick) => (
-                                    <Login onClick={onClick}>
-                                        Войти / Зарегистрироваться
-                                    </Login>
-                                )}
-                            />
-                        )}
-                    </ClientOnly>
-                </Links>
+                {renderLinks()}
 
-                <SandwichIcon onClick={onOpen}>
-                    <span />
-                </SandwichIcon>
-            </Wrapper>
+                <ClientOnly>
+                    {isLoggedIn ? (
+                        <Profile {...profile} />
+                    ) : (
+                        <Login onSuccessAuth={router.reload}>Войти</Login>
+                    )}
+                </ClientOnly>
+            </Links>
+
+            <SandwichIcon onClick={onOpen}>
+                <span />
+            </SandwichIcon>
 
             <SandwichModal isOpen={isOpen} onClose={onClose}>
                 <MobileMenu profile={profile}>{renderLinks()}</MobileMenu>

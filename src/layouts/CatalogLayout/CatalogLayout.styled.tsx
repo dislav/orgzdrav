@@ -5,8 +5,11 @@ import PriceComponent from '@components/Price/Price';
 import { Container as StyledSearchForm } from '@components/SearchForm/SearchForm.styled';
 
 export const Container = styled(Layout)`
+    max-width: 1100px;
+    margin: 80px auto 160px;
+
     ${StyledSearchForm} {
-        margin-bottom: 40px;
+        margin-bottom: 26px;
     }
 `;
 
@@ -65,4 +68,16 @@ export const Categories = styled.div`
 export const Price = styled(PriceComponent)`
     color: ${({ theme }) => theme.colors.white};
     margin-top: auto;
+`;
+
+export const AccordionList = styled.div`
+    background: ${({ theme }) => theme.colors.white};
+    border-radius: 20px;
+    padding: 20px;
+`;
+
+export const AccordionTitle = styled.span`
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
 `;

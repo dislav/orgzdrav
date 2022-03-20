@@ -1,7 +1,7 @@
 #import "../fragments/SimpleProduct.graphql"
 
-query GetProductCategories {
-    productCategories {
+query GetProductCategories($first: Int) {
+    productCategories(first: $first) {
         nodes {
             slug
             name

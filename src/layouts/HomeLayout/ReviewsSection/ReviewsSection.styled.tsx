@@ -6,13 +6,15 @@ export const Container = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: column;
+    background: ${({ theme }) => theme.colors.gray15};
+    overflow: hidden;
+    padding: 80px 0;
 `;
 
 export const Header = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: ${({ theme }) => theme.colors.white};
     margin-bottom: 40px;
 
     > h2 {
@@ -29,21 +31,24 @@ export const Header = styled.div`
 
 export const Slider = styled(Swiper)`
     padding-bottom: 40px;
+    overflow: visible;
 
     .swiper-slide {
-        max-width: 820px;
+        max-width: 360px;
         will-change: scale;
-        opacity: 0.5;
-        transform: scale(0.9);
-        transition: transform 0.6s, opacity 0.6s;
-
-        &-active {
-            opacity: 1;
-            transform: scale(1);
-        }
+        transform: scale(1);
+        transition: transform 0.6s, opacity 0.6s, box-shadow 0.3s;
+        box-shadow: none;
+        margin: 0 10px;
 
         img {
             border-radius: 4px;
+        }
+
+        &:hover {
+            transform: scale(1.2);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+            z-index: 10;
         }
     }
 

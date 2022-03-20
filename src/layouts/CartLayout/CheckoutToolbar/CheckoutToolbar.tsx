@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Switch, FormControlLabel, Tooltip } from '@mui/material';
@@ -6,6 +6,7 @@ import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 import {
     SimpleProductFragment,
     useCheckoutMutation,
+    useGetCartLazyQuery,
     useSubmitGfFormMutation,
     ViewerFragment,
 } from '@graphql';
@@ -13,7 +14,7 @@ import {
 import { Container, Wrapper, AuthButton } from './CheckoutToolbar.styled';
 
 import { useConfig } from '@context/configProvider';
-import { getCartTotalPrice } from '@redux/cart/selectors';
+import { getCartProducts, getCartTotalPrice } from '@redux/cart/selectors';
 import { getProfile } from '@redux/profile/selectors';
 import { addOrder } from '@redux/orders/actions';
 
@@ -25,19 +26,45 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
+    const {
+        global: { defaultEmail },
+        order: { maxOrderPrice },
+    } = useConfig();
+
     const profile = useSelector(getProfile);
 
     const [isEntity, setIsEntity] = useState(false);
 
+    const cartProducts = useSelector(getCartProducts);
     const total = useSelector(getCartTotalPrice);
 
-    const maxOrderPrice = useConfig().order.maxOrderPrice;
+    const productsByEmails = useMemo(() => {
+        const cartProductMap = new Map<string, SimpleProductFragment[]>();
+
+        cartProducts.forEach((product) => {
+            const simpleProduct = product?.product
+                ?.node as SimpleProductFragment;
+            const email = simpleProduct.productAdditional?.mail || defaultEmail;
+
+            cartProductMap.has(email)
+                ? cartProductMap.set(email, [
+                      ...(cartProductMap.get(email) || []),
+                      simpleProduct,
+                  ])
+                : cartProductMap.set(email, [simpleProduct]);
+        });
+
+        return Array.from(cartProductMap);
+    }, [cartProducts, defaultEmail]);
+
     const totalPrice = +total.replace(/\D+/gm, '');
     const isUnavailablePrice = isEntity && maxOrderPrice > totalPrice;
 
     const [checkout, { loading }] = useCheckoutMutation();
     const [submitGfForm, { loading: submitGfLoading }] =
         useSubmitGfFormMutation();
+
+    const [fetchCart, { loading: cartLoading }] = useGetCartLazyQuery();
 
     const onSubmitOrder = useCallback(
         async (user?: ViewerFragment) => {
@@ -62,58 +89,55 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 });
 
                 if (response.data?.checkout?.result === 'success') {
-                    const formResponse = await submitGfForm({
-                        variables: {
-                            input: {
-                                id: '1',
-                                fieldValues: [
-                                    {
-                                        id: 1,
-                                        emailValues: {
-                                            value: userValues.email,
-                                        },
+                    await Promise.all([
+                        productsByEmails.map(([email, products]) =>
+                            submitGfForm({
+                                variables: {
+                                    input: {
+                                        id: '1',
+                                        fieldValues: [
+                                            {
+                                                id: 1,
+                                                emailValues: {
+                                                    value: userValues.email,
+                                                },
+                                            },
+                                            {
+                                                id: 2,
+                                                nameValues: {
+                                                    first: userValues.firstName,
+                                                    last: userValues.lastName,
+                                                },
+                                            },
+                                            {
+                                                id: 6,
+                                                value: products
+                                                    .map(
+                                                        (product) =>
+                                                            `• ${product.name}`
+                                                    )
+                                                    .join('\n'),
+                                            },
+                                            {
+                                                id: 4,
+                                                emailValues: {
+                                                    value: email,
+                                                },
+                                            },
+                                            {
+                                                id: 5,
+                                                value:
+                                                    response?.data?.checkout?.order?.databaseId?.toString() ||
+                                                    '',
+                                            },
+                                        ],
                                     },
-                                    {
-                                        id: 2,
-                                        nameValues: {
-                                            first: userValues.firstName,
-                                            last: userValues.lastName,
-                                        },
-                                    },
-                                    {
-                                        id: 6,
-                                        value: response.data.checkout.order?.lineItems?.nodes
-                                            ?.map(
-                                                (item) =>
-                                                    `• ${
-                                                        (
-                                                            item?.product as SimpleProductFragment
-                                                        ).name
-                                                    }`
-                                            )
-                                            .join('\n'),
-                                    },
-                                    {
-                                        id: 4,
-                                        emailValues: {
-                                            value: 'v1.grigoriev@yandex.ru',
-                                        },
-                                    },
-                                    {
-                                        id: 5,
-                                        value:
-                                            response.data.checkout.order?.databaseId?.toString() ||
-                                            '',
-                                    },
-                                ],
-                            },
-                        },
-                    });
+                                },
+                            })
+                        ),
+                    ]);
 
-                    if (
-                        response.data.checkout.order &&
-                        formResponse.data?.submitGfForm
-                    ) {
+                    if (response.data.checkout.order) {
                         await router.push(
                             `/order-success/${response.data.checkout.order.databaseId}`
                         );
@@ -121,9 +145,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                         dispatch(addOrder(response.data.checkout.order));
                     }
 
-                    if (user) {
-                        await router.reload();
-                    }
+                    await router.reload();
                 }
             } catch (e) {
                 console.log(e);
@@ -155,7 +177,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 <AuthButton
                     onClick={onSubmitOrder}
                     onSuccessAuth={onSubmitOrder}
-                    isLoading={loading || submitGfLoading}
+                    isLoading={loading || cartLoading || submitGfLoading}
                     disabled={isUnavailablePrice}
                 >
                     Оформить заказ

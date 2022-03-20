@@ -3,16 +3,21 @@ import styled from 'styled-components';
 import ButtonLinkComponent from '@components/ButtonLink/ButtonLink';
 
 export const Container = styled.div`
+    padding: 80px 0;
+`;
+
+export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    max-width: 1100px;
     width: 100%;
+    margin: 0 auto;
 `;
 
 export const Text = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: ${({ theme }) => theme.colors.white};
     text-align: center;
     margin-bottom: 20px;
 

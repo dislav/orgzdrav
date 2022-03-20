@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Swiper, { SwiperOptions, Pagination, Keyboard } from 'swiper';
+import Swiper, { SwiperOptions, Pagination, Keyboard, Autoplay } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
 import { PartnerFragment } from '@graphql';
@@ -19,7 +19,7 @@ interface IReviewsSection {
     partners: PartnerFragment[];
 }
 
-Swiper.use([Pagination, Keyboard]);
+Swiper.use([Pagination, Keyboard, Autoplay]);
 
 const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
     const options: SwiperOptions = {
@@ -35,6 +35,10 @@ const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
             enabled: true,
             onlyInViewport: true,
         },
+        autoplay: {
+            delay: 6000,
+        },
+        loop: true
     };
 
     return (

@@ -7967,6 +7967,8 @@ export type MediaItemMeta = {
 export enum MediaItemSizeEnum {
   /** MediaItem with the large size */
   Large = 'LARGE',
+  /** MediaItem with the mailpoet_newsletter_max size */
+  MailpoetNewsletterMax = 'MAILPOET_NEWSLETTER_MAX',
   /** MediaItem with the medium size */
   Medium = 'MEDIUM',
   /** MediaItem with the medium_large size */
@@ -9180,7 +9182,7 @@ export enum OrderStatusEnum {
   Failed = 'FAILED',
   /** На удержании */
   OnHold = 'ON_HOLD',
-  /** В ожидании оплаты */
+  /** Ожидается оплата */
   Pending = 'PENDING',
   /** Обработка */
   Processing = 'PROCESSING',
@@ -25245,7 +25247,9 @@ export type GetProductQueryVariables = Exact<{
 
 export type GetProductQuery = { __typename?: 'RootQuery', product?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined };
 
-export type GetProductCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProductCategoriesQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+}>;
 
 
 export type GetProductCategoriesQuery = { __typename?: 'RootQuery', productCategories?: { __typename?: 'RootQueryToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined, products?: { __typename?: 'ProductCategoryToProductConnection', nodes?: Array<{ __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined> | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
@@ -26366,8 +26370,8 @@ export type GetProductQueryHookResult = ReturnType<typeof useGetProductQuery>;
 export type GetProductLazyQueryHookResult = ReturnType<typeof useGetProductLazyQuery>;
 export type GetProductQueryResult = Apollo.QueryResult<GetProductQuery, GetProductQueryVariables>;
 export const GetProductCategoriesDocument = gql`
-    query GetProductCategories {
-  productCategories {
+    query GetProductCategories($first: Int) {
+  productCategories(first: $first) {
     nodes {
       slug
       name
@@ -26393,6 +26397,7 @@ export const GetProductCategoriesDocument = gql`
  * @example
  * const { data, loading, error } = useGetProductCategoriesQuery({
  *   variables: {
+ *      first: // value for 'first'
  *   },
  * });
  */
