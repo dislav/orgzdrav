@@ -8,6 +8,22 @@ import {
     accordionDetailsClasses,
 } from '@mui/material';
 
+export const Arrow = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    will-change: rotate;
+    transition: transform 0.3s;
+    margin-left: auto;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+`;
+
 export const Container = styled(Accordion)`
     &.${accordionClasses.root} {
         border: 1px solid ${({ theme }) => theme.colors.gray10};
@@ -25,6 +41,10 @@ export const Container = styled(Accordion)`
 
         &.${accordionClasses.expanded} {
             margin: 14px 0;
+
+            ${Arrow} {
+                transform: rotate(180deg);
+            }
         }
     }
 `;

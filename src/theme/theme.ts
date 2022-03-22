@@ -2,6 +2,9 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
     fonts: {},
+    variables: {
+        maxWidth: '1100px',
+    },
     colors: {
         black: '#000000',
         white: '#ffffff',

@@ -5,6 +5,9 @@ declare module 'styled-components' {
         fonts: {
             [key: string]: string;
         };
+        variables: {
+            maxWidth: string;
+        };
         colors: {
             [key: string]: string;
             black: string;

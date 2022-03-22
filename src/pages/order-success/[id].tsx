@@ -13,9 +13,7 @@ import {
 } from '@graphql';
 
 import OrdersLayout from '@layouts/OrdersLayout/OrdersLayout';
-import SocialsSection from '@layouts/HomeLayout/SocialsSection/SocialsSection';
 
-import GradientLine from '@components/GradientLine/GradientLine';
 import ContactsCard from '@layouts/OrdersLayout/ContactsCard/ContactsCard';
 import ButtonLink from '@components/ButtonLink/ButtonLink';
 
@@ -36,10 +34,6 @@ const Order: React.FC<GetPageQuery> = ({ page }) => {
             <ButtonLink href="/orders">Перейти к заказу</ButtonLink>
 
             {page?.content && <ContactsCard content={page.content} />}
-
-            <GradientLine />
-
-            <SocialsSection />
         </OrdersLayout>
     );
 };

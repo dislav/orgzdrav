@@ -5,8 +5,9 @@ export const Container = styled.footer`
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background: ${({ theme }) => theme.colors.gray15};
-    padding: 80px 0;
+    color: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.primary};
+    padding: 160px 0;
 `;
 
 export const Wrapper = styled.div`

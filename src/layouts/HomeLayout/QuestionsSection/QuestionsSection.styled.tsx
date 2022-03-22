@@ -1,10 +1,15 @@
 import styled from 'styled-components';
+import { down } from 'styled-breakpoints';
 
-import ButtonLinkComponent from '@components/ButtonLink/ButtonLink';
+import ButtonLink from '@components/ButtonLink/ButtonLink';
 
 export const Container = styled.div`
     background: ${({ theme }) => theme.colors.gray15};
-    padding: 80px 0;
+    padding: 160px 0;
+
+    ${down('sm')} {
+        padding: 40px 20px;
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -33,6 +38,33 @@ export const Text = styled.div`
     }
 `;
 
-export const ButtonLink = styled(ButtonLinkComponent)`
-    margin-bottom: 40px;
+export const Row = styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+
+    ${down('sm')} {
+        flex-direction: column;
+    }
+`;
+
+export const Button = styled(ButtonLink)`
+    flex: 1;
+    padding: 10px 20px;
+    margin-right: 10px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    ${down('sm')} {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 `;

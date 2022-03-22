@@ -38,7 +38,8 @@ const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
         autoplay: {
             delay: 6000,
         },
-        loop: true
+        loop: true,
+        preventClicks: true
     };
 
     return (

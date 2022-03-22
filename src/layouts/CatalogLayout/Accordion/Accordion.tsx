@@ -1,7 +1,8 @@
 import React from 'react';
 import { AccordionProps } from '@mui/material';
 
-import { Container, Summary, Details } from './Accordion.styled';
+import { Container, Summary, Arrow, Details } from './Accordion.styled';
+import { ChevronDown } from '@icons/icons';
 
 interface IAccordion extends Omit<AccordionProps, 'children'> {
     summary: React.ReactNode;
@@ -11,7 +12,12 @@ interface IAccordion extends Omit<AccordionProps, 'children'> {
 const Accordion: React.FC<IAccordion> = ({ summary, details, ...props }) => {
     return (
         <Container {...props}>
-            <Summary>{summary}</Summary>
+            <Summary>
+                {summary}
+                <Arrow>
+                    <ChevronDown />
+                </Arrow>
+            </Summary>
             <Details>{details}</Details>
         </Container>
     );

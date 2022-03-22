@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { down } from 'styled-breakpoints';
 import { rgba } from 'polished';
 import { Swiper } from 'swiper/react';
 
@@ -6,7 +7,11 @@ export const Container = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: column;
-    padding: 80px 0;
+    padding: 160px 0;
+
+    ${down('sm')} {
+        padding: 40px 20px;
+    }
 `;
 
 export const Header = styled.div`
@@ -20,6 +25,14 @@ export const Header = styled.div`
         font-weight: 700;
         text-transform: uppercase;
         margin-bottom: 10px;
+
+        ${down('sm')} {
+            font-size: 20px;
+        }
+    }
+
+    > p {
+        text-align: center;
     }
 
     > svg {
@@ -73,6 +86,11 @@ export const Slider = styled(Swiper)`
                 margin-right: 0;
             }
         }
+    }
+
+    ${down('sm')} {
+        width: calc(100% + 40px);
+        margin-left: -20px;
     }
 `;
 

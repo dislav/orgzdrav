@@ -17,7 +17,7 @@ const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
     const options: SwiperOptions = {
         speed: 600,
         slidesPerView: 'auto',
-        slidesPerGroup: 3,
+        slidesPerGroup: 1,
         slidesPerGroupAuto: true,
         centeredSlides: true,
         pagination: {
@@ -30,7 +30,11 @@ const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
             onlyInViewport: true,
         },
         loop: true,
-        loopedSlides: 3
+        breakpoints: {
+            640: {
+                slidesPerGroup: 3,
+            },
+        },
     };
 
     return (

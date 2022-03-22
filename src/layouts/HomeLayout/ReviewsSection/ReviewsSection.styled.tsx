@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { down } from 'styled-breakpoints';
 import { rgba } from 'polished';
 import { Swiper } from 'swiper/react';
 
@@ -8,7 +9,11 @@ export const Container = styled.div`
     flex-direction: column;
     background: ${({ theme }) => theme.colors.gray15};
     overflow: hidden;
-    padding: 80px 0;
+    padding: 160px 0;
+
+    ${down('sm')} {
+        padding: 40px 20px;
+    }
 `;
 
 export const Header = styled.div`
@@ -21,6 +26,10 @@ export const Header = styled.div`
         font-size: 32px;
         font-weight: 700;
         text-transform: uppercase;
+
+        ${down('sm')} {
+            font-size: 20px;
+        }
     }
 
     > svg {
