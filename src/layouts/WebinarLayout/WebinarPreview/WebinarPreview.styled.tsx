@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { up } from 'styled-breakpoints';
-import { Skeleton as SkeletonComponent } from '@mui/material';
+import {
+    Skeleton as SkeletonComponent,
+    buttonClasses,
+    skeletonClasses,
+} from '@mui/material';
 
 import AuthButtonComponent from '@components/AuthButton/AuthButton';
 import ButtonComponent from '@components/Button/Button';
@@ -55,7 +59,7 @@ export const Controls = styled.div`
 `;
 
 export const Button = styled(ButtonComponent)`
-    && {
+    &.${buttonClasses.root} {
         flex: 1;
         height: 40px;
         color: ${({ theme }) => theme.colors.black};
@@ -74,14 +78,14 @@ export const Button = styled(ButtonComponent)`
 `;
 
 export const AuthButton = styled(AuthButtonComponent)`
-    && {
+    &.${buttonClasses.root} {
         flex: 1;
         height: 40px;
     }
 `;
 
 export const Skeleton = styled(SkeletonComponent)`
-    && {
+    &.${skeletonClasses.root} {
         flex: 1;
         height: 40px;
         border-radius: 4px;

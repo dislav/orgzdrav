@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h2`
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
     font-size: 24px;
     font-weight: 700;
     line-height: 1.3;
@@ -21,7 +21,7 @@ export const Title = styled.h2`
 export const NewBroadcasts = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 40px;
 
     ${up('xl')} {
         grid-template-columns: 1fr 1fr 1fr;
@@ -31,9 +31,9 @@ export const NewBroadcasts = styled.div`
 export const OldBroadcasts = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 40px;
 
     ${up('xl')} {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 `;

@@ -6,6 +6,9 @@ import { Container as StyledButtonLink } from '@components/ButtonLink/ButtonLink
 export const Container = styled(Layout)`
     display: flex;
     flex-direction: column;
+    max-width: ${({ theme }) => theme.variables.maxWidth};
+    margin: 0 auto;
+    padding: 100px 0;
 
     & > h1 {
         text-align: center;

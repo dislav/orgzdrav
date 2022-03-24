@@ -23,9 +23,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Author = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 0 1 40%;
+    flex: 0 1 30%;
     margin-right: 80px;
 
     ${down('sm')} {
@@ -43,7 +41,7 @@ export const Button = styled(ButtonLink)`
 `;
 
 export const Content = styled.div`
-    flex: 0 1 60%;
+    flex: 0 1 70%;
 
     h3,
     h4,

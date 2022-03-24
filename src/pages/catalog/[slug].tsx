@@ -24,6 +24,7 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 image: product.image?.sourceUrl,
             }}
             product={product}
+            showShopToolbar
             hideFooter
         >
             {product.productAdditional?.content && (

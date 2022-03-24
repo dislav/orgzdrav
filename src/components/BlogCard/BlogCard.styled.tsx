@@ -8,10 +8,12 @@ export const Container = styled.a`
 export const ImageWrapper = styled.div`
     position: relative;
     width: 100%;
-    padding-top: 100%;
+    padding-top: 40%;
 `;
 
 export const Content = styled.div`
     background-color: ${({ theme }) => theme.colors.white};
     padding: 16px;
 `;
+
+export const Description = styled.p``;

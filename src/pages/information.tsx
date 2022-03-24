@@ -9,18 +9,18 @@ import {
     DocumentFragment,
 } from '@graphql';
 
-import Layout from '@components/Layout/Layout';
+import InformationLayout from '@layouts/InformationLayout/InformationLayout';
 import DocumentList from '@components/DocumentList/DocumentList';
 
 const Information: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     documents,
 }) => {
     return (
-        <Layout meta={{ title: 'Документы' }} hideFooter>
+        <InformationLayout meta={{ title: 'Документы' }} hideFooter>
             {documents && documents.length > 0 && (
                 <DocumentList documents={documents} />
             )}
-        </Layout>
+        </InformationLayout>
     );
 };
 

@@ -4,7 +4,12 @@ import Image from 'next/image';
 
 import { PostFragment } from '@graphql';
 
-import { Container, ImageWrapper, Content } from './BlogCard.styled';
+import {
+    Container,
+    ImageWrapper,
+    Content,
+    Description,
+} from './BlogCard.styled';
 
 interface IBlogCard extends PostFragment {
     className?: string;
@@ -14,6 +19,7 @@ const BlogCard: React.FC<IBlogCard> = ({
     className,
     slug,
     title,
+    excerpt,
     featuredImage,
 }) => {
     return (
@@ -31,6 +37,11 @@ const BlogCard: React.FC<IBlogCard> = ({
                 )}
                 <Content>
                     <h3>{title}</h3>
+                    {excerpt && (
+                        <Description
+                            dangerouslySetInnerHTML={{ __html: excerpt }}
+                        />
+                    )}
                 </Content>
             </Container>
         </Link>

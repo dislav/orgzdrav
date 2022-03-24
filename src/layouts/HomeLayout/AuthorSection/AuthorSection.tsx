@@ -24,7 +24,6 @@ const AuthorSection: React.FC<IAuthorSection> = ({ className }) => {
                         width={1835}
                         height={4111}
                     />
-                    <Button href="/author">Узнать обо мне подробнее</Button>
                 </Author>
                 <Content>
                     <h4>Основатель и куратор Проекта «OrgZdrav»</h4>
@@ -60,6 +59,7 @@ const AuthorSection: React.FC<IAuthorSection> = ({ className }) => {
                             университета им. В.Ф. Войно- Ясенецкого
                         </li>
                     </ul>
+                    <Button href="/author">Узнать обо мне подробнее</Button>
                 </Content>
             </Wrapper>
         </Container>

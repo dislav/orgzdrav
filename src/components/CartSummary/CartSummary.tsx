@@ -53,15 +53,24 @@ const CartSummary: React.FC = () => {
             <PromoCode />
 
             <Footer>
-                <Row>
-                    <span>Итого:</span>
-                    {cart.subtotal && <Price regularPrice={cart.subtotal} />}
-                </Row>
+                {cart.discountTotal && cart.subtotal && (
+                    <Row smallPrice>
+                        <span>Итого (без учета скидки):</span>
+                        <Price regularPrice={cart.subtotal} />
+                    </Row>
+                )}
 
-                {cart.discountTotal && cart.discountTotal !== '0&nbsp;₽' && (
-                    <Row>
+                {cart.discountTotal && (
+                    <Row smallPrice>
                         <span>Скидка:</span>
                         <Price regularPrice={cart.discountTotal} />
+                    </Row>
+                )}
+
+                {cart.total && (
+                    <Row>
+                        <span>Итого:</span>
+                        <Price regularPrice={cart.total} />
                     </Row>
                 )}
             </Footer>

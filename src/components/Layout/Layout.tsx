@@ -20,7 +20,7 @@ import { getIsProfileLoaded } from '@redux/profile/selectors';
 export interface ILayout {
     className?: string;
     hideFooter?: boolean;
-    hideShopFooter?: boolean;
+    showShopToolbar?: boolean;
     meta?: IMeta;
     product?: SimpleProductFragment;
 }
@@ -29,7 +29,7 @@ const Layout: React.FC<ILayout> = ({
     className,
     children,
     hideFooter,
-    hideShopFooter,
+    showShopToolbar,
     meta,
     product,
 }) => {
@@ -58,7 +58,7 @@ const Layout: React.FC<ILayout> = ({
 
             {!hideFooter && <Footer />}
 
-            {!hideShopFooter && <ShopFooter product={product} />}
+            {showShopToolbar && <ShopFooter product={product} />}
         </>
     );
 };

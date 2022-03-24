@@ -12,6 +12,7 @@ import {
 import WebinarPreview from '@layouts/WebinarLayout/WebinarPreview/WebinarPreview';
 import ProductCard from '@components/ProductCard/ProductCard';
 import EmptyList from '@components/EmptyList/EmptyList';
+import Slider from '@layouts/WebinarLayout/Slider/Slider';
 
 enum WebinarEnum {
     New,
@@ -49,19 +50,21 @@ const WebinarList: React.FC<IWebinarList> = ({ className, webinars }) => {
         <Container className={className}>
             {webinarsByTypes.size ? (
                 <>
-                    {webinarsByTypes.get(WebinarEnum.New) && (
+                    {webinarsByTypes.has(WebinarEnum.New) && (
                         <>
-                            <Title>Предстоящие вебинары</Title>
-                            <NewBroadcasts>
-                                {webinarsByTypes
-                                    .get(WebinarEnum.New)
-                                    ?.map((webinar, index) => (
-                                        <WebinarPreview
-                                            key={index}
-                                            webinar={webinar}
-                                        />
-                                    ))}
-                            </NewBroadcasts>
+                            <Title>
+                                Предстоящие вебинары (
+                                {webinarsByTypes.get(WebinarEnum.New)?.length ||
+                                    0}
+                                )
+                            </Title>
+                            <Slider
+                                slides={
+                                    webinarsByTypes.get(
+                                        WebinarEnum.New
+                                    ) as SimpleProductFragment[]
+                                }
+                            />
                         </>
                     )}
 

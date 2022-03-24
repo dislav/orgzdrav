@@ -86,6 +86,7 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             meta={{
                 title: 'Продукты',
             }}
+            showShopToolbar
             hideFooter
         >
             <AccordionList>

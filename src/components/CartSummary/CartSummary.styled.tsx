@@ -24,7 +24,11 @@ export const Footer = styled.div`
     padding: 16px;
 `;
 
-export const Row = styled.div`
+export const Price = styled(PriceComponent)`
+    margin-left: auto;
+`;
+
+export const Row = styled.div<{ smallPrice?: boolean }>`
     display: flex;
     align-items: center;
     margin-bottom: 8px;
@@ -32,10 +36,10 @@ export const Row = styled.div`
     &:last-child {
         margin-bottom: 0;
     }
-`;
 
-export const Price = styled(PriceComponent)`
-    margin-left: auto;
+    ${Price} > span {
+        font-size: ${({ smallPrice }) => (smallPrice ? '16px' : null)};
+    }
 `;
 
 export const Loader = styled.div`

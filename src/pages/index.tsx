@@ -28,7 +28,7 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     partners,
 }) => {
     return (
-        <HomeLayout hideShopFooter>
+        <HomeLayout>
             <HeroSection />
             <AboutSection />
             <AuthorSection />

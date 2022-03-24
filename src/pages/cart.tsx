@@ -14,7 +14,7 @@ const Cart: React.FC = () => {
     const itemCount = useSelector(getCartItemCount);
 
     return (
-        <CartLayout meta={{ title: 'Корзина' }} hideFooter hideShopFooter>
+        <CartLayout meta={{ title: 'Корзина' }} hideFooter>
             {isLoading && <Spinner />}
 
             {!isLoading && itemCount > 0 && (

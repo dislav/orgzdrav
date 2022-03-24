@@ -20,7 +20,6 @@ interface ICartProduct extends SimpleProductFragment {
 const CartProduct: React.FC<ICartProduct> = ({
     image,
     name,
-    regularPrice,
     totalPrice,
     onRemoveProduct,
 }) => {
@@ -38,14 +37,7 @@ const CartProduct: React.FC<ICartProduct> = ({
             )}
             <Text>{name}</Text>
             <RightWrapper>
-                {regularPrice && (
-                    <Price
-                        regularPrice={regularPrice}
-                        salePrice={
-                            regularPrice !== totalPrice ? totalPrice : null
-                        }
-                    />
-                )}
+                {totalPrice && <Price regularPrice={totalPrice} />}
                 <Remove onClick={onRemoveProduct} />
             </RightWrapper>
         </Container>

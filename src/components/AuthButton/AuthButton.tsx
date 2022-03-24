@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { ViewerFragment, LoginInput } from '@graphql';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
-import { Modal, AuthForm } from './AuthButton.styled';
-import Button, { IButton } from '@components/Button/Button';
+import { Modal, AuthForm, Button } from './AuthButton.styled';
+import { IButton } from '@components/Button/Button';
 
 import { useTogglable } from '@hooks/useTogglable';
 import { getIsLoggedIn } from '@redux/profile/selectors';
