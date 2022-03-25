@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { useTrail, a, useTransition, useSpring } from 'react-spring';
 
 import {
     Container,
@@ -16,11 +17,43 @@ interface IHeroSection {
     className?: string;
 }
 
+const list: string[] = [
+    'Обучим всем тонкостям медицинского законодательства',
+    'Предоставим все необходимые документы для открытия или ведения деятельности',
+    'Подготовим к любым проверкам Роспотребнадзора и Росздравнадзор',
+    'Ответим на все самые сложные вопросы',
+];
+
+const controls = [
+    {
+        title: 'Получить документы',
+        href: '/catalog',
+    },
+    {
+        title: 'Пройти проверку',
+        href: '/services',
+    },
+    {
+        title: 'Посетить вебинар',
+        href: '/webinars',
+    },
+];
+
 const HeroSection: React.FC<IHeroSection> = ({ className }) => {
+    const animation = {
+        from: { y: 40, opacity: 0 },
+        opacity: 1,
+        y: 0,
+    };
+
+    const [title] = useSpring(() => animation);
+    const trail = useTrail(list.length, animation);
+    const controlsTrail = useTrail(controls.length, animation);
+
     return (
         <Container className={className}>
             <Wrapper>
-                <Title>
+                <Title style={title}>
                     Проект «OrgZdrav» – правовая поддержка и защита интересов
                     клиник и врачей
                 </Title>
@@ -30,23 +63,36 @@ const HeroSection: React.FC<IHeroSection> = ({ className }) => {
                         деятельности:
                     </p>
                     <List>
-                        <li>
-                            Обучим всем тонкостям медицинского законодательства
-                        </li>
-                        <li>
-                            Предоставим все необходимые документы для открытия
-                            или ведения деятельности
-                        </li>
-                        <li>
-                            Подготовим к любым проверкам Роспотребнадзора и
-                            Росздравнадзор
-                        </li>
-                        <li>Ответим на все самые сложные вопросы</li>
+                        {trail.map(({ y, ...style }, index) => (
+                            <a.li
+                                key={index}
+                                style={{
+                                    ...style,
+                                    transform: y.to(
+                                        (val) => `translateY(${val}px)`
+                                    ),
+                                }}
+                            >
+                                {list[index]}
+                            </a.li>
+                        ))}
                     </List>
                     <Buttons>
-                        <Button href="/catalog">Получить документы</Button>
-                        <Button href="/services">Пройти проверку</Button>
-                        <Button href="/webinars">Посетить вебинар</Button>
+                        {controlsTrail.map(({ y, ...style }, index) => (
+                            <a.div
+                                key={index}
+                                style={{
+                                    ...style,
+                                    transform: y.to(
+                                        (val) => `translateY(${val}px)`
+                                    ),
+                                }}
+                            >
+                                <Button href={controls[index].href}>
+                                    {controls[index].title}
+                                </Button>
+                            </a.div>
+                        ))}
                     </Buttons>
                 </Content>
                 <ImageWrapper>

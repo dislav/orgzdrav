@@ -28,6 +28,7 @@ import {
 } from '@layouts/CatalogLayout/CatalogLayout.styled';
 import { InferGetStaticPropsType } from 'next';
 import ProductItem from '@layouts/CatalogLayout/ProductItem/ProductItem';
+import Heading from "@components/Heading/Heading"
 
 const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     productCategories,
@@ -89,6 +90,10 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             showShopToolbar
             hideFooter
         >
+            <Heading
+              title="Проект «OrgZdrav»"
+              subtitle="Организуйте с нуля весь документооборот в клинике"
+            />
             <AccordionList>
                 <SearchForm onChange={onSearch} />
 
@@ -127,7 +132,7 @@ export const getStaticProps = async () => {
                         order: OrderEnum.Asc,
                     },
                 ],
-                categoryNotIn: ['vebinary'],
+                categoryNotIn: ['vebinary', 'uslugi'],
             },
             first: 100,
         },

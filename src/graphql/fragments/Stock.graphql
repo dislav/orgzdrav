@@ -1,0 +1,11 @@
+fragment Stock on Stock {
+    id
+    slug
+    title
+    featuredImage {
+        node {
+            sourceUrl
+        }
+    }
+    content
+}

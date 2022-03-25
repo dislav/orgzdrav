@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import Layout from '@components/Layout/Layout';
+import ProfileLayout from '@layouts/ProfileLayout/ProfileLayout';
 import ProfileCard from '@components/ProfileCard/ProfileCard';
 import Spinner from '@components/Spinner/Spinner';
 
@@ -33,10 +33,10 @@ const Profile = () => {
     }, [isLoading, isLoggedIn, profile]);
 
     return (
-        <Layout meta={{ title }} hideFooter>
+        <ProfileLayout meta={{ title }} hideFooter>
             {isLoading && <Spinner />}
             {!isLoading && isLoggedIn && <ProfileCard />}
-        </Layout>
+        </ProfileLayout>
     );
 };
 

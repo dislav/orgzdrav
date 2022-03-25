@@ -1,0 +1,9 @@
+#import "../fragments/Stock.graphql"
+
+query GetStocks($first: Int) {
+    stocks(first: $first) {
+        nodes {
+            ...Stock
+        }
+    }
+}

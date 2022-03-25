@@ -16,7 +16,7 @@ const Information: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     documents,
 }) => {
     return (
-        <InformationLayout meta={{ title: 'Документы' }} hideFooter>
+        <InformationLayout meta={{ title: 'Документы' }}>
             {documents && documents.length > 0 && (
                 <DocumentList documents={documents} />
             )}

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { down } from 'styled-breakpoints';
+import { a } from 'react-spring';
 
 import ButtonLink from '@components/ButtonLink/ButtonLink';
 
@@ -67,19 +68,22 @@ export const List = styled.ul`
 export const Buttons = styled.div`
     display: flex;
     align-items: center;
-`;
 
-export const Button = styled(ButtonLink)`
-    flex: 1;
-    font-size: 14px;
-    margin-right: 10px;
+    > div {
+        flex: 1;
+        margin-right: 10px;
 
-    &:last-child {
-        margin-right: 0;
+        &:last-child {
+            margin-right: 0;
+        }
     }
 `;
 
-export const Title = styled.h1`
+export const Button = styled(ButtonLink)`
+    font-size: 14px;
+`;
+
+export const Title = styled(a.h1)`
     font-size: 40px;
     font-weight: 700;
     line-height: 1.1;

@@ -52,10 +52,10 @@ const defaultConfig: IConfig = {
                 title: 'Информация',
                 href: '/information',
             },
-            // {
-            //     title: 'Акции',
-            //     href: '/stocks',
-            // },
+            {
+                title: 'Акции',
+                href: '/stocks',
+            },
             // {
             //     title: 'Контакты',
             //     href: '/contacts',

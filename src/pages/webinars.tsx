@@ -12,12 +12,17 @@ import {
 import WebinarLayout from '@layouts/WebinarLayout/WebinarLayout';
 import WebinarList from '@components/WebinarList/WebinarList';
 import EmptyList from '@components/EmptyList/EmptyList';
+import Heading from '@components/Heading/Heading';
 
 const Webinars: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     webinars,
 }) => {
     return (
-        <WebinarLayout meta={{ title: 'Вебинары' }} hideFooter>
+        <WebinarLayout meta={{ title: 'Вебинары' }}>
+            <Heading
+                title="Проект «OrgZdrav»"
+                subtitle="Получите все знания о законодательстве онлайн"
+            />
             {webinars.length ? (
                 <WebinarList webinars={webinars} />
             ) : (

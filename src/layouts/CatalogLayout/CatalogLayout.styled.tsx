@@ -5,8 +5,9 @@ import PriceComponent from '@components/Price/Price';
 import { Container as StyledSearchForm } from '@components/SearchForm/SearchForm.styled';
 
 export const Container = styled(Layout)`
-    max-width: 1100px;
-    margin: 80px auto 160px;
+    max-width: ${({ theme }) => theme.variables.maxWidth};
+    margin: 0 auto;
+    padding: 100px 0;
 
     ${StyledSearchForm} {
         margin-bottom: 26px;

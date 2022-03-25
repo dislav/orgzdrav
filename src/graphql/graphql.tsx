@@ -2290,7 +2290,9 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   ShopOrder = 'SHOP_ORDER',
   /** The Type of Content object */
-  ShopOrderRefund = 'SHOP_ORDER_REFUND'
+  ShopOrderRefund = 'SHOP_ORDER_REFUND',
+  /** The Type of Content object */
+  Stocks = 'STOCKS'
 }
 
 /** The Type of Identifier used to fetch a single Content Type node. To be used along with the "id" field. Default is "ID". */
@@ -3733,6 +3735,35 @@ export type CreateShippingClassPayload = {
   shippingClass?: Maybe<ShippingClass>;
 };
 
+/** Input for the createStock mutation */
+export type CreateStockInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the createStock mutation */
+export type CreateStockPayload = {
+  __typename?: 'CreateStockPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  stock?: Maybe<Stock>;
+};
+
 /** Input for the createTag mutation */
 export type CreateTagInput = {
   /** The slug that the post_tag will be an alias of */
@@ -4710,6 +4741,27 @@ export type DeleteShippingClassPayload = {
   deletedId?: Maybe<Scalars['ID']>;
   /** The deteted term object */
   shippingClass?: Maybe<ShippingClass>;
+};
+
+/** Input for the deleteStock mutation */
+export type DeleteStockInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** The ID of the Stock to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deleteStock mutation */
+export type DeleteStockPayload = {
+  __typename?: 'DeleteStockPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The object before it was deleted */
+  stock?: Maybe<Stock>;
 };
 
 /** Input for the deleteTag mutation */
@@ -8140,7 +8192,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkeable Interface */
-export type MenuItemObjectUnion = Category | Document | Page | Partner | PeopleReview | Post | ProductCategory | ProductTag | ProductType | Tag;
+export type MenuItemObjectUnion = Category | Document | Page | Partner | PeopleReview | Post | ProductCategory | ProductTag | ProductType | Stock | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
@@ -16950,6 +17002,8 @@ export type RootMutation = {
   createProductType?: Maybe<CreateProductTypePayload>;
   /** The payload for the createShippingClass mutation */
   createShippingClass?: Maybe<CreateShippingClassPayload>;
+  /** The payload for the createStock mutation */
+  createStock?: Maybe<CreateStockPayload>;
   /** The payload for the createTag mutation */
   createTag?: Maybe<CreateTagPayload>;
   /** The payload for the createUser mutation */
@@ -16998,6 +17052,8 @@ export type RootMutation = {
   deleteReview?: Maybe<DeleteReviewPayload>;
   /** The payload for the deleteShippingClass mutation */
   deleteShippingClass?: Maybe<DeleteShippingClassPayload>;
+  /** The payload for the deleteStock mutation */
+  deleteStock?: Maybe<DeleteStockPayload>;
   /** The payload for the deleteTag mutation */
   deleteTag?: Maybe<DeleteTagPayload>;
   /** The payload for the deleteUser mutation */
@@ -17088,6 +17144,8 @@ export type RootMutation = {
   updateShippingClass?: Maybe<UpdateShippingClassPayload>;
   /** The payload for the updateShippingMethod mutation */
   updateShippingMethod?: Maybe<UpdateShippingMethodPayload>;
+  /** The payload for the updateStock mutation */
+  updateStock?: Maybe<UpdateStockPayload>;
   /** The payload for the UpdateTag mutation */
   updateTag?: Maybe<UpdateTagPayload>;
   /** The payload for the updateUser mutation */
@@ -17232,6 +17290,12 @@ export type RootMutationCreateShippingClassArgs = {
 
 
 /** The root mutation */
+export type RootMutationCreateStockArgs = {
+  input: CreateStockInput;
+};
+
+
+/** The root mutation */
 export type RootMutationCreateTagArgs = {
   input: CreateTagInput;
 };
@@ -17372,6 +17436,12 @@ export type RootMutationDeleteReviewArgs = {
 /** The root mutation */
 export type RootMutationDeleteShippingClassArgs = {
   input: DeleteShippingClassInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteStockArgs = {
+  input: DeleteStockInput;
 };
 
 
@@ -17646,6 +17716,12 @@ export type RootMutationUpdateShippingMethodArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdateStockArgs = {
+  input: UpdateStockInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdateTagArgs = {
   input: UpdateTagInput;
 };
@@ -17853,6 +17929,15 @@ export type RootQuery = {
   shippingMethods?: Maybe<RootQueryToShippingMethodConnection>;
   /** A simple product object */
   simpleProduct?: Maybe<SimpleProduct>;
+  /** An object of the Stock Type.  */
+  stock?: Maybe<Stock>;
+  /**
+   * A Stock object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  stockBy?: Maybe<Stock>;
+  /** Connection between the RootQuery type and the Stock type */
+  stocks?: Maybe<RootQueryToStockConnection>;
   /** A 0bject */
   tag?: Maybe<Tag>;
   /** Connection between the RootQuery type and the tag type */
@@ -18543,6 +18628,33 @@ export type RootQueryShippingMethodsArgs = {
 export type RootQuerySimpleProductArgs = {
   id?: InputMaybe<Scalars['ID']>;
   idType?: InputMaybe<ProductIdTypeEnum>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryStockArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  idType?: InputMaybe<StockIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryStockByArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
+  stockId?: InputMaybe<Scalars['Int']>;
+  uri?: InputMaybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryStocksArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RootQueryToStockConnectionWhereArgs>;
 };
 
 
@@ -20350,6 +20462,64 @@ export type RootQueryToShippingMethodConnectionEdge = {
   node?: Maybe<ShippingMethod>;
 };
 
+/** Connection between the RootQuery type and the Stock type */
+export type RootQueryToStockConnection = {
+  __typename?: 'RootQueryToStockConnection';
+  /** Edges for the RootQueryToStockConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToStockConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Stock>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToStockConnectionEdge = {
+  __typename?: 'RootQueryToStockConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Stock>;
+};
+
+/** Arguments for filtering the RootQueryToStockConnection connection */
+export type RootQueryToStockConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
 /** Connection between the RootQuery type and the tag type */
 export type RootQueryToTagConnection = {
   __typename?: 'RootQueryToTagConnection';
@@ -21621,12 +21791,135 @@ export type SimpleProductToVariationAttributeConnectionEdge = {
   node?: Maybe<VariationAttribute>;
 };
 
+/** The Stock type */
+export type Stock = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+  __typename?: 'Stock';
+  /** The content of the post. */
+  content?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String'];
+  /** The unique resource identifier path */
+  databaseId: Scalars['Int'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']>;
+  /** The globally unique identifier of the stocks object. */
+  id: Scalars['ID'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']>;
+  /** Connection between the Stock type and the Stock type */
+  preview?: Maybe<StockToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  stockId: Scalars['Int'];
+  /** The template assigned to a node of content */
+  template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The Stock type */
+export type StockContentArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+
+/** The Stock type */
+export type StockEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The Stock type */
+export type StockEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The Stock type */
+export type StockTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum StockIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
 /** Product stock status enumeration */
 export enum StockStatusEnum {
   InStock = 'IN_STOCK',
   OnBackorder = 'ON_BACKORDER',
   OutOfStock = 'OUT_OF_STOCK'
 }
+
+/** Connection between the Stock type and the Stock type */
+export type StockToPreviewConnectionEdge = {
+  __typename?: 'StockToPreviewConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<Stock>;
+};
 
 /** Entry meta input fields for submitting Gravity Forms forms. */
 export type SubmitFormMetaInput = {
@@ -23381,6 +23674,37 @@ export type UpdateShippingMethodPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
 };
 
+/** Input for the updateStock mutation */
+export type UpdateStockInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** The ID of the Stock object */
+  id: Scalars['ID'];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the updateStock mutation */
+export type UpdateStockPayload = {
+  __typename?: 'UpdateStockPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  stock?: Maybe<Stock>;
+};
+
 /** Input for the UpdateTag mutation */
 export type UpdateTagInput = {
   /** The slug that the post_tag will be an alias of */
@@ -25088,6 +25412,8 @@ export type ProductDownloadFragment = { __typename?: 'ProductDownload', fileExt?
 
 export type SimpleProductFragment = { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
+export type StockFragment = { __typename?: 'Stock', id: string, slug?: string | null | undefined, title?: string | null | undefined, content?: string | null | undefined, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined } | null | undefined } | null | undefined };
+
 export type ViewerFragment = { __typename?: 'User', id: string, userId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined };
 
 export type AddToCartMutationVariables = Exact<{
@@ -25266,6 +25592,13 @@ export type GetPeopleReviewsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPeopleReviewsQuery = { __typename?: 'RootQuery', peopleReviews?: { __typename?: 'RootQueryToPeopleReviewConnection', nodes?: Array<{ __typename?: 'PeopleReview', slug?: string | null | undefined, title?: string | null | undefined, reviewMain?: { __typename?: 'PeopleReview_Reviewmain', image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
+export type GetStocksQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetStocksQuery = { __typename?: 'RootQuery', stocks?: { __typename?: 'RootQueryToStockConnection', nodes?: Array<{ __typename?: 'Stock', id: string, slug?: string | null | undefined, title?: string | null | undefined, content?: string | null | undefined, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type GetViewerQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -25528,6 +25861,19 @@ export const PostFragmentDoc = gql`
   }
 }
     ${SimpleProductFragmentDoc}`;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  slug
+  title
+  featuredImage {
+    node {
+      sourceUrl
+    }
+  }
+  content
+}
+    `;
 export const ViewerFragmentDoc = gql`
     fragment Viewer on User {
   id
@@ -26486,6 +26832,43 @@ export function useGetPeopleReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetPeopleReviewsQueryHookResult = ReturnType<typeof useGetPeopleReviewsQuery>;
 export type GetPeopleReviewsLazyQueryHookResult = ReturnType<typeof useGetPeopleReviewsLazyQuery>;
 export type GetPeopleReviewsQueryResult = Apollo.QueryResult<GetPeopleReviewsQuery, GetPeopleReviewsQueryVariables>;
+export const GetStocksDocument = gql`
+    query GetStocks($first: Int) {
+  stocks(first: $first) {
+    nodes {
+      ...Stock
+    }
+  }
+}
+    ${StockFragmentDoc}`;
+
+/**
+ * __useGetStocksQuery__
+ *
+ * To run a query within a React component, call `useGetStocksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStocksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStocksQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetStocksQuery(baseOptions?: Apollo.QueryHookOptions<GetStocksQuery, GetStocksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetStocksQuery, GetStocksQueryVariables>(GetStocksDocument, options);
+      }
+export function useGetStocksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStocksQuery, GetStocksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetStocksQuery, GetStocksQueryVariables>(GetStocksDocument, options);
+        }
+export type GetStocksQueryHookResult = ReturnType<typeof useGetStocksQuery>;
+export type GetStocksLazyQueryHookResult = ReturnType<typeof useGetStocksLazyQuery>;
+export type GetStocksQueryResult = Apollo.QueryResult<GetStocksQuery, GetStocksQueryVariables>;
 export const GetViewerDocument = gql`
     query GetViewer {
   viewer {
