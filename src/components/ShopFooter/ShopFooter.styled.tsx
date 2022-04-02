@@ -53,6 +53,10 @@ export const CartButton = styled.a`
         flex: 1 1 48%;
         margin-left: 20px;
     }
+
+    &:only-child {
+        margin-left: 0;
+    }
 `;
 
 export const CartIconWrapper = styled.div`
