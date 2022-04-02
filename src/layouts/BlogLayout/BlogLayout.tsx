@@ -1,8 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { ILayout } from '@components/Layout/Layout';
 import { Container, ImageWrapper } from './BlogLayout.styled';
+import Image from '@components/Image/Image';
 
 const BlogLayout: React.FC<ILayout> = ({ children, ...props }) => {
     return (

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { SimpleProductFragment } from '@graphql';
 
@@ -18,6 +17,7 @@ import {
 import { useCart } from '@hooks/useCart';
 import { getCartProducts } from '@redux/cart/selectors';
 import Price from '@components/Price/Price';
+import Image from '@components/Image/Image';
 
 const ProductCard: React.FC<SimpleProductFragment> = ({
     slug,

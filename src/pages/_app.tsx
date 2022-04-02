@@ -12,6 +12,7 @@ import client from '@graphql/client';
 import theme from '@theme/theme';
 import GlobalStyle from '@theme/globalStyle';
 import ConfigProvider from '../context/configProvider';
+import '@theme/fonts.css';
 
 dayjs.extend(utc);
 

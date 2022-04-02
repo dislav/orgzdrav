@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import dayjs from 'dayjs';
 
 import {
@@ -25,6 +24,7 @@ import {
     Button,
 } from './WebinarPreview.styled';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
+import Image from '@components/Image/Image';
 
 import { getProfile } from '@redux/profile/selectors';
 import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';

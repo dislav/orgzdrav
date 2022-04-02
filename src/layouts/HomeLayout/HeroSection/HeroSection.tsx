@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import { useTrail, a, useTransition, useSpring } from 'react-spring';
+import { useTrail, a, useSpring } from 'react-spring';
 
 import {
     Container,
@@ -12,6 +11,7 @@ import {
     List,
     ImageWrapper,
 } from './HeroSection.styled';
+import Image from '@components/Image/Image';
 
 interface IHeroSection {
     className?: string;

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { SimpleProductFragment } from '@graphql';
 
@@ -15,6 +14,7 @@ import {
 
 import { getCartProducts } from '@redux/cart/selectors';
 import { useCart } from '@hooks/useCart';
+import Image from '@components/Image/Image';
 
 interface IProductItem extends SimpleProductFragment {
     className?: string;

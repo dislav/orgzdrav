@@ -1,9 +1,9 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { StockFragment } from '@graphql';
 
 import { Container, Content, ImageWrapper } from './StockCard.styled';
+import Image from '@components/Image/Image';
 
 interface IStockCard extends StockFragment {
     className?: string;

@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { Post_Postmain_Content_SectionProduct } from '@graphql';
 
+import Image from '@components/Image/Image';
 import { Container, ImageWrapper, Content } from './SectionProduct.styled';
 
 const SectionProduct: React.FC<Post_Postmain_Content_SectionProduct> = ({

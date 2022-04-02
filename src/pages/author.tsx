@@ -1,12 +1,12 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
-import Image from 'next/image';
 
 import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
 import ContentSection from '@components/ContentSection/ContentSection';
 import InfoLayout from '@layouts/InfoLayout/InfoLayout';
+import Image from '@components/Image/Image';
 
 const Author: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     page,

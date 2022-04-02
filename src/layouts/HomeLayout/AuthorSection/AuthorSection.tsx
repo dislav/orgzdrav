@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import {
     Container,
@@ -8,6 +7,7 @@ import {
     Button,
     Content,
 } from './AuthorSection.styled';
+import Image from '@components/Image/Image';
 
 interface IAuthorSection {
     className?: string;

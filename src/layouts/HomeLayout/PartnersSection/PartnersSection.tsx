@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Swiper, { SwiperOptions, Pagination, Keyboard, Autoplay } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
@@ -13,6 +12,7 @@ import {
     SlideText,
     SlideTextHeader,
 } from './PartnersSection.styled';
+import Image from '@components/Image/Image';
 import { ArrowRight, Link } from '@icons/icons';
 
 interface IReviewsSection {
@@ -39,7 +39,7 @@ const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
             delay: 6000,
         },
         loop: true,
-        preventClicks: true
+        preventClicks: true,
     };
 
     return (

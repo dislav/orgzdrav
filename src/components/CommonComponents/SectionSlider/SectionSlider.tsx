@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -12,6 +11,7 @@ import {
     Slide,
     SlideButton,
 } from './SectionSlider.styled';
+import Image from '@components/Image/Image';
 import { ArrowsDown } from '@icons/icons';
 
 const SectionSlider: React.FC<Post_Postmain_Content_SectionSlider> = ({

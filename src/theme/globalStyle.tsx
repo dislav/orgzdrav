@@ -1,30 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'Open Sans';
-    src: url('/fonts/OpenSans/OpenSans-Regular.ttf') format('truetype');
-    font-weight: 400;
-  }
-
-  @font-face {
-    font-family: 'Open Sans';
-    src: url('/fonts/OpenSans/OpenSans-Medium.ttf') format('truetype');
-    font-weight: 500;
-  }
-
-  @font-face {
-    font-family: 'Open Sans';
-    src: url('/fonts/OpenSans/OpenSans-SemiBold.ttf') format('truetype');
-    font-weight: 600;
-  }
-
-  @font-face {
-    font-family: 'Open Sans';
-    src: url('/fonts/OpenSans/OpenSans-Bold.ttf') format('truetype');
-    font-weight: 700;
-  }
-  
   html {
   }
 
