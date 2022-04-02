@@ -53,6 +53,21 @@ export const Summary = styled(AccordionSummary)`
     &.${accordionSummaryClasses.root} {
         min-height: 60px;
         padding: 0 20px;
+        
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: transparent;
+            transition: background 0.3s;
+        }
+        
+        &.${accordionSummaryClasses.expanded}:after {
+            background: ${({ theme }) => theme.colors.gray10};
+        }
     }
 `;
 

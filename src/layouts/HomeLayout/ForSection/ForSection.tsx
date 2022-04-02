@@ -46,7 +46,7 @@ const ForSection: React.FC<IForSection> = ({ className }) => {
                             variant: 'vk',
                         }}
                     >
-                        Вконтакте
+                        Группа Вконтакте
                     </Button>
                     <Button
                         href="https://t.me/+TTvAkkpKlyCjHXe4"
@@ -56,7 +56,7 @@ const ForSection: React.FC<IForSection> = ({ className }) => {
                             variant: 'telegram',
                         }}
                     >
-                        Телеграм канал
+                        Телеграм-чат
                     </Button>
                     <Button
                         href="https://t.me/orgzdrav2019"
@@ -66,7 +66,7 @@ const ForSection: React.FC<IForSection> = ({ className }) => {
                             variant: 'telegram',
                         }}
                     >
-                        Телеграм канал
+                        Телеграм-канал
                     </Button>
                 </Footer>
             </Wrapper>

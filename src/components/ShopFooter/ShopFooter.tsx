@@ -9,6 +9,7 @@ import {
     Wrapper,
     Button,
     CartButton,
+    CartIconWrapper,
     CartCounter,
 } from './ShopFooter.styled';
 import { CartIcon } from '@icons/icons';
@@ -62,16 +63,15 @@ const ShopFooter: React.FC<IShopFooter> = ({ product }) => {
                     )
                 )}
 
-                <Link href="/cart">
-                    <a>
-                        {!product?.databaseId && <span>Корзина</span>}
-                        <CartButton>
+                <Link href="/cart" passHref>
+                    <CartButton>
+                        <CartIconWrapper>
                             {itemCount > 0 && (
                                 <CartCounter>{itemCount}</CartCounter>
                             )}
                             <CartIcon />
-                        </CartButton>
-                    </a>
+                        </CartIconWrapper>
+                    </CartButton>
                 </Link>
             </Wrapper>
         </Container>

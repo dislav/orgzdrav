@@ -16,7 +16,7 @@ export const Container = styled.header`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 58px;
+    height: 64px;
     background-color: ${({ theme }) => theme.colors.primary};
     padding: 0 40px;
     z-index: 10;
@@ -49,9 +49,10 @@ export const Links = styled.div`
     }
 
     > a {
-        font-size: 14px;
+        font-size: 16px;
         color: ${({ theme }) => theme.colors.white};
-        margin-right: 18px;
+        font-weight: 500;
+        margin-right: 26px;
         cursor: pointer;
 
         &:last-child {

@@ -5,14 +5,16 @@ import Image from 'next/image';
 import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
-import Layout from '@components/Layout/Layout';
+import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 import ContentSection from '@components/ContentSection/ContentSection';
 
 const PrivacyPolicy: React.FC<
     InferGetStaticPropsType<typeof getStaticProps>
 > = ({ page }) => {
     return (
-        <Layout meta={{ title: page?.title || 'Политика конфиденциальности' }}>
+        <InfoLayout
+            meta={{ title: page?.title || 'Политика конфиденциальности' }}
+        >
             <Image
                 src="/images/pages/privacy-policy.png"
                 alt={page?.title || ''}
@@ -25,7 +27,7 @@ const PrivacyPolicy: React.FC<
                     dangerouslySetInnerHTML={{ __html: page.content }}
                 />
             )}
-        </Layout>
+        </InfoLayout>
     );
 };
 

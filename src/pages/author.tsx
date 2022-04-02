@@ -6,13 +6,13 @@ import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
 import ContentSection from '@components/ContentSection/ContentSection';
-import Layout from '@components/Layout/Layout';
+import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 
 const Author: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     page,
 }) => {
     return (
-        <Layout meta={{ title: page?.title || 'Автор' }}>
+        <InfoLayout meta={{ title: page?.title || 'Автор' }}>
             <Image
                 src="/images/pages/author.png"
                 alt={page?.title || ''}
@@ -25,7 +25,7 @@ const Author: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     dangerouslySetInnerHTML={{ __html: page.content }}
                 />
             )}
-        </Layout>
+        </InfoLayout>
     );
 };
 

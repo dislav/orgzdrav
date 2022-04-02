@@ -5,14 +5,14 @@ import Image from 'next/image';
 import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
-import Layout from '@components/Layout/Layout';
+import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 import ContentSection from '@components/ContentSection/ContentSection';
 
 const PublicOffer: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     page,
 }) => {
     return (
-        <Layout meta={{ title: page?.title || 'Публичная оферта' }}>
+        <InfoLayout meta={{ title: page?.title || 'Публичная оферта' }}>
             <Image
                 src="/images/pages/public-offer.png"
                 alt={page?.title || ''}
@@ -25,7 +25,7 @@ const PublicOffer: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     dangerouslySetInnerHTML={{ __html: page.content }}
                 />
             )}
-        </Layout>
+        </InfoLayout>
     );
 };
 

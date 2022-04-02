@@ -33,7 +33,7 @@ const ProfileCard: React.FC<IProfileCard> = ({ className }) => {
                 <Avatar>{abbreviatedName}</Avatar>
                 <Info>
                     <h3>{fullName}</h3>
-                    <span>{profile.username}</span>
+                    <span>@{profile.username}</span>
                 </Info>
             </Content>
             <ButtonLink href="/profile/settings">

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const ContentSection = styled.div`
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
     font-size: 18px;
     line-height: 1.4;
     margin: 40px 0;
@@ -20,7 +20,7 @@ export const ContentSection = styled.div`
     }
 
     a {
-        color: ${({ theme }) => theme.colors.orange};
+        color: ${({ theme }) => theme.colors.primary};
         text-decoration: underline;
     }
 

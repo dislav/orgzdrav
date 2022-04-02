@@ -5,14 +5,14 @@ import Image from 'next/image';
 import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
-import Layout from '@components/Layout/Layout';
+import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 import ContentSection from '@components/ContentSection/ContentSection';
 
 const PaymentMethods: React.FC<
     InferGetStaticPropsType<typeof getStaticProps>
 > = ({ page }) => {
     return (
-        <Layout meta={{ title: page?.title || 'Способы оплаты' }}>
+        <InfoLayout meta={{ title: page?.title || 'Способы оплаты' }}>
             <Image
                 src="/images/pages/payment-methods.png"
                 alt={page?.title || ''}
@@ -25,7 +25,7 @@ const PaymentMethods: React.FC<
                     dangerouslySetInnerHTML={{ __html: page.content }}
                 />
             )}
-        </Layout>
+        </InfoLayout>
     );
 };
 

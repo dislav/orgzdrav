@@ -27,28 +27,6 @@ export const Wrapper = styled.div`
     max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-
-    > a {
-        flex: 1 1 48%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 50px;
-        color: ${({ theme }) => theme.colors.black};
-        background-color: ${({ theme }) => theme.colors.gray05};
-        border-radius: 4px;
-        cursor: pointer;
-        margin-left: 20px;
-
-        > svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        > span {
-            margin-right: 8px;
-        }
-    }
 `;
 
 export const Button = styled(ButtonComponent)`
@@ -56,7 +34,28 @@ export const Button = styled(ButtonComponent)`
     min-height: 50px;
 `;
 
-export const CartButton = styled.div`
+export const CartButton = styled.a`
+    flex: 1 1 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    min-height: 50px;
+    color: ${({ theme }) => theme.colors.black};
+    background-color: ${({ theme }) => theme.colors.gray05};
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+
+    ${up('md')} {
+        flex: 1 1 48%;
+        margin-left: 20px;
+    }
+`;
+
+export const CartIconWrapper = styled.div`
     position: relative;
     width: 20px;
     height: 20px;

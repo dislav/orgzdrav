@@ -15,5 +15,5 @@ export const Container = styled(Layout)`
 
 export const ImageWrapper = styled.div`
     position: relative;
-    padding-top: 100%;
+    padding-top: 40%;
 `;

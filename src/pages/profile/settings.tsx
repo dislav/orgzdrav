@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import Layout from '@components/Layout/Layout';
+import ProfileLayout from '@layouts/ProfileLayout/ProfileLayout';
 import ProfileForm from '@components/ProfileForm/ProfileForm';
 import Spinner from '@components/Spinner/Spinner';
 
@@ -20,10 +20,10 @@ const Settings: React.FC = () => {
     }, [isLoading, isLoggedIn, router]);
 
     return (
-        <Layout hideFooter>
+        <ProfileLayout hideFooter>
             {isLoading && <Spinner />}
             {!isLoading && isLoggedIn && <ProfileForm />}
-        </Layout>
+        </ProfileLayout>
     );
 };
 
