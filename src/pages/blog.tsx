@@ -7,6 +7,7 @@ import { GetPostsDocument, GetPostsQuery, PostFragment } from '@graphql';
 import BlogLayout from '@layouts/BlogLayout/BlogLayout';
 import BlogList from '@layouts/BlogLayout/BlogList/BlogList';
 import Heading from '@components/Heading/Heading';
+import EmptyList from '@components/EmptyList/EmptyList';
 
 const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     posts,
@@ -21,7 +22,11 @@ const Blog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 title="Проект «OrgZdrav»"
                 subtitle="Получите разъяснения по самым сложным вопросам"
             />
-            <BlogList posts={posts as PostFragment[]} />
+            {posts.length > 0 ? (
+                <BlogList posts={posts as PostFragment[]} />
+            ) : (
+                <EmptyList>Список статей пуст</EmptyList>
+            )}
         </BlogLayout>
     );
 };

@@ -13,9 +13,7 @@ import {
 } from '@graphql';
 
 import OrdersLayout from '@layouts/OrdersLayout/OrdersLayout';
-
 import ContactsCard from '@layouts/OrdersLayout/ContactsCard/ContactsCard';
-import ButtonLink from '@components/ButtonLink/ButtonLink';
 
 const Order: React.FC<GetPageQuery> = ({ page }) => {
     const router = useRouter();
@@ -23,16 +21,9 @@ const Order: React.FC<GetPageQuery> = ({ page }) => {
     return (
         <OrdersLayout
             meta={{
-                title: `Заказ #${router.query.id}`,
+                title: `Успешный заказ #${router.query.id}`,
             }}
         >
-            <h1>Спасибо за заказ!</h1>
-            <p>
-                Заказ #{router.query.id} успешно создан и ожидает вашей оплаты.
-            </p>
-
-            <ButtonLink href="/orders">Перейти к заказу</ButtonLink>
-
             {page?.content && <ContactsCard content={page.content} />}
         </OrdersLayout>
     );

@@ -49,13 +49,11 @@ const Footer: React.FC = () => {
                     &reg; ORGZDRAV.2019
                     <br />
                     &copy; Назимкин Иван Игоревич
-                    <br />
-                    All rights reserved.
                 </Text>
 
-                <Link href="/public-offer">Публичная оферта</Link>
                 <Link href="/privacy-policy">Политика конфиденциальности</Link>
-                <Link href="/payment-methods">Способы оплаты</Link>
+                <Link href="/public-offer">Публичная оферта</Link>
+                <Link href="/contacts">Реквизиты и юридическая информация</Link>
 
                 <Text>
                     Любое использование либо копирование материалов или подборки

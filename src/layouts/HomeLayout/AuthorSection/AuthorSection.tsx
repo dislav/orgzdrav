@@ -59,7 +59,7 @@ const AuthorSection: React.FC<IAuthorSection> = ({ className }) => {
                             университета им. В.Ф. Войно- Ясенецкого
                         </li>
                     </ul>
-                    <Button href="/author">Узнать обо мне подробнее</Button>
+                    <Button href="/contacts">Узнать обо мне подробнее</Button>
                 </Content>
             </Wrapper>
         </Container>

@@ -54,7 +54,7 @@ export const getStaticProps = async () => {
                         order: OrderEnum.Asc,
                     },
                 ],
-                category: 'uslugi',
+                categoryIn: ['uslugi', 'audity']
             },
             first: 100,
         },

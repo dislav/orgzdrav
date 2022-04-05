@@ -1,5 +1,5 @@
 import React from 'react';
-import Swiper, { SwiperOptions, Pagination, Keyboard, Autoplay } from 'swiper';
+import { SwiperOptions, Pagination, Keyboard, Autoplay } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
 import { PartnerFragment } from '@graphql';
@@ -19,8 +19,6 @@ interface IReviewsSection {
     partners: PartnerFragment[];
 }
 
-Swiper.use([Pagination, Keyboard, Autoplay]);
-
 const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
     const options: SwiperOptions = {
         speed: 600,
@@ -36,10 +34,11 @@ const PartnersSection: React.FC<IReviewsSection> = ({ partners }) => {
             onlyInViewport: true,
         },
         autoplay: {
-            delay: 6000,
+            delay: 3000,
         },
         loop: true,
         preventClicks: true,
+        modules: [Pagination, Keyboard, Autoplay]
     };
 
     return (

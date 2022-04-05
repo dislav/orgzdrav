@@ -9,7 +9,15 @@ export const Container = styled.footer`
     text-align: center;
     color: ${({ theme }) => theme.colors.white};
     background: ${({ theme }) => theme.colors.primary};
-    padding: 120px 0;
+    padding: 40px 20px 100px;
+
+    ${up('md')} {
+        padding: 80px 40px;
+    }
+
+    ${up('xl')} {
+        padding: 120px 0;
+    }
 `;
 
 export const Wrapper = styled.div`

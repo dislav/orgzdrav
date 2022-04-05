@@ -5,7 +5,6 @@ import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
 import InfoLayout from '@layouts/InfoLayout/InfoLayout';
-import Image from '@components/Image/Image';
 import ContentSection from '@components/ContentSection/ContentSection';
 
 const PrivacyPolicy: React.FC<
@@ -15,13 +14,6 @@ const PrivacyPolicy: React.FC<
         <InfoLayout
             meta={{ title: page?.title || 'Политика конфиденциальности' }}
         >
-            <Image
-                src="/images/pages/privacy-policy.png"
-                alt={page?.title || ''}
-                width={1080}
-                height={590}
-            />
-
             {page?.content && (
                 <ContentSection
                     dangerouslySetInnerHTML={{ __html: page.content }}

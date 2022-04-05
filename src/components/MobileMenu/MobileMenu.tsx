@@ -17,12 +17,10 @@ const MobileMenu: React.FC<IMobileMenu> = ({
 }) => {
     return (
         <Container className={className}>
-            {profile ? (
+            {profile?.id && (
                 <ProfileWrapper>
                     <Profile {...profile} />
                 </ProfileWrapper>
-            ) : (
-                <div>Войти / Зарегистрироваться</div>
             )}
             <Content>{children}</Content>
         </Container>

@@ -66,7 +66,6 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 title: 'Продукты',
             }}
             showShopToolbar
-            hideFooter
         >
             <Heading
                 title="Проект «OrgZdrav»"
@@ -119,7 +118,7 @@ export const getStaticProps = async () => {
                         order: OrderEnum.Asc,
                     },
                 ],
-                categoryNotIn: ['vebinary', 'uslugi'],
+                categoryNotIn: ['vebinary', 'uslugi', 'konsultaczii', 'audity'],
             },
             first: 100,
         },

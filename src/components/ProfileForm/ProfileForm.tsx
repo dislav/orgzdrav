@@ -18,13 +18,12 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
     const dispatch = useDispatch();
 
     const profile = useSelector(getProfile);
-    const { id, firstName, lastName, email } = profile;
+    const { id, firstName, lastName } = profile;
 
     const { handleSubmit, control } = useForm<UpdateUserInput>({
         defaultValues: {
             firstName,
             lastName,
-            email,
         },
     });
 
@@ -50,7 +49,6 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
         <Container className={className} onSubmit={handleSubmit(onSubmit)}>
             <Input label="Имя" name="firstName" control={control} />
             <Input label="Фамилия" name="lastName" control={control} />
-            <Input label="E-mail" name="email" control={control} />
 
             <Footer>
                 <Button onClick={() => router.push('/profile')}>Назад</Button>

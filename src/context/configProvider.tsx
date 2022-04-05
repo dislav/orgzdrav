@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 
 interface IConfig {
     global: {
+        ymCode: number;
         defaultEmail: string;
     };
     header: {
@@ -14,12 +15,14 @@ interface IConfig {
         maxOrderPrice: number;
     };
     regex: {
+        username: RegExp;
         email: RegExp;
     };
 }
 
 const defaultConfig: IConfig = {
     global: {
+        ymCode: 87166583,
         defaultEmail: 'nazimkin18@mail.ru',
     },
     header: {
@@ -56,16 +59,17 @@ const defaultConfig: IConfig = {
                 title: 'Акции',
                 href: '/stocks',
             },
-            // {
-            //     title: 'Контакты',
-            //     href: '/contacts',
-            // },
+            {
+                title: 'Контакты',
+                href: '/contacts',
+            },
         ],
     },
     order: {
         maxOrderPrice: 10000,
     },
     regex: {
+        username: /^[a-zA-Z0-9]+$/,
         email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
 };

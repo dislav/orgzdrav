@@ -4,8 +4,12 @@ import { useDispatch } from 'react-redux';
 import { setCart } from '@redux/cart/actions';
 import { useAddToCartMutation, useRemoveItemsFromCartMutation } from '@graphql';
 
+import { useConfig } from '@context/configProvider';
+
 export const useCart = () => {
     const dispatch = useDispatch();
+
+    const { ymCode } = useConfig().global;
 
     const [addToCart, { loading: addToCartLoading }] = useAddToCartMutation();
 
@@ -17,6 +21,9 @@ export const useCart = () => {
             const { data } = await addToCart({
                 variables: { input: { productId: databaseId } },
             });
+
+            // @ts-ignore
+            ym(ymCode, 'reachGoal', 'ADD_TO_CART', { id: databaseId });
 
             if (data?.addToCart?.cart) dispatch(setCart(data.addToCart.cart));
         } catch (e) {

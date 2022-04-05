@@ -44,7 +44,7 @@ const Header: React.FC = () => {
             <Links>
                 <Link href="/" passHref>
                     <Logo>
-                        <img src="/favicon.jpeg" alt="" />
+                        <img src="/images/logo.jpg" alt="" />
                     </Logo>
                 </Link>
 

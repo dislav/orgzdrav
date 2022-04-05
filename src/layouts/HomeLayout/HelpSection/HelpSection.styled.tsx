@@ -25,17 +25,4 @@ export const Wrapper = styled.div`
             font-size: 20px;
         }
     }
-
-    ol {
-        padding-left: 20px;
-
-        li {
-            font-weight: 500;
-            margin-bottom: 10px;
-
-            &:last-of-type {
-                margin-bottom: 0;
-            }
-        }
-    }
 `;

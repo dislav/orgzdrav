@@ -7,18 +7,22 @@ import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 import ContentSection from '@components/ContentSection/ContentSection';
 import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 import Image from '@components/Image/Image';
+import { Header } from '@layouts/InfoLayout/InfoLayout.styled';
 
 const Author: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     page,
 }) => {
     return (
         <InfoLayout meta={{ title: page?.title || 'Автор' }}>
-            <Image
-                src="/images/pages/author.png"
-                alt={page?.title || ''}
-                width={1080}
-                height={571}
-            />
+            <Header>
+                <Image
+                    src="/images/IMG_8203.png"
+                    alt={page?.title || ''}
+                    width={467}
+                    height={802}
+                    objectFit="contain"
+                />
+            </Header>
 
             {page?.content && (
                 <ContentSection

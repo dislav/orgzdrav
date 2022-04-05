@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FormControlLabel, formControlLabelClasses } from '@mui/material';
 
 import InputComponent from '@components/Input/Input';
 import ButtonComponent from '@components/Button/Button';
@@ -24,6 +25,22 @@ export const Link = styled.span`
     font-size: 14px;
     text-decoration: underline;
     cursor: pointer;
+`;
+
+export const Accept = styled.div`
+    margin-bottom: 30px;
+`;
+
+export const AcceptLabel = styled(FormControlLabel)`
+    & .${formControlLabelClasses.label} {
+        font-size: 14px;
+        line-height: 1.2;
+
+        a {
+            color: ${({ theme }) => theme.colors.primary};
+            text-decoration: underline;
+        }
+    }
 `;
 
 export const Footer = styled.div`

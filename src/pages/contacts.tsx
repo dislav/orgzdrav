@@ -4,14 +4,14 @@ import { InferGetStaticPropsType } from 'next';
 import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
-import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 import ContentSection from '@components/ContentSection/ContentSection';
+import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 
-const PublicOffer: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const Contacts: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     page,
 }) => {
     return (
-        <InfoLayout meta={{ title: page?.title || 'Публичная оферта' }}>
+        <InfoLayout meta={{ title: page?.title || 'Контакты' }}>
             {page?.content && (
                 <ContentSection
                     dangerouslySetInnerHTML={{ __html: page.content }}
@@ -28,15 +28,15 @@ export const getStaticProps = async () => {
     >({
         query: GetPageDocument,
         fetchPolicy: 'no-cache',
-        variables: { id: 'public-offer' },
+        variables: { id: 'contacts' },
     });
 
     return {
         props: {
             page: page.page,
         },
-        revalidate: 60,
+        revalidate: 1,
     };
 };
 
-export default PublicOffer;
+export default Contacts;

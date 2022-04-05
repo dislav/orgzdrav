@@ -14,12 +14,15 @@ export const Container = styled.header`
     position: sticky;
     top: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
     height: 64px;
     background-color: ${({ theme }) => theme.colors.primary};
-    padding: 0 40px;
+    padding: 0 20px;
     z-index: 10;
+
+    ${up('md')} {
+        padding: 0 40px;
+    }
 `;
 
 export const Logo = styled.a`
@@ -35,33 +38,40 @@ export const Logo = styled.a`
 `;
 
 export const Links = styled.div`
-    display: none;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 100%;
 
-    ${up('sm')} {
-        display: flex;
-        align-items: center;
-    }
-    
     ${Logo} {
+        display: block;
         margin-right: 26px;
     }
 
     > a {
+        display: none;
         font-size: 16px;
         color: ${({ theme }) => theme.colors.white};
         font-weight: 500;
-        margin-right: 26px;
+        margin-right: 36px;
         cursor: pointer;
 
         &:last-child {
             margin-right: 0;
         }
+
+        ${up('xl')} {
+            display: block;
+        }
     }
 
     ${StyledProfile} {
+        display: none;
         margin-left: auto;
+
+        ${up('xl')} {
+            display: inherit;
+        }
     }
 `;
 
@@ -105,7 +115,7 @@ export const SandwichIcon = styled.div`
         background: currentColor;
     }
 
-    ${up('md')} {
+    ${up('xl')} {
         display: none;
     }
 `;

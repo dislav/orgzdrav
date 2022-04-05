@@ -50,7 +50,7 @@ const StepsSection: React.FC<IStepsSection> = ({ className }) => {
                                 оформить заказ
                             </li>
                         </ol>
-                        <Button href="/catalog">
+                        <Button href="/services">
                             Перейти в Каталог услуг и аудитов
                         </Button>
                     </Step>
@@ -68,7 +68,7 @@ const StepsSection: React.FC<IStepsSection> = ({ className }) => {
                                 оформить заказ
                             </li>
                         </ol>
-                        <Button href="/catalog">
+                        <Button href="/webinars">
                             Перейти в Каталог вебинаров
                         </Button>
                     </Step>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
 import Layout from '@components/Layout/Layout';
 import { Container as StyledButtonLink } from '@components/ButtonLink/ButtonLink.styled';
@@ -8,7 +9,15 @@ export const Container = styled(Layout)`
     flex-direction: column;
     max-width: ${({ theme }) => theme.variables.maxWidth};
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 40px 20px;
+
+    ${up('md')} {
+        padding: 8px 40px;
+    }
+
+    ${up('xl')} {
+        padding: 100px 0;
+    }
 
     & > h1 {
         text-align: center;

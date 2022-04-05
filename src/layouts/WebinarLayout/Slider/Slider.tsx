@@ -15,13 +15,21 @@ SwiperCore.use([Autoplay]);
 
 const Slider: React.FC<ISlider> = ({ className, slides }) => {
     const sliderOptions: SwiperProps = {
-        slidesPerView: 3,
+        slidesPerView: 1,
         grabCursor: true,
         autoplay: {
             delay: 8000,
         },
         autoHeight: true,
-        spaceBetween: 40
+        spaceBetween: 40,
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
     };
 
     return (

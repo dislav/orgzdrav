@@ -2,16 +2,18 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import { useConfig } from "@context/configProvider"
+
 export interface IMeta {
     title?: string;
     description?: string;
     image?: string | null;
 }
 
-const YM_CODE = 87166583;
-
 const Meta: React.FC<IMeta> = ({ title, description, image }) => {
     const router = useRouter();
+
+    const { ymCode } = useConfig().global;
 
     const metaProps: IMeta = {
         title: `Оргздрав${title ? ` — ${title}` : ''}`,
@@ -50,7 +52,7 @@ const Meta: React.FC<IMeta> = ({ title, description, image }) => {
                      m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
                      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
                   
-                     ym(${YM_CODE}, "init", {
+                     ym(${ymCode}, "init", {
                           clickmap:true,
                           trackLinks:true,
                           accurateTrackBounce:true,
@@ -63,7 +65,7 @@ const Meta: React.FC<IMeta> = ({ title, description, image }) => {
             <noscript>
                 <div>
                     <img
-                        src={`https://mc.yandex.ru/watch/${YM_CODE}`}
+                        src={`https://mc.yandex.ru/watch/${ymCode}`}
                         style={{
                             position: 'absolute',
                             left: -9999,
@@ -72,6 +74,8 @@ const Meta: React.FC<IMeta> = ({ title, description, image }) => {
                     />
                 </div>
             </noscript>
+
+            <script src="//code.jivo.ru/widget/D4MQYGMXoD" async />
         </Head>
     );
 };
