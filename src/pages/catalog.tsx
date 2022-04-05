@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import client from '@graphql/client';
 import {
@@ -12,15 +12,12 @@ import {
     OrderEnum,
     ProductCategory,
     ProductsOrderByEnum,
-    SimpleProductFragment,
-    useGetProductsLazyQuery,
 } from '@graphql';
 
 import CatalogLayout from '@layouts/CatalogLayout/CatalogLayout';
 import SearchForm from '@components/SearchForm/SearchForm';
 import Accordion from '@layouts/CatalogLayout/Accordion/Accordion';
 
-import { setProducts } from '@redux/products/actions';
 import { getProductsByCategories } from '@redux/products/selectors';
 import {
     AccordionList,
@@ -28,13 +25,13 @@ import {
 } from '@layouts/CatalogLayout/CatalogLayout.styled';
 import { InferGetStaticPropsType } from 'next';
 import ProductItem from '@layouts/CatalogLayout/ProductItem/ProductItem';
-import Heading from "@components/Heading/Heading"
+import Heading from '@components/Heading/Heading';
+import EmptyList from '@components/EmptyList/EmptyList';
 
 const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     productCategories,
 }) => {
-    const dispatch = useDispatch();
-
+    const [search, setSearch] = useState('');
     const [expanded, setExpanded] = useState<string | null>(null);
 
     const onExpanded =
@@ -43,44 +40,25 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
     const productsByCategories = useSelector(getProductsByCategories);
 
-    const [fetchProducts] = useGetProductsLazyQuery();
-
-    const onSearch = async (search: string) => {
-        console.log(search);
-
-        try {
-            const { data } = await fetchProducts({
-                variables: {
-                    where: {
-                        search,
-                        orderby: [
-                            {
-                                field: ProductsOrderByEnum.MenuOrder,
-                                order: OrderEnum.Asc,
-                            },
-                        ],
-                        categoryNotIn: ['vebinary'],
-                    },
-                    first: 100,
-                },
-            });
-
-            console.log(data);
-
-            if (data?.products?.nodes)
-                dispatch(
-                    setProducts(data.products.nodes as SimpleProductFragment[])
-                );
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
     const getCategoryTitleBySlug = useCallback(
         (slug: string) =>
             productCategories.find((category) => category.slug === slug)?.name,
         [productCategories]
     );
+
+    const filteredProducts = useMemo(() => {
+        const lowerSearch = search.toLowerCase();
+
+        return productsByCategories.filter(([category, products]) =>
+            products.some(
+                (product) =>
+                    getCategoryTitleBySlug(category)
+                        ?.toLowerCase()
+                        ?.indexOf(lowerSearch) !== -1 ||
+                    product.name?.toLowerCase().indexOf(lowerSearch) !== -1
+            )
+        );
+    }, [productsByCategories, getCategoryTitleBySlug, search]);
 
     return (
         <CatalogLayout
@@ -88,30 +66,38 @@ const Catalog: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 title: 'Продукты',
             }}
             showShopToolbar
-            hideFooter
         >
             <Heading
-              title="Проект «OrgZdrav»"
-              subtitle="Организуйте с нуля весь документооборот в клинике"
+                title="Проект «OrgZdrav»"
+                subtitle="Организуйте с нуля весь документооборот в клинике"
             />
             <AccordionList>
-                <SearchForm onChange={onSearch} />
+                <SearchForm label="Поиск по документам" onChange={setSearch} />
 
-                {productsByCategories.map(([category, products]) => (
-                    <Accordion
-                        key={category}
-                        expanded={expanded === category}
-                        onChange={onExpanded(category)}
-                        summary={
-                            <AccordionTitle>
-                                {getCategoryTitleBySlug(category)}
-                            </AccordionTitle>
-                        }
-                        details={products.map((product) => (
-                            <ProductItem key={product.id} {...product} />
+                {filteredProducts.length > 0 ? (
+                    <>
+                        {filteredProducts.map(([category, products]) => (
+                            <Accordion
+                                key={category}
+                                expanded={expanded === category}
+                                onChange={onExpanded(category)}
+                                summary={
+                                    <AccordionTitle>
+                                        {getCategoryTitleBySlug(category)}
+                                    </AccordionTitle>
+                                }
+                                details={products.map((product) => (
+                                    <ProductItem
+                                        key={product.id}
+                                        {...product}
+                                    />
+                                ))}
+                            />
                         ))}
-                    />
-                ))}
+                    </>
+                ) : (
+                    <EmptyList>Список пуст</EmptyList>
+                )}
             </AccordionList>
         </CatalogLayout>
     );
@@ -132,7 +118,7 @@ export const getStaticProps = async () => {
                         order: OrderEnum.Asc,
                     },
                 ],
-                categoryNotIn: ['vebinary', 'uslugi'],
+                categoryNotIn: ['vebinary', 'uslugi', 'konsultaczii', 'audity'],
             },
             first: 100,
         },

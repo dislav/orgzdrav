@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { Checkbox, Tooltip } from '@mui/material';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import NextLink from 'next/link';
 
 import { AuthType } from '@components/AuthForm/AuthForm';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
@@ -11,9 +13,11 @@ import {
     Footer,
     Button,
     Link,
+    Accept,
+    AcceptLabel,
 } from './RegisterForm.styled';
 
-import { useConfig } from "@context/configProvider"
+import { useConfig } from '@context/configProvider';
 
 interface IRegisterForm {
     setType: (type: AuthType) => void;
@@ -24,7 +28,7 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-    const emailRegex = useConfig().regex.email;
+    const { username: usernameRegex, email: emailRegex } = useConfig().regex;
 
     const { handleSubmit, control, watch } = useForm<RegisterUserInputProps>();
 
@@ -59,6 +63,11 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
                 control={control}
                 rules={{
                     required: 'Обязательное поле',
+                    pattern: {
+                        value: usernameRegex,
+                        message:
+                            'Имя пользователя должно содерждать только латинские символы',
+                    },
                 }}
             />
             <Input
@@ -117,6 +126,41 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
             {errorMessages.length > 0 && (
                 <FormErrors messages={errorMessages} />
             )}
+
+            <Accept>
+                <Controller
+                    name="accept"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                        <Tooltip
+                            open={!!error}
+                            title={error?.message || ''}
+                            placement="top-start"
+                        >
+                            <AcceptLabel
+                                control={<Checkbox {...field} />}
+                                label={
+                                    <>
+                                        Я согласен{' '}
+                                        <NextLink href="/privacy-policy">
+                                            <a>
+                                                с политикой конфиденциальности
+                                            </a>
+                                        </NextLink>{' '}
+                                        и{' '}
+                                        <NextLink href="/public-offer">
+                                            <a>публичной оффертой</a>
+                                        </NextLink>
+                                    </>
+                                }
+                            />
+                        </Tooltip>
+                    )}
+                    rules={{
+                        required: 'Для регистрации Вам необходимо согласиться',
+                    }}
+                />
+            </Accept>
 
             <Footer>
                 <Button type="submit" isLoading={isLoading}>

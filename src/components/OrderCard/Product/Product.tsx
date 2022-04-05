@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { SimpleProductFragment } from '@graphql';
 
 import { Container } from './Product.styled';
+import Image from '@components/Image/Image';
 
 const Product: React.FC<SimpleProductFragment> = ({ slug, name, image }) => {
     return (

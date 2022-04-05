@@ -3,13 +3,7 @@ import dayjs from 'dayjs';
 
 import { SimpleProductFragment } from '@graphql';
 
-import {
-    Container,
-    Title,
-    NewBroadcasts,
-    OldBroadcasts,
-} from './WebinarList.styled';
-import WebinarPreview from '@layouts/WebinarLayout/WebinarPreview/WebinarPreview';
+import { Container, Title, OldBroadcasts } from './WebinarList.styled';
 import ProductCard from '@components/ProductCard/ProductCard';
 import EmptyList from '@components/EmptyList/EmptyList';
 import Slider from '@layouts/WebinarLayout/Slider/Slider';

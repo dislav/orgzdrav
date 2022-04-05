@@ -9,8 +9,9 @@ import {
     Input,
     FormErrors,
     Footer,
-    Button, Link,
-} from "./LoginForm.styled"
+    Button,
+    Link,
+} from './LoginForm.styled';
 
 interface ILoginForm {
     setType: (type: AuthType) => void;
@@ -46,7 +47,7 @@ const LoginForm: React.FC<ILoginForm> = ({ setType, onSubmit }) => {
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
             <Input
                 name="username"
-                label="Имя пользователя"
+                label="Имя пользователя или почта"
                 control={control}
                 rules={{
                     required: 'Обязательное поле',

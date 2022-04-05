@@ -12,7 +12,11 @@ import {
 } from '@graphql';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
+import { useConfig } from '@context/configProvider';
+
 export const useAuth = () => {
+    const { ymCode } = useConfig().global;
+
     const [login, { loading: loginLoading }] = useLoginMutation();
 
     const [registerUser, { loading: registerLoading }] =
@@ -77,7 +81,16 @@ export const useAuth = () => {
                         response.data.registerUser.user.jwtAuthToken
                     );
 
-                    await onSubmit?.(response.data.registerUser.user);
+                    const registeredUser = response.data.registerUser.user;
+
+                    // @ts-ignore
+                    ym(ymCode, 'reachGoal', 'REGISTER', {
+                        first_name: registeredUser.firstName,
+                        last_name: registeredUser.lastName,
+                        email: registeredUser.email,
+                    });
+
+                    await onSubmit?.(registeredUser);
 
                     return response;
                 }

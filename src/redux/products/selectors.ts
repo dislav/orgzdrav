@@ -13,8 +13,8 @@ export const getProductsByCategories = createSelector(
             product.productCategories?.nodes?.forEach((category) => {
                 if (category?.slug && productsMap.has(category.slug)) {
                     productsMap.set(category.slug, [
-                        ...(productsMap.get(category.slug) || []),
                         product,
+                        ...(productsMap.get(category.slug) || []),
                     ]);
                 } else if (category?.slug) {
                     productsMap.set(category.slug, [product]);

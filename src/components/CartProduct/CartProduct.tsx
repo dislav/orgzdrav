@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { SimpleProductFragment } from '@graphql';
 
@@ -11,6 +10,7 @@ import {
     Text,
     Remove,
 } from './CartProduct.styled';
+import Image from '@components/Image/Image';
 
 interface ICartProduct extends SimpleProductFragment {
     totalPrice?: string | null;

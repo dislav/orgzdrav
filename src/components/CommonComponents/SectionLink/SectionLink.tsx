@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { Post_Postmain_Content_SectionLink } from '@graphql';
 
 import { Container, ImageWrapper, Content } from './SectionLink.styled';
+import Image from '@components/Image/Image';
 
 const SectionLink: React.FC<Post_Postmain_Content_SectionLink> = ({ post }) => {
     return (

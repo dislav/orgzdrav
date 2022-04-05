@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { PostFragment } from '@graphql';
 
@@ -10,6 +9,7 @@ import {
     Content,
     Description,
 } from './BlogCard.styled';
+import Image from '@components/Image/Image';
 
 interface IBlogCard extends PostFragment {
     className?: string;

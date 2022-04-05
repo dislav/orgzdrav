@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { down } from 'styled-breakpoints';
+import { down, up } from "styled-breakpoints"
 
 import ButtonLink from '@components/ButtonLink/ButtonLink';
 
@@ -42,6 +42,11 @@ export const Button = styled(ButtonLink)`
 
 export const Content = styled.div`
     flex: 0 1 70%;
+    margin-bottom: 40px;
+
+    ${up('md')} {
+        margin-bottom: 0;
+    }
 
     h3,
     h4,

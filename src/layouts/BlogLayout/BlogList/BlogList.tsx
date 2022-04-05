@@ -13,11 +13,9 @@ interface IBlogList {
 const BlogList: React.FC<IBlogList> = ({ posts }) => {
     return (
         <Container>
-            {posts.length > 0 ? (
-                posts.map((post) => <BlogCard key={post.id} {...post} />)
-            ) : (
-                <EmptyList>Список статей пуст</EmptyList>
-            )}
+            {posts.map((post) => (
+                <BlogCard key={post.id} {...post} />
+            ))}
         </Container>
     );
 };

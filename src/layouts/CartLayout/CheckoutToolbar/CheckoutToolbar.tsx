@@ -6,7 +6,6 @@ import { Switch, FormControlLabel, Tooltip } from '@mui/material';
 import {
     SimpleProductFragment,
     useCheckoutMutation,
-    useGetCartLazyQuery,
     useSubmitGfFormMutation,
     ViewerFragment,
 } from '@graphql';
@@ -27,7 +26,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const dispatch = useDispatch();
 
     const {
-        global: { defaultEmail },
+        global: { defaultEmail, ymCode },
         order: { maxOrderPrice },
     } = useConfig();
 
@@ -64,8 +63,6 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
     const [submitGfForm, { loading: submitGfLoading }] =
         useSubmitGfFormMutation();
 
-    const [fetchCart, { loading: cartLoading }] = useGetCartLazyQuery();
-
     const onSubmitOrder = useCallback(
         async (user?: ViewerFragment) => {
             const userValues = {
@@ -89,6 +86,11 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 });
 
                 if (response.data?.checkout?.result === 'success') {
+                    // @ts-ignore
+                    ym(ymCode, 'reachGoal', 'CHECKOUT', {
+                        order_id: response.data?.checkout?.order?.databaseId,
+                    });
+
                     await Promise.all([
                         productsByEmails.map(([email, products]) =>
                             submitGfForm({
@@ -177,7 +179,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 <AuthButton
                     onClick={onSubmitOrder}
                     onSuccessAuth={onSubmitOrder}
-                    isLoading={loading || cartLoading || submitGfLoading}
+                    isLoading={loading || submitGfLoading}
                     disabled={isUnavailablePrice}
                 >
                     Оформить заказ

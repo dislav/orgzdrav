@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Container, Wrapper, Value } from './AboutSection.styled';
+import { Container, Wrapper } from './AboutSection.styled';
+import NumberList from '@components/NumberList/NumberList';
 
 interface IAboutSection {
     className?: string;
@@ -21,20 +22,7 @@ const AboutSection: React.FC<IAboutSection> = ({ className }) => {
         <Container className={className}>
             <Wrapper>
                 <h2>С нашим проектом Вы:</h2>
-                <ol>
-                    {list.map((text, index) => {
-                        const value = index + 1;
-
-                        return (
-                            <li key={index}>
-                                <Value>
-                                    {value >= 10 ? value : `0${value}`}
-                                </Value>
-                                {text}
-                            </li>
-                        );
-                    })}
-                </ol>
+                <NumberList list={list} />
             </Wrapper>
         </Container>
     );

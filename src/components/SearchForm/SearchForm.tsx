@@ -1,22 +1,30 @@
 import React from 'react';
-import { useDebouncedCallback } from 'use-debounce';
 
-import { Container, Input } from './SearchForm.styled';
+import { Container, Input, CircularProgress } from './SearchForm.styled';
 
 interface ISearchForm {
     className?: string;
+    label?: string;
     onChange: React.Dispatch<string>;
+    isLoading?: boolean;
 }
 
-const SearchForm: React.FC<ISearchForm> = ({ className, onChange }) => {
-    const onChangeHandler = useDebouncedCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value),
-        400
-    );
-
+const SearchForm: React.FC<ISearchForm> = ({
+    className,
+    label = 'Поиск',
+    onChange,
+    isLoading,
+}) => {
     return (
         <Container className={className}>
-            <Input name="search" label="Поиск" onChange={onChangeHandler} />
+            <Input
+                name="search"
+                label={label}
+                onChange={(e) => onChange(e.target.value)}
+                InputProps={{
+                    endAdornment: isLoading && <CircularProgress size={20} />,
+                }}
+            />
         </Container>
     );
 };

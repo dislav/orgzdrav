@@ -19,7 +19,7 @@ export const Container = styled.div`
 export const File = styled.a`
     display: flex;
     align-items: center;
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
     font-size: 14px;
 `;
 
@@ -30,8 +30,8 @@ export const FileIcon = styled.div`
     justify-content: center;
     width: 60px;
     height: 60px;
-    color: ${({ theme }) => theme.colors.black};
-    background: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.primary};
     border-radius: 4px;
     margin-right: 20px;
 

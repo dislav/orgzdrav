@@ -1,17 +1,15 @@
 import React from 'react';
-import Image from 'next/image';
-import Swiper, { SwiperOptions, Pagination, Keyboard } from 'swiper';
+import { SwiperOptions, Pagination, Keyboard } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
 
 import { PeopleReviewFragment } from '@graphql';
 import { Container, Header, Slider } from './ReviewsSection.styled';
 import { ArrowRight } from '@icons/icons';
+import Image from '@components/Image/Image';
 
 interface IReviewsSection {
     reviews: PeopleReviewFragment[];
 }
-
-Swiper.use([Pagination, Keyboard]);
 
 const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
     const options: SwiperOptions = {
@@ -35,6 +33,7 @@ const ReviewsSection: React.FC<IReviewsSection> = ({ reviews }) => {
                 slidesPerGroup: 3,
             },
         },
+        modules: [Pagination, Keyboard],
     };
 
     return (

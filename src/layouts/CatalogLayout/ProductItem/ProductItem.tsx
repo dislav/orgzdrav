@@ -4,10 +4,17 @@ import Link from 'next/link';
 
 import { SimpleProductFragment } from '@graphql';
 
-import { Container, Button } from './ProductItem.styled';
+import {
+    Container,
+    ImageWrapper,
+    Content,
+    Price,
+    Button,
+} from './ProductItem.styled';
 
 import { getCartProducts } from '@redux/cart/selectors';
 import { useCart } from '@hooks/useCart';
+import Image from '@components/Image/Image';
 
 interface IProductItem extends SimpleProductFragment {
     className?: string;
@@ -18,6 +25,9 @@ const ProductItem: React.FC<IProductItem> = ({
     slug,
     databaseId,
     name,
+    image,
+    regularPrice,
+    salePrice,
 }) => {
     const cartProducts = useSelector(getCartProducts);
 
@@ -52,10 +62,28 @@ const ProductItem: React.FC<IProductItem> = ({
     return (
         <Link href={`/catalog/${slug}`} passHref>
             <Container className={className}>
-                {name}
-                <Button onClick={onClickHandler} isLoading={isLoading}>
-                    {!productKey ? 'В корзину' : 'Добавлено'}
-                </Button>
+                {image?.sourceUrl && (
+                    <ImageWrapper>
+                        <Image
+                            src={image.sourceUrl}
+                            alt={name || ''}
+                            layout="fill"
+                            objectFit="cover"
+                        />
+                    </ImageWrapper>
+                )}
+                <Content>
+                    {name}
+                    {regularPrice && (
+                        <Price
+                            regularPrice={regularPrice}
+                            salePrice={salePrice}
+                        />
+                    )}
+                    <Button onClick={onClickHandler} isLoading={isLoading}>
+                        {!productKey ? 'В корзину' : 'Добавлено'}
+                    </Button>
+                </Content>
             </Container>
         </Link>
     );

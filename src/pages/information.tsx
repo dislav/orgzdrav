@@ -11,14 +11,17 @@ import {
 
 import InformationLayout from '@layouts/InformationLayout/InformationLayout';
 import DocumentList from '@components/DocumentList/DocumentList';
+import EmptyList from '@components/EmptyList/EmptyList';
 
 const Information: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     documents,
 }) => {
     return (
         <InformationLayout meta={{ title: 'Документы' }}>
-            {documents && documents.length > 0 && (
+            {documents?.length > 0 ? (
                 <DocumentList documents={documents} />
+            ) : (
+                <EmptyList>Список пуст</EmptyList>
             )}
         </InformationLayout>
     );

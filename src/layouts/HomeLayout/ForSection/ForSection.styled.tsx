@@ -15,19 +15,6 @@ export const Wrapper = styled.div`
     width: 100%;
     max-width: ${({ theme }) => theme.variables.maxWidth};
     margin: 0 auto;
-
-    ol {
-        padding-left: 20px;
-
-        li {
-            font-weight: 500;
-            margin-bottom: 10px;
-
-            &:last-of-type {
-                margin-bottom: 0;
-            }
-        }
-    }
 `;
 
 export const Title = styled.h2`

@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import {
     Container,
@@ -8,6 +7,7 @@ import {
     Button,
     Content,
 } from './AuthorSection.styled';
+import Image from '@components/Image/Image';
 
 interface IAuthorSection {
     className?: string;
@@ -59,7 +59,7 @@ const AuthorSection: React.FC<IAuthorSection> = ({ className }) => {
                             университета им. В.Ф. Войно- Ясенецкого
                         </li>
                     </ul>
-                    <Button href="/author">Узнать обо мне подробнее</Button>
+                    <Button href="/contacts">Узнать обо мне подробнее</Button>
                 </Content>
             </Wrapper>
         </Container>

@@ -1,31 +1,23 @@
 import React from 'react';
 import { InferGetStaticPropsType } from 'next';
-import Image from 'next/image';
 
 import client from '@graphql/client';
 import { GetPageDocument, GetPageQuery, GetPageQueryVariables } from '@graphql';
 
 import ContentSection from '@components/ContentSection/ContentSection';
-import Layout from '@components/Layout/Layout';
+import InfoLayout from '@layouts/InfoLayout/InfoLayout';
 
-const Author: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const Contacts: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     page,
 }) => {
     return (
-        <Layout meta={{ title: page?.title || 'Автор' }}>
-            <Image
-                src="/images/pages/author.png"
-                alt={page?.title || ''}
-                width={1080}
-                height={571}
-            />
-
+        <InfoLayout meta={{ title: page?.title || 'Контакты' }}>
             {page?.content && (
                 <ContentSection
                     dangerouslySetInnerHTML={{ __html: page.content }}
                 />
             )}
-        </Layout>
+        </InfoLayout>
     );
 };
 
@@ -36,7 +28,7 @@ export const getStaticProps = async () => {
     >({
         query: GetPageDocument,
         fetchPolicy: 'no-cache',
-        variables: { id: 'author' },
+        variables: { id: 'contacts' },
     });
 
     return {
@@ -47,4 +39,4 @@ export const getStaticProps = async () => {
     };
 };
 
-export default Author;
+export default Contacts;

@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import dayjs from 'dayjs';
 
 import {
@@ -9,6 +8,7 @@ import {
     SimpleProductFragment,
     useCreateOrderMutation,
     useGetOrdersLazyQuery,
+    useSubmitGfFormMutation,
     ViewerFragment,
 } from '@graphql';
 
@@ -25,10 +25,12 @@ import {
     Button,
 } from './WebinarPreview.styled';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
+import Image from '@components/Image/Image';
 
 import { getProfile } from '@redux/profile/selectors';
 import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';
 import { addOrder } from '@redux/orders/actions';
+import { useConfig } from '@context/configProvider';
 
 interface IWebinarPreview {
     className?: string;
@@ -42,6 +44,8 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
     const profile = useSelector(getProfile);
     const isOrdersLoading = useSelector(getIsOrdersLoading);
 
+    const { defaultEmail } = useConfig().global;
+
     const orders = useSelector(getOrders);
 
     const isRecordedOnWebinar = useMemo(() => {
@@ -53,11 +57,19 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
         );
     }, [webinar, orders]);
 
-    const [fetchOrders, { loading: ordersLoading }] = useGetOrdersLazyQuery();
     const [createOrder, { loading }] = useCreateOrderMutation();
+    const [fetchOrders, { loading: ordersLoading }] = useGetOrdersLazyQuery();
+    const [submitGfForm, { loading: submitGfLoading }] =
+        useSubmitGfFormMutation();
 
     const onSubmitOrder = useCallback(
         async (user?: ViewerFragment) => {
+            const userValues = {
+                firstName: user?.firstName || profile?.firstName || '',
+                lastName: user?.lastName || profile?.lastName || '',
+                email: user?.email || profile?.email || '',
+            };
+
             try {
                 const orders = await fetchOrders();
 
@@ -95,6 +107,47 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
                         },
                     });
 
+                    await submitGfForm({
+                        variables: {
+                            input: {
+                                id: '1',
+                                fieldValues: [
+                                    {
+                                        id: 1,
+                                        emailValues: {
+                                            value: userValues.email,
+                                        },
+                                    },
+                                    {
+                                        id: 2,
+                                        nameValues: {
+                                            first: userValues.firstName,
+                                            last: userValues.lastName,
+                                        },
+                                    },
+                                    {
+                                        id: 6,
+                                        value: webinar.name,
+                                    },
+                                    {
+                                        id: 4,
+                                        emailValues: {
+                                            value:
+                                                webinar.productAdditional
+                                                    ?.mail || defaultEmail,
+                                        },
+                                    },
+                                    {
+                                        id: 5,
+                                        value:
+                                            response?.data?.createOrder?.order?.databaseId?.toString() ||
+                                            '',
+                                    },
+                                ],
+                            },
+                        },
+                    });
+
                     if (response.data?.createOrder?.order)
                         dispatch(addOrder(response.data.createOrder.order));
                 }
@@ -108,7 +161,6 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
     );
 
     const onDownloadProgram = () => {
-        console.log(webinar.productAdditional?.programm);
         if (webinar.productAdditional?.programm?.mediaItemUrl)
             router.push(webinar.productAdditional.programm.mediaItemUrl);
     };
@@ -162,7 +214,9 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
                             <AuthButton
                                 onClick={onSubmitOrder}
                                 onSuccessAuth={onSubmitOrder}
-                                isLoading={loading || ordersLoading}
+                                isLoading={
+                                    loading || ordersLoading || submitGfLoading
+                                }
                                 disabled={!showTime || isRecordedOnWebinar}
                             >
                                 {isRecordedOnWebinar

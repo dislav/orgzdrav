@@ -15,7 +15,6 @@ import HomeLayout from '@layouts/HomeLayout/HomeLayout';
 import HeroSection from '@layouts/HomeLayout/HeroSection/HeroSection';
 import ReviewsSection from '@layouts/HomeLayout/ReviewsSection/ReviewsSection';
 import PartnersSection from '@layouts/HomeLayout/PartnersSection/PartnersSection';
-import QuestionsSection from '@layouts/HomeLayout/QuestionsSection/QuestionsSection';
 import AboutSection from '@layouts/HomeLayout/AboutSection/AboutSection';
 import AuthorSection from '@layouts/HomeLayout/AuthorSection/AuthorSection';
 import ResultsSection from '@layouts/HomeLayout/ResultsSection/ResultsSection';
@@ -38,7 +37,6 @@ const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <StepsSection />
             <ReviewsSection reviews={reviews as PeopleReviewFragment[]} />
             <PartnersSection partners={partners as PartnerFragment[]} />
-            <QuestionsSection />
         </HomeLayout>
     );
 };

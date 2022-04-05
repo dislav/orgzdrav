@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import { useTrail, a, useTransition, useSpring } from 'react-spring';
+import { useTrail, a, useSpring } from 'react-spring';
 
 import {
     Container,
@@ -12,6 +11,7 @@ import {
     List,
     ImageWrapper,
 } from './HeroSection.styled';
+import Image from '@components/Image/Image';
 
 interface IHeroSection {
     className?: string;
@@ -20,7 +20,7 @@ interface IHeroSection {
 const list: string[] = [
     'Обучим всем тонкостям медицинского законодательства',
     'Предоставим все необходимые документы для открытия или ведения деятельности',
-    'Подготовим к любым проверкам Роспотребнадзора и Росздравнадзор',
+    'Подготовим к любым проверкам Роспотребнадзора и Росздравнадзора',
     'Ответим на все самые сложные вопросы',
 ];
 

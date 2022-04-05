@@ -2,37 +2,26 @@ import React from 'react';
 
 import { Container, Wrapper, Title, Footer, Button } from './ForSection.styled';
 import { Telegram, Vk } from '@icons/icons';
+import NumberList from '@components/NumberList/NumberList';
 
 interface IForSection {
     className?: string;
 }
+
+const list = [
+    'Подготовить к открытию клинику от проектирования и до получения СЭЗ и лицензии',
+    'Привести в порядок всю внутреннюю документацию в клинике',
+    'Подготовить и успешно пройти проверки Росздравнадзора и Роспотребнадзора',
+    'Защититься от неправомерных требований надзорных органов или необоснованных претензий пациентов',
+    'Научиться читать и понимать действующее законодательство, а также разбираться в нем',
+];
 
 const ForSection: React.FC<IForSection> = ({ className }) => {
     return (
         <Container className={className}>
             <Wrapper>
                 <Title>Для кого создан Проект «OrgZdrav»?</Title>
-                <ol>
-                    <li>
-                        Подготовить к открытию клинику от проектирования и до
-                        получения СЭЗ и лицензии
-                    </li>
-                    <li>
-                        Привести в порядок всю внутреннюю документацию в клинике
-                    </li>
-                    <li>
-                        Подготовить и успешно пройти проверки Росздравнадзора и
-                        Роспотребнадзора
-                    </li>
-                    <li>
-                        Защититься от неправомерных требований надзорных органов
-                        или необоснованных претензий пациентов
-                    </li>
-                    <li>
-                        Научиться читать и понимать действующее
-                        законодательство, а также разбираться в нем
-                    </li>
-                </ol>
+                <NumberList list={list} />
 
                 <Title>
                     Оставайтесь с нами на связи удобным для Вас способом
@@ -46,7 +35,7 @@ const ForSection: React.FC<IForSection> = ({ className }) => {
                             variant: 'vk',
                         }}
                     >
-                        Вконтакте
+                        Группа Вконтакте
                     </Button>
                     <Button
                         href="https://t.me/+TTvAkkpKlyCjHXe4"
@@ -56,7 +45,7 @@ const ForSection: React.FC<IForSection> = ({ className }) => {
                             variant: 'telegram',
                         }}
                     >
-                        Телеграм канал
+                        Телеграм-чат
                     </Button>
                     <Button
                         href="https://t.me/orgzdrav2019"
@@ -66,7 +55,7 @@ const ForSection: React.FC<IForSection> = ({ className }) => {
                             variant: 'telegram',
                         }}
                     >
-                        Телеграм канал
+                        Телеграм-канал
                     </Button>
                 </Footer>
             </Wrapper>
