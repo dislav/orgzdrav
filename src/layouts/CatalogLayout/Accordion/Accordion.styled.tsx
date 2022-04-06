@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { up } from "styled-breakpoints"
 import {
     Accordion,
     AccordionDetails,
@@ -13,7 +14,9 @@ export const Arrow = styled.div`
     align-items: center;
     justify-content: center;
     width: 18px;
+    min-width: 18px;
     height: 18px;
+    min-height: 18px;
     will-change: rotate;
     transition: transform 0.3s;
     margin-left: auto;
@@ -52,7 +55,11 @@ export const Container = styled(Accordion)`
 export const Summary = styled(AccordionSummary)`
     &.${accordionSummaryClasses.root} {
         min-height: 60px;
-        padding: 0 20px;
+        padding: 0 12px;
+
+        ${up('md')} {
+            padding: 0 20px;
+        }
         
         &:after {
             content: '';
@@ -68,6 +75,10 @@ export const Summary = styled(AccordionSummary)`
         &.${accordionSummaryClasses.expanded}:after {
             background: ${({ theme }) => theme.colors.gray10};
         }
+    }
+
+    & .${accordionSummaryClasses.content} {
+        align-items: center;
     }
 `;
 

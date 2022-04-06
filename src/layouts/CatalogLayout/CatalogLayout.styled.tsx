@@ -147,7 +147,13 @@ export const AccordionList = styled.div`
 `;
 
 export const AccordionTitle = styled.span`
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 1.2;
+    padding-right: 14px;
+
+    ${up('md')} {
+        font-size: 18px;
+        padding-right: 20px;
+    }
 `;

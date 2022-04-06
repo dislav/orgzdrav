@@ -8,6 +8,7 @@ import {
     Container,
     ImageWrapper,
     Content,
+    Title,
     Price,
     Button,
 } from './ProductItem.styled';
@@ -73,7 +74,7 @@ const ProductItem: React.FC<IProductItem> = ({
                     </ImageWrapper>
                 )}
                 <Content>
-                    {name}
+                    <Title>{name}</Title>
                     {regularPrice && (
                         <Price
                             regularPrice={regularPrice}
