@@ -8,6 +8,5 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /usr/src/app/node_modules
       - /usr/src/app/.next
     restart: always
