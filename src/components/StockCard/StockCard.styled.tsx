@@ -15,7 +15,8 @@ export const ImageWrapper = styled.div`
     padding-top: 100%;
 
     ${up('sm')} {
-        width: 40%;
+        flex: 1;
+        max-width: 50%;
         height: 300px;
         padding-top: 0;
     }
@@ -26,7 +27,7 @@ export const Content = styled.div`
     padding: 20px;
 
     ${up('sm')} {
-        width: 60%;
+        flex: 1;
         padding-left: 40px;
     }
 `;
