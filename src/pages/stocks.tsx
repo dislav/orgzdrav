@@ -41,7 +41,11 @@ export const getStaticProps = async () => {
     const { data: stocks } = await client.query<
         GetStocksQuery,
         GetStocksQueryVariables
-    >({ query: GetStocksDocument, variables: { first: 100 } });
+    >({
+        query: GetStocksDocument,
+        fetchPolicy: 'no-cache',
+        variables: { first: 100 },
+    });
 
     return {
         props: {

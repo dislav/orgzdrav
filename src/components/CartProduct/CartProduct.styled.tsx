@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
-import PriceComponent from "@components/Price/Price"
+import PriceComponent from '@components/Price/Price';
 
 export const Container = styled.div`
     display: flex;
@@ -20,9 +21,15 @@ export const ImageCover = styled.div`
 export const Text = styled.span`
     flex: 0 1 60%;
     color: ${({ theme }) => theme.colors.black};
-    font-size: 18px;
-    line-height: 1.3;
-    padding-right: 20px;
+    font-size: 16px;
+    line-height: 1.2;
+    padding-right: 14px;
+
+    ${up('md')} {
+        font-size: 18px;
+        line-height: 1.3;
+        padding-right: 20px;
+    }
 `;
 
 export const RightWrapper = styled.div`

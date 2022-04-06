@@ -26,6 +26,10 @@ const CartSummary: React.FC = () => {
 
     const onRemoveProduct = (key: string) => () => onRemoveProductFromCart(key);
 
+    const discount = cart.discountTotal
+        ? +cart.discountTotal.replace(/\D+/gm, '')
+        : null;
+
     return (
         <Container>
             {isLoading && (
@@ -53,19 +57,21 @@ const CartSummary: React.FC = () => {
             <PromoCode />
 
             <Footer>
-                {cart.discountTotal && cart.subtotal && (
-                    <Row smallPrice>
-                        <span>Итого (без учета скидки):</span>
-                        <Price regularPrice={cart.subtotal} />
-                    </Row>
-                )}
+                {cart.discountTotal &&
+                    cart.subtotal &&
+                    cart.subtotal !== cart.total && (
+                        <>
+                            <Row smallPrice>
+                                <span>Итого (без учета скидки):</span>
+                                <Price regularPrice={cart.subtotal} />
+                            </Row>
 
-                {cart.discountTotal && (
-                    <Row smallPrice>
-                        <span>Скидка:</span>
-                        <Price regularPrice={cart.discountTotal} />
-                    </Row>
-                )}
+                            <Row smallPrice>
+                                <span>Скидка:</span>
+                                <Price regularPrice={cart.discountTotal} />
+                            </Row>
+                        </>
+                    )}
 
                 {cart.total && (
                     <Row>

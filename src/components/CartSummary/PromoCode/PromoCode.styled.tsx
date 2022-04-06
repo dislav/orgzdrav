@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { up } from 'styled-breakpoints';
 
 import InputComponent from '@components/Input/Input';
 import ButtonComponent from '@components/Button/Button';
-import FormErrors from '@components/FormErrors/FormErrors';
 
 export const Container = styled.form`
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     background-color: ${({ theme }) => theme.colors.white};
     border-bottom: 1px dashed ${({ theme }) => theme.colors.gray10};
     padding: 16px;
@@ -17,9 +18,14 @@ export const Container = styled.form`
         height: 30px;
         margin-right: 16px;
     }
+
+    ${up('md')} {
+        flex-wrap: nowrap;
+    }
 `;
 
 export const Wrapper = styled.div`
+    flex: 1;
     display: flex;
     flex-direction: column;
 `;
@@ -42,8 +48,14 @@ export const ApplyPromoCode = styled.span`
 
 export const InputWrapper = styled.div`
     display: flex;
-    flex: 0 1 50%;
-    margin-left: auto;
+    width: 100%;
+    margin-top: 20px;
+
+    ${up('md')} {
+        flex: 0 1 50%;
+        margin-top: 0;
+        margin-left: auto;
+    }
 `;
 
 export const Input = styled(InputComponent)`

@@ -9,7 +9,7 @@ export const Container = styled(Layout)`
     padding: 40px 20px;
 
     ${up('md')} {
-        padding: 8px 40px;
+        padding: 80px 40px;
     }
 
     ${up('xl')} {

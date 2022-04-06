@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 
 import { useResetUserPasswordMutation } from '@graphql';
 
-import Layout from '@components/Layout/Layout';
-import NewPasswordForm from '@components/NewPasswordForm/NewPasswordForm';
 import { ResetPasswordInputs } from '@components/NewPasswordForm/types';
+import ProfileLayout from '@layouts/ProfileLayout/ProfileLayout';
+import NewPasswordForm from '@components/NewPasswordForm/NewPasswordForm';
 
 const RestorePassword: React.FC = () => {
     const router = useRouter();
@@ -47,13 +47,13 @@ const RestorePassword: React.FC = () => {
     }, [router]);
 
     return (
-        <Layout
+        <ProfileLayout
             meta={{
                 title: 'Восстановление пароля',
             }}
         >
             <NewPasswordForm onSubmit={onResetPassword} isLoading={loading} />
-        </Layout>
+        </ProfileLayout>
     );
 };
 
