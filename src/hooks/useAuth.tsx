@@ -66,10 +66,8 @@ export const useAuth = () => {
             onSubmit?: (user: ViewerFragment) => Promise<void> | void
         ) => {
             try {
-                const { confirmPassword, ...input } = data;
-
                 const response = await registerUser({
-                    variables: { input },
+                    variables: { input: data },
                 });
 
                 if (

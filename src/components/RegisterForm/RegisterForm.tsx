@@ -34,9 +34,11 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
 
     const password = watch('password', '');
 
-    const onSubmitHandler: SubmitHandler<RegisterUserInputProps> = async (
-        data
-    ) => {
+    const onSubmitHandler: SubmitHandler<RegisterUserInputProps> = async ({
+        confirmPassword,
+        accept,
+        ...data
+    }) => {
         setIsLoading(true);
         setErrorMessages([]);
 
