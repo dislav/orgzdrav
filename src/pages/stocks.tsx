@@ -19,7 +19,11 @@ const Stocks: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     stocks,
 }) => {
     return (
-        <StocksLayout>
+        <StocksLayout
+            meta={{
+                title: 'Акции',
+            }}
+        >
             <Heading
                 title="Проект «OrgZdrav»"
                 subtitle="Получите максимальную выгоду с акциями и скидками"
