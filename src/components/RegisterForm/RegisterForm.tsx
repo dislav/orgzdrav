@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Checkbox, Tooltip } from '@mui/material';
+import { Checkbox, TextField, Tooltip } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import NextLink from 'next/link';
+import NumberFormat from 'react-number-format';
 
 import { AuthType } from '@components/AuthForm/AuthForm';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
 import {
     Container,
-    Input,
     FormErrors,
     Footer,
     Button,
@@ -17,6 +17,7 @@ import {
     AcceptLabel,
 } from './RegisterForm.styled';
 
+import Input from '@components/Input/Input';
 import { useConfig } from '@context/configProvider';
 
 interface IRegisterForm {
@@ -96,6 +97,24 @@ const RegisterForm: React.FC<IRegisterForm> = ({ setType, onSubmit }) => {
                 name="lastName"
                 label="Фамилия"
                 control={control}
+                rules={{
+                    required: 'Обязательное поле',
+                }}
+            />
+            <Controller
+                name="billing.phone"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <NumberFormat
+                        label="Телефон"
+                        customInput={TextField}
+                        format="+7 (###) ###-####"
+                        mask="_"
+                        error={!!error}
+                        helperText={error?.message || ''}
+                        {...field}
+                    />
+                )}
                 rules={{
                     required: 'Обязательное поле',
                 }}

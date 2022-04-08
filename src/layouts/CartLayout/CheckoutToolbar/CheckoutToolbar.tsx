@@ -7,15 +7,15 @@ import {
     SimpleProductFragment,
     useCheckoutMutation,
     useSubmitGfFormMutation,
-    ViewerFragment,
+    CustomerFragment,
 } from '@graphql';
 
 import { Container, Wrapper, AuthButton } from './CheckoutToolbar.styled';
 
 import { useConfig } from '@context/configProvider';
 import { getCartProducts, getCartTotalPrice } from '@redux/cart/selectors';
-import { getProfile } from '@redux/profile/selectors';
-import { addOrder } from '@redux/orders/actions';
+import { getCustomer } from '@redux/customer/selectors';
+import { addCustomerOrder } from '@redux/customer/actions';
 
 interface ICheckoutForm {
     className?: string;
@@ -30,7 +30,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
         order: { maxOrderPrice },
     } = useConfig();
 
-    const profile = useSelector(getProfile);
+    const customer = useSelector(getCustomer);
 
     const [isEntity, setIsEntity] = useState(false);
 
@@ -64,11 +64,15 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
         useSubmitGfFormMutation();
 
     const onSubmitOrder = useCallback(
-        async (user?: ViewerFragment) => {
+        async (user?: CustomerFragment) => {
             const userValues = {
-                firstName: user?.firstName || profile?.firstName || '',
-                lastName: user?.lastName || profile?.lastName || '',
-                email: user?.email || profile?.email || '',
+                firstName: user?.firstName || customer?.firstName || '',
+                lastName: user?.lastName || customer?.lastName || '',
+                email: user?.email || customer?.email || '',
+                phone: user?.billing?.phone || customer?.billing?.phone || '',
+                company:
+                    user?.billing?.company || customer?.billing?.company || '',
+                city: user?.billing?.city || customer?.billing?.city || '',
             };
 
             try {
@@ -79,6 +83,9 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                                 firstName: userValues.firstName,
                                 lastName: userValues.lastName,
                                 email: userValues.email,
+                                phone: userValues.phone,
+                                company: userValues.company,
+                                city: userValues.city,
                             },
                             paymentMethod: 'bacs',
                         },
@@ -132,6 +139,10 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                                                     response?.data?.checkout?.order?.databaseId?.toString() ||
                                                     '',
                                             },
+                                            {
+                                                id: 7,
+                                                value: userValues.phone,
+                                            },
                                         ],
                                     },
                                 },
@@ -144,7 +155,9 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                             `/order-success/${response.data.checkout.order.databaseId}`
                         );
 
-                        dispatch(addOrder(response.data.checkout.order));
+                        dispatch(
+                            addCustomerOrder(response.data.checkout.order)
+                        );
                     }
 
                     await router.reload();
@@ -153,7 +166,7 @@ const CheckoutToolbar: React.FC<ICheckoutForm> = ({ className }) => {
                 console.log(e);
             }
         },
-        [profile, router, checkout, submitGfForm, dispatch]
+        [customer, router, checkout, submitGfForm, dispatch]
     );
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

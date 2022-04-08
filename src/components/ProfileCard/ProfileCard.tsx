@@ -4,36 +4,29 @@ import { useSelector } from 'react-redux';
 import { Container, Content, Avatar, Info } from './ProfileCard.styled';
 import ButtonLink from '@components/ButtonLink/ButtonLink';
 
-import { getProfile } from '@redux/profile/selectors';
+import {
+    getCustomer,
+    getCustomerDisplayName,
+    getCustomerShortName,
+} from '@redux/customer/selectors';
 
 interface IProfileCard {
     className?: string;
 }
 
 const ProfileCard: React.FC<IProfileCard> = ({ className }) => {
-    const profile = useSelector(getProfile);
+    const customer = useSelector(getCustomer);
 
-    const fullName = `${profile.firstName}${
-        profile.lastName ? ` ${profile.lastName}` : ''
-    }`;
-
-    const abbreviatedName = useMemo(() => {
-        if (profile.firstName || profile.lastName) {
-            return `${profile.firstName ? profile.firstName[0] : ''}${
-                profile.lastName ? profile.lastName[0] : ''
-            }`;
-        }
-
-        return profile?.username?.[0] || '';
-    }, [profile]);
+    const displayName = useSelector(getCustomerDisplayName);
+    const shortName = useSelector(getCustomerShortName);
 
     return (
         <Container className={className}>
             <Content>
-                <Avatar>{abbreviatedName}</Avatar>
+                <Avatar>{shortName}</Avatar>
                 <Info>
-                    <h3>{fullName}</h3>
-                    <span>@{profile.username}</span>
+                    <h3>{displayName}</h3>
+                    <span>@{customer.username}</span>
                 </Info>
             </Content>
             <ButtonLink href="/profile/settings">

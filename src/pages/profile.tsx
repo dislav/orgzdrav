@@ -6,34 +6,26 @@ import ProfileLayout from '@layouts/ProfileLayout/ProfileLayout';
 import ProfileCard from '@components/ProfileCard/ProfileCard';
 import Spinner from '@components/Spinner/Spinner';
 
-import {
-    getIsLoggedIn,
-    getIsProfileLoading,
-    getProfile,
-} from '@redux/profile/selectors';
 import { getToken } from '@graphql/utils';
+import {
+    getCustomerDisplayName,
+    getCustomerLoading,
+    getIsLoggedIn,
+} from '@redux/customer/selectors';
 
 const Profile = () => {
     const router = useRouter();
 
     const isLoggedIn = useSelector(getIsLoggedIn);
-    const isLoading = useSelector(getIsProfileLoading);
-    const profile = useSelector(getProfile);
+    const isLoading = useSelector(getCustomerLoading);
+    const displayName = useSelector(getCustomerDisplayName);
 
     useEffect(() => {
         if (!getToken() && !isLoading && !isLoggedIn) router.push('/');
     }, [isLoading, isLoggedIn, router]);
 
-    const title = useMemo(() => {
-        if (!isLoading && !isLoggedIn) return '';
-
-        return `${profile.firstName}${
-            profile.lastName ? ` ${profile.lastName}` : ''
-        }`;
-    }, [isLoading, isLoggedIn, profile]);
-
     return (
-        <ProfileLayout meta={{ title }} hideFooter>
+        <ProfileLayout meta={{ title: displayName || '' }} hideFooter>
             {isLoading && <Spinner />}
             {!isLoading && isLoggedIn && <ProfileCard />}
         </ProfileLayout>

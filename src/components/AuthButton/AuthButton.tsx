@@ -2,19 +2,19 @@ import React, { useCallback } from 'react';
 import { UnpackNestedValue } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { ViewerFragment, LoginInput } from '@graphql';
+import { CustomerFragment, LoginInput } from '@graphql';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
 import { Modal, AuthForm, Button } from './AuthButton.styled';
 import { IButton } from '@components/Button/Button';
 
 import { useTogglable } from '@hooks/useTogglable';
-import { getIsLoggedIn } from '@redux/profile/selectors';
+import { getIsLoggedIn } from '@redux/customer/selectors';
 import { useAuth } from '@hooks/useAuth';
 
 interface IAuthButton extends IButton {
     renderButton?: (onClick?: React.DispatchWithoutAction) => React.ReactNode;
-    onSuccessAuth?: (user: ViewerFragment) => Promise<void> | void;
+    onSuccessAuth?: (user: CustomerFragment) => Promise<void> | void;
     onClick?: React.DispatchWithoutAction;
 }
 
@@ -45,7 +45,7 @@ const AuthButton: React.FC<IAuthButton> = ({
     }, [isLoggedIn, onClick, onOpen]);
 
     const onSuccessHandler = useCallback(
-        (user: ViewerFragment) => {
+        (user: CustomerFragment) => {
             onClose();
 
             return onSuccessAuth?.(user);

@@ -6,9 +6,9 @@ import {
     LoginInput,
     SendPasswordResetEmailInput,
     useLoginMutation,
-    useRegisterUserMutation,
+    useRegisterCustomerMutation,
     useSendPasswordResetEmailMutation,
-    ViewerFragment,
+    CustomerFragment,
 } from '@graphql';
 import { RegisterUserInputProps } from '@components/RegisterForm/types';
 
@@ -19,8 +19,8 @@ export const useAuth = () => {
 
     const [login, { loading: loginLoading }] = useLoginMutation();
 
-    const [registerUser, { loading: registerLoading }] =
-        useRegisterUserMutation();
+    const [registerCustomer, { loading: registerLoading }] =
+        useRegisterCustomerMutation();
 
     const [passwordReset, { loading: passwordResetLoading }] =
         useSendPasswordResetEmailMutation();
@@ -28,13 +28,13 @@ export const useAuth = () => {
     const onLogin = useCallback(
         async (
             data: UnpackNestedValue<LoginInput>,
-            onSubmit?: (user: ViewerFragment) => Promise<void> | void
+            onSubmit?: (user: CustomerFragment) => Promise<void> | void
         ) => {
             try {
                 const response = await login({ variables: { input: data } });
 
                 if (
-                    response.data?.login?.user &&
+                    response.data?.login?.customer &&
                     response.data.login.authToken
                 ) {
                     localStorage.setItem(
@@ -42,7 +42,7 @@ export const useAuth = () => {
                         response.data.login.authToken
                     );
 
-                    await onSubmit?.(response.data.login.user);
+                    await onSubmit?.(response.data.login.customer);
 
                     return response;
                 }
@@ -63,29 +63,29 @@ export const useAuth = () => {
     const onRegister = useCallback(
         async (
             data: UnpackNestedValue<RegisterUserInputProps>,
-            onSubmit?: (user: ViewerFragment) => Promise<void> | void
+            onSubmit?: (user: CustomerFragment) => Promise<void> | void
         ) => {
             try {
-                const response = await registerUser({
+                const response = await registerCustomer({
                     variables: { input: data },
                 });
 
-                if (
-                    response.data?.registerUser?.user &&
-                    response.data.registerUser.user.jwtAuthToken
-                ) {
-                    localStorage.setItem(
-                        'authToken',
-                        response.data.registerUser.user.jwtAuthToken
-                    );
+                if (response.data?.registerCustomer?.customer) {
+                    const registeredUser =
+                        response.data.registerCustomer.customer;
 
-                    const registeredUser = response.data.registerUser.user;
+                    if (registeredUser.jwtAuthToken)
+                        localStorage.setItem(
+                            'authToken',
+                            registeredUser.jwtAuthToken
+                        );
 
                     // @ts-ignore
                     ym(ymCode, 'reachGoal', 'REGISTER', {
                         first_name: registeredUser.firstName,
                         last_name: registeredUser.lastName,
                         email: registeredUser.email,
+                        phone: registeredUser.billing?.phone || '',
                     });
 
                     await onSubmit?.(registeredUser);
@@ -103,7 +103,7 @@ export const useAuth = () => {
                     };
             }
         },
-        [registerUser]
+        [registerCustomer]
     );
 
     const onPasswordReset = useCallback(

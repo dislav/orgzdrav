@@ -1,8 +1,0 @@
-fragment Viewer on User {
-    id
-    userId
-    username
-    firstName
-    lastName
-    email
-}

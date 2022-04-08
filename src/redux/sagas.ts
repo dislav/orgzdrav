@@ -1,11 +1,10 @@
 import { all } from '@redux-saga/core/effects';
 
 import { cartSaga } from '@redux/cart/sagas';
-import { profileSaga } from '@redux/profile/sagas';
-import { ordersSaga } from '@redux/orders/sagas';
+import { customerSaga } from '@redux/customer/sagas';
 
 function* rootSagas() {
-    yield all([cartSaga(), profileSaga(), ordersSaga()]);
+    yield all([cartSaga(), customerSaga()]);
 }
 
 export default rootSagas;

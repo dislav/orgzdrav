@@ -1,25 +1,23 @@
 import React from 'react';
-
-import { ViewerFragment } from '@graphql';
+import { useSelector } from 'react-redux';
 
 import { Container, ProfileWrapper, Content } from './MobileMenu.styled';
 import Profile from '@components/Profile/Profile';
 
+import { getIsLoggedIn } from '@redux/customer/selectors';
+
 interface IMobileMenu {
     className?: string;
-    profile?: ViewerFragment;
 }
 
-const MobileMenu: React.FC<IMobileMenu> = ({
-    className,
-    profile,
-    children,
-}) => {
+const MobileMenu: React.FC<IMobileMenu> = ({ className, children }) => {
+    const isLoggedIn = useSelector(getIsLoggedIn);
+
     return (
         <Container className={className}>
-            {profile?.id && (
+            {isLoggedIn && (
                 <ProfileWrapper>
-                    <Profile {...profile} />
+                    <Profile />
                 </ProfileWrapper>
             )}
             <Content>{children}</Content>

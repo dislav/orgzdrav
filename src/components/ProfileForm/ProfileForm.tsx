@@ -1,13 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import NumberFormat from 'react-number-format';
 
-import { UpdateUserInput, useUpdateUserMutation } from '@graphql';
+import { UpdateCustomerInput, useUpdateCustomerMutation } from '@graphql';
 
-import { Container, Input, Footer, Button } from './ProfileForm.styled';
-import { getProfile } from '@redux/profile/selectors';
-import { setProfile } from '@redux/profile/actions';
+import { Container, Footer, Button } from './ProfileForm.styled';
+import Input from '@components/Input/Input';
+
+import { getCustomer } from '@redux/customer/selectors';
+import { setCustomer } from '@redux/customer/actions';
+import { TextField } from '@mui/material';
 
 interface IProfileForm {
     className?: string;
@@ -17,28 +21,32 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const profile = useSelector(getProfile);
-    const { id, firstName, lastName } = profile;
+    const customer = useSelector(getCustomer);
 
-    const { handleSubmit, control } = useForm<UpdateUserInput>({
+    const { handleSubmit, control } = useForm<UpdateCustomerInput>({
         defaultValues: {
-            firstName,
-            lastName,
+            firstName: customer?.firstName || '',
+            lastName: customer?.lastName || '',
+            billing: {
+                phone: customer?.billing?.phone || '',
+                company: customer?.billing?.company || '',
+                city: customer?.billing?.city || '',
+            },
         },
     });
 
-    const [updateUser, { loading }] = useUpdateUserMutation();
+    const [updateCustomer, { loading }] = useUpdateCustomerMutation();
 
-    const onSubmit: SubmitHandler<UpdateUserInput> = async (data) => {
+    const onSubmit: SubmitHandler<UpdateCustomerInput> = async (data) => {
         try {
-            const response = await updateUser({
-                variables: { input: { ...data, id } },
+            const response = await updateCustomer({
+                variables: { input: { ...data, id: customer.id } },
             });
 
-            if (response.data?.updateUser?.user) {
+            if (response.data?.updateCustomer?.customer) {
                 await router.push('/profile');
 
-                dispatch(setProfile(response.data.updateUser.user));
+                dispatch(setCustomer(response.data.updateCustomer.customer));
             }
         } catch (e) {
             console.log(e);
@@ -47,8 +55,44 @@ const ProfileForm: React.FC<IProfileForm> = ({ className }) => {
 
     return (
         <Container className={className} onSubmit={handleSubmit(onSubmit)}>
-            <Input label="Имя" name="firstName" control={control} />
-            <Input label="Фамилия" name="lastName" control={control} />
+            <Input
+                label="Имя"
+                name="firstName"
+                control={control}
+                rules={{
+                    required: 'Обязательное поле',
+                }}
+            />
+
+            <Input
+                label="Фамилия"
+                name="lastName"
+                control={control}
+                rules={{
+                    required: 'Обязательное поле',
+                }}
+            />
+
+            <Controller
+                name="billing.phone"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <NumberFormat
+                        customInput={TextField}
+                        format="+7 (###) ###-####"
+                        mask="_"
+                        error={!!error}
+                        helperText={error?.message || ''}
+                        {...field}
+                    />
+                )}
+                rules={{
+                    required: 'Обязательное поле',
+                }}
+            />
+
+            <Input label="Компания" name="billing.company" control={control} />
+            <Input label="Город" name="billing.city" control={control} />
 
             <Footer>
                 <Button onClick={() => router.push('/profile')}>Назад</Button>

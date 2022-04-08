@@ -1,37 +1,25 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { ViewerFragment } from '@graphql';
-
 import { Container, Avatar, Menu, Logout } from './Profile.styled';
 import { useOnClickOutside } from '@hooks/useOnClickOutside';
+import {
+    getCustomerDisplayName,
+    getCustomerShortName,
+} from '@redux/customer/selectors';
 
-const Profile: React.FC<ViewerFragment> = ({
-    firstName,
-    lastName,
-    username,
-}) => {
+const Profile: React.FC = () => {
     const router = useRouter();
+
+    const displayName = useSelector(getCustomerDisplayName);
+    const shortName = useSelector(getCustomerShortName);
 
     const menuContainer = useRef(null);
     const [menuActive, setMenuActive] = useState(false);
 
     useOnClickOutside(menuContainer, () => setMenuActive(false));
-
-    const name = useMemo(() => {
-        return `${firstName || ''}${lastName ? ` ${lastName}` : ''}`;
-    }, [firstName, lastName]);
-
-    const abbreviatedName = useMemo(() => {
-        if (firstName || lastName) {
-            return `${firstName ? firstName[0] : ''}${
-                lastName ? lastName[0] : ''
-            }`;
-        }
-
-        return username?.[0] || '';
-    }, [firstName, lastName, username]);
 
     const onLogout = () => {
         localStorage.removeItem('authToken');
@@ -40,8 +28,8 @@ const Profile: React.FC<ViewerFragment> = ({
 
     return (
         <Container onClick={() => setMenuActive(true)}>
-            {name}
-            <Avatar>{abbreviatedName}</Avatar>
+            {displayName}
+            <Avatar>{shortName}</Avatar>
 
             {menuActive && (
                 <Menu ref={menuContainer}>

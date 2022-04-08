@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Container } from './OrderList.styled';
 import OrderCard from '@components/OrderCard/OrderCard';
 
-import { getOrders } from '@redux/orders/selectors';
+import { getCustomerOrders } from '@redux/customer/selectors';
 import EmptyList from '@components/EmptyList/EmptyList';
 
 interface IOrderList {
@@ -13,11 +13,11 @@ interface IOrderList {
 }
 
 const OrderList: React.FC<IOrderList> = ({ className }) => {
-    const orders = useSelector(getOrders);
+    const orders = useSelector(getCustomerOrders);
 
     const sortedOrders = useMemo(() => {
         return [...orders]
-            .filter((order) => order.billing && order.date)
+            .filter((order) => order?.billing && order?.date)
             .sort((orderA, orderB) => {
                 const orderADate = dayjs(orderA.date);
                 const orderBDate = dayjs(orderB.date);

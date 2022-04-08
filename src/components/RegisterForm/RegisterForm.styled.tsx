@@ -1,17 +1,19 @@
 import styled from 'styled-components';
-import { FormControlLabel, formControlLabelClasses } from '@mui/material';
+import {
+    FormControlLabel,
+    formControlLabelClasses,
+    textFieldClasses,
+    buttonClasses,
+} from '@mui/material';
 
-import InputComponent from '@components/Input/Input';
 import ButtonComponent from '@components/Button/Button';
 import FormErrorsComponent from '@components/FormErrors/FormErrors';
 
 export const Container = styled.form`
     display: flex;
     flex-direction: column;
-`;
 
-export const Input = styled(InputComponent)`
-    && {
+    .${textFieldClasses.root} {
         margin-bottom: 20px;
     }
 `;
@@ -52,7 +54,7 @@ export const Footer = styled.div`
 `;
 
 export const Button = styled(ButtonComponent)`
-    && {
+    &.${buttonClasses.root} {
         width: 100%;
         height: 48px;
         margin-bottom: 14px;

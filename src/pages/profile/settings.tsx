@@ -6,14 +6,14 @@ import ProfileLayout from '@layouts/ProfileLayout/ProfileLayout';
 import ProfileForm from '@components/ProfileForm/ProfileForm';
 import Spinner from '@components/Spinner/Spinner';
 
-import { getIsLoggedIn, getIsProfileLoading } from '@redux/profile/selectors';
+import { getCustomerLoading, getIsLoggedIn } from '@redux/customer/selectors';
 import { getToken } from '@graphql/utils';
 
 const Settings: React.FC = () => {
     const router = useRouter();
 
     const isLoggedIn = useSelector(getIsLoggedIn);
-    const isLoading = useSelector(getIsProfileLoading);
+    const isLoading = useSelector(getCustomerLoading);
 
     useEffect(() => {
         if (!getToken() && !isLoading && !isLoggedIn) router.push('/');

@@ -1,0 +1,23 @@
+#import "./Order.graphql"
+
+fragment Customer on Customer {
+    id
+    databaseId
+    username
+    firstName
+    lastName
+    email
+    billing {
+        firstName
+        lastName
+        phone
+        company
+        city
+    }
+    orderCount
+    orders {
+        nodes {
+            ...Order
+        }
+    }
+}

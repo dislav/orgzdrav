@@ -15,8 +15,8 @@ import Profile from '@components/Profile/Profile';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 
+import { getIsLoggedIn } from '@redux/customer/selectors';
 import { useConfig } from '@context/configProvider';
-import { getIsLoggedIn, getProfile } from '@redux/profile/selectors';
 import { useTogglable } from '@hooks/useTogglable';
 
 const Header: React.FC = () => {
@@ -24,7 +24,6 @@ const Header: React.FC = () => {
 
     const links = useConfig().header.links;
 
-    const profile = useSelector(getProfile);
     const isLoggedIn = useSelector(getIsLoggedIn);
 
     const { isOpen, onOpen, onClose } = useTogglable();
@@ -52,7 +51,7 @@ const Header: React.FC = () => {
 
                 <ClientOnly>
                     {isLoggedIn ? (
-                        <Profile {...profile} />
+                        <Profile />
                     ) : (
                         <Login onSuccessAuth={router.reload}>Войти</Login>
                     )}
@@ -64,7 +63,7 @@ const Header: React.FC = () => {
             </SandwichIcon>
 
             <SandwichModal isOpen={isOpen} onClose={onClose}>
-                <MobileMenu profile={profile}>{renderLinks()}</MobileMenu>
+                <MobileMenu>{renderLinks()}</MobileMenu>
             </SandwichModal>
         </Container>
     );

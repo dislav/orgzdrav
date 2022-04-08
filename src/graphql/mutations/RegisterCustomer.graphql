@@ -1,0 +1,10 @@
+#import "../fragments/Customer.graphql"
+
+mutation RegisterCustomer($input: RegisterCustomerInput!) {
+    registerCustomer(input: $input) {
+        customer {
+            ...Customer
+            jwtAuthToken
+        }
+    }
+}

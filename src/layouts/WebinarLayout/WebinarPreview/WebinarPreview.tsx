@@ -9,7 +9,7 @@ import {
     useCreateOrderMutation,
     useGetOrdersLazyQuery,
     useSubmitGfFormMutation,
-    ViewerFragment,
+    CustomerFragment,
 } from '@graphql';
 
 import {
@@ -27,10 +27,13 @@ import {
 import ClientOnly from '@components/ClientOnly/ClientOnly';
 import Image from '@components/Image/Image';
 
-import { getProfile } from '@redux/profile/selectors';
-import { getIsOrdersLoading, getOrders } from '@redux/orders/selectors';
-import { addOrder } from '@redux/orders/actions';
+import {
+    getCustomer,
+    getCustomerLoading,
+    getCustomerOrders,
+} from '@redux/customer/selectors';
 import { useConfig } from '@context/configProvider';
+import { addCustomerOrder } from '@redux/customer/actions';
 
 interface IWebinarPreview {
     className?: string;
@@ -41,12 +44,11 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const profile = useSelector(getProfile);
-    const isOrdersLoading = useSelector(getIsOrdersLoading);
+    const customer = useSelector(getCustomer);
+    const orders = useSelector(getCustomerOrders);
+    const isCustomerLoading = useSelector(getCustomerLoading);
 
     const { defaultEmail } = useConfig().global;
-
-    const orders = useSelector(getOrders);
 
     const isRecordedOnWebinar = useMemo(() => {
         return !!orders?.find((order) =>
@@ -63,11 +65,15 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
         useSubmitGfFormMutation();
 
     const onSubmitOrder = useCallback(
-        async (user?: ViewerFragment) => {
+        async (user?: CustomerFragment) => {
             const userValues = {
-                firstName: user?.firstName || profile?.firstName || '',
-                lastName: user?.lastName || profile?.lastName || '',
-                email: user?.email || profile?.email || '',
+                firstName: user?.firstName || customer?.firstName || '',
+                lastName: user?.lastName || customer?.lastName || '',
+                email: user?.email || customer?.email || '',
+                phone: user?.billing?.phone || customer?.billing?.phone || '',
+                company:
+                    user?.billing?.company || customer?.billing?.company || '',
+                city: user?.billing?.city || customer?.billing?.city || '',
             };
 
             try {
@@ -85,15 +91,12 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
                         variables: {
                             input: {
                                 billing: {
-                                    firstName:
-                                        user?.firstName ||
-                                        profile?.firstName ||
-                                        '',
-                                    lastName:
-                                        user?.lastName ||
-                                        profile?.lastName ||
-                                        '',
-                                    email: user?.email || profile?.email || '',
+                                    firstName: userValues.firstName,
+                                    lastName: userValues.lastName,
+                                    email: userValues.email,
+                                    phone: userValues.phone,
+                                    company: userValues.company,
+                                    city: userValues.city,
                                 },
                                 lineItems: [
                                     {
@@ -143,13 +146,19 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
                                             response?.data?.createOrder?.order?.databaseId?.toString() ||
                                             '',
                                     },
+                                    {
+                                        id: 7,
+                                        value: userValues.phone,
+                                    },
                                 ],
                             },
                         },
                     });
 
                     if (response.data?.createOrder?.order)
-                        dispatch(addOrder(response.data.createOrder.order));
+                        dispatch(
+                            addCustomerOrder(response.data.createOrder.order)
+                        );
                 }
 
                 if (user) await router.reload();
@@ -157,7 +166,7 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
                 console.log(e);
             }
         },
-        [router, profile, webinar, createOrder, fetchOrders, dispatch]
+        [router, customer, webinar, createOrder, fetchOrders, dispatch]
     );
 
     const onDownloadProgram = () => {
@@ -208,7 +217,7 @@ const WebinarPreview: React.FC<IWebinarPreview> = ({ className, webinar }) => {
                     )}
 
                     <ClientOnly>
-                        {isOrdersLoading ? (
+                        {isCustomerLoading ? (
                             <Skeleton variant="rectangular" />
                         ) : (
                             <AuthButton

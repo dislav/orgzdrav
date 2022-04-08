@@ -25392,6 +25392,8 @@ export type CartContentItemFragment = { __typename?: 'CartToCartItemConnection',
 
 export type CartItemFragment = { __typename?: 'CartItem', key: string, total?: string | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'CartItemToProductConnectionEdge', node?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined };
 
+export type CustomerFragment = { __typename?: 'Customer', id: string, databaseId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined, orderCount?: number | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, phone?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined } | null | undefined, orders?: { __typename?: 'CustomerToOrderConnection', nodes?: Array<{ __typename?: 'Order', id: string, databaseId?: number | null | undefined, status?: OrderStatusEnum | null | undefined, total?: string | null | undefined, discountTotal?: string | null | undefined, hasBillingAddress?: boolean | null | undefined, needsPayment?: boolean | null | undefined, needsProcessing?: boolean | null | undefined, paymentMethod?: string | null | undefined, paymentMethodTitle?: string | null | undefined, date?: string | null | undefined, dateCompleted?: string | null | undefined, datePaid?: string | null | undefined, isDownloadPermitted?: boolean | null | undefined, hasDownloadableItem?: boolean | null | undefined, downloadableItems?: { __typename?: 'OrderToDownloadableItemConnection', nodes?: Array<{ __typename?: 'DownloadableItem', name?: string | null | undefined, accessExpires?: string | null | undefined, url?: string | null | undefined, download?: { __typename?: 'ProductDownload', fileExt?: string | null | undefined, fileExists?: boolean | null | undefined, fileType?: string | null | undefined, downloadId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, lineItems?: { __typename?: 'OrderToLineItemConnection', nodes?: Array<{ __typename?: 'LineItem', orderId?: number | null | undefined, databaseId?: number | null | undefined, productId?: number | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined> | null | undefined } | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined, email?: string | null | undefined, phone?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
 export type DocumentFragment = { __typename?: 'Document', slug?: string | null | undefined, title?: string | null | undefined, excerpt?: string | null | undefined, documentMain?: { __typename?: 'Document_Documentmain', file?: { __typename?: 'MediaItem', title?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined } | null | undefined } | null | undefined };
 
 export type DownloadableItemFragment = { __typename?: 'DownloadableItem', name?: string | null | undefined, accessExpires?: string | null | undefined, url?: string | null | undefined, download?: { __typename?: 'ProductDownload', fileExt?: string | null | undefined, fileExists?: boolean | null | undefined, fileType?: string | null | undefined, downloadId: string } | null | undefined };
@@ -25413,8 +25415,6 @@ export type ProductDownloadFragment = { __typename?: 'ProductDownload', fileExt?
 export type SimpleProductFragment = { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type StockFragment = { __typename?: 'Stock', id: string, slug?: string | null | undefined, title?: string | null | undefined, content?: string | null | undefined, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined } | null | undefined } | null | undefined };
-
-export type ViewerFragment = { __typename?: 'User', id: string, userId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined };
 
 export type AddToCartMutationVariables = Exact<{
   input: AddToCartInput;
@@ -25449,14 +25449,14 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'RootMutation', login?: { __typename?: 'LoginPayload', authToken?: string | null | undefined, user?: { __typename?: 'User', id: string, userId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined } | null | undefined } | null | undefined };
+export type LoginMutation = { __typename?: 'RootMutation', login?: { __typename?: 'LoginPayload', authToken?: string | null | undefined, customer?: { __typename?: 'Customer', id: string, databaseId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined, orderCount?: number | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, phone?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined } | null | undefined, orders?: { __typename?: 'CustomerToOrderConnection', nodes?: Array<{ __typename?: 'Order', id: string, databaseId?: number | null | undefined, status?: OrderStatusEnum | null | undefined, total?: string | null | undefined, discountTotal?: string | null | undefined, hasBillingAddress?: boolean | null | undefined, needsPayment?: boolean | null | undefined, needsProcessing?: boolean | null | undefined, paymentMethod?: string | null | undefined, paymentMethodTitle?: string | null | undefined, date?: string | null | undefined, dateCompleted?: string | null | undefined, datePaid?: string | null | undefined, isDownloadPermitted?: boolean | null | undefined, hasDownloadableItem?: boolean | null | undefined, downloadableItems?: { __typename?: 'OrderToDownloadableItemConnection', nodes?: Array<{ __typename?: 'DownloadableItem', name?: string | null | undefined, accessExpires?: string | null | undefined, url?: string | null | undefined, download?: { __typename?: 'ProductDownload', fileExt?: string | null | undefined, fileExists?: boolean | null | undefined, fileType?: string | null | undefined, downloadId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, lineItems?: { __typename?: 'OrderToLineItemConnection', nodes?: Array<{ __typename?: 'LineItem', orderId?: number | null | undefined, databaseId?: number | null | undefined, productId?: number | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined> | null | undefined } | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined, email?: string | null | undefined, phone?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
-export type RegisterUserMutationVariables = Exact<{
-  input: RegisterUserInput;
+export type RegisterCustomerMutationVariables = Exact<{
+  input: RegisterCustomerInput;
 }>;
 
 
-export type RegisterUserMutation = { __typename?: 'RootMutation', registerUser?: { __typename?: 'RegisterUserPayload', user?: { __typename?: 'User', jwtAuthToken?: string | null | undefined, id: string, userId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined } | null | undefined } | null | undefined };
+export type RegisterCustomerMutation = { __typename?: 'RootMutation', registerCustomer?: { __typename?: 'RegisterCustomerPayload', customer?: { __typename?: 'Customer', jwtAuthToken?: string | null | undefined, id: string, databaseId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined, orderCount?: number | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, phone?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined } | null | undefined, orders?: { __typename?: 'CustomerToOrderConnection', nodes?: Array<{ __typename?: 'Order', id: string, databaseId?: number | null | undefined, status?: OrderStatusEnum | null | undefined, total?: string | null | undefined, discountTotal?: string | null | undefined, hasBillingAddress?: boolean | null | undefined, needsPayment?: boolean | null | undefined, needsProcessing?: boolean | null | undefined, paymentMethod?: string | null | undefined, paymentMethodTitle?: string | null | undefined, date?: string | null | undefined, dateCompleted?: string | null | undefined, datePaid?: string | null | undefined, isDownloadPermitted?: boolean | null | undefined, hasDownloadableItem?: boolean | null | undefined, downloadableItems?: { __typename?: 'OrderToDownloadableItemConnection', nodes?: Array<{ __typename?: 'DownloadableItem', name?: string | null | undefined, accessExpires?: string | null | undefined, url?: string | null | undefined, download?: { __typename?: 'ProductDownload', fileExt?: string | null | undefined, fileExists?: boolean | null | undefined, fileType?: string | null | undefined, downloadId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, lineItems?: { __typename?: 'OrderToLineItemConnection', nodes?: Array<{ __typename?: 'LineItem', orderId?: number | null | undefined, databaseId?: number | null | undefined, productId?: number | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined> | null | undefined } | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined, email?: string | null | undefined, phone?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 export type RemoveCouponsMutationVariables = Exact<{
   input: RemoveCouponsInput;
@@ -25493,6 +25493,13 @@ export type SubmitGfFormMutationVariables = Exact<{
 
 export type SubmitGfFormMutation = { __typename?: 'RootMutation', submitGfForm?: { __typename?: 'SubmitGfFormPayload', entry?: { __typename?: 'GfDraftEntry' } | { __typename?: 'GfSubmittedEntry', id: string, status?: EntryStatusEnum | null | undefined, isSubmitted?: boolean | null | undefined } | null | undefined, errors?: Array<{ __typename?: 'FieldError', message?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
+export type UpdateCustomerMutationVariables = Exact<{
+  input: UpdateCustomerInput;
+}>;
+
+
+export type UpdateCustomerMutation = { __typename?: 'RootMutation', updateCustomer?: { __typename?: 'UpdateCustomerPayload', customer?: { __typename?: 'Customer', id: string, databaseId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined, orderCount?: number | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, phone?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined } | null | undefined, orders?: { __typename?: 'CustomerToOrderConnection', nodes?: Array<{ __typename?: 'Order', id: string, databaseId?: number | null | undefined, status?: OrderStatusEnum | null | undefined, total?: string | null | undefined, discountTotal?: string | null | undefined, hasBillingAddress?: boolean | null | undefined, needsPayment?: boolean | null | undefined, needsProcessing?: boolean | null | undefined, paymentMethod?: string | null | undefined, paymentMethodTitle?: string | null | undefined, date?: string | null | undefined, dateCompleted?: string | null | undefined, datePaid?: string | null | undefined, isDownloadPermitted?: boolean | null | undefined, hasDownloadableItem?: boolean | null | undefined, downloadableItems?: { __typename?: 'OrderToDownloadableItemConnection', nodes?: Array<{ __typename?: 'DownloadableItem', name?: string | null | undefined, accessExpires?: string | null | undefined, url?: string | null | undefined, download?: { __typename?: 'ProductDownload', fileExt?: string | null | undefined, fileExists?: boolean | null | undefined, fileType?: string | null | undefined, downloadId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, lineItems?: { __typename?: 'OrderToLineItemConnection', nodes?: Array<{ __typename?: 'LineItem', orderId?: number | null | undefined, databaseId?: number | null | undefined, productId?: number | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined> | null | undefined } | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined, email?: string | null | undefined, phone?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 export type UpdateItemQuantitiesMutationVariables = Exact<{
   input: UpdateItemQuantitiesInput;
 }>;
@@ -25500,17 +25507,17 @@ export type UpdateItemQuantitiesMutationVariables = Exact<{
 
 export type UpdateItemQuantitiesMutation = { __typename?: 'RootMutation', updateItemQuantities?: { __typename?: 'UpdateItemQuantitiesPayload', cart?: { __typename?: 'Cart', isEmpty?: boolean | null | undefined, total?: string | null | undefined, subtotal?: string | null | undefined, contentsTotal?: string | null | undefined, discountTotal?: string | null | undefined, appliedCoupons?: Array<{ __typename?: 'AppliedCoupon', code: string, discountAmount: string, discountTax: string } | null | undefined> | null | undefined, contents?: { __typename?: 'CartToCartItemConnection', itemCount?: number | null | undefined, productCount?: number | null | undefined, nodes?: Array<{ __typename?: 'CartItem', key: string, total?: string | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'CartItemToProductConnectionEdge', node?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
-export type UpdateUserMutationVariables = Exact<{
-  input: UpdateUserInput;
-}>;
-
-
-export type UpdateUserMutation = { __typename?: 'RootMutation', updateUser?: { __typename?: 'UpdateUserPayload', user?: { __typename?: 'User', id: string, userId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined } | null | undefined } | null | undefined };
-
 export type GetCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCartQuery = { __typename?: 'RootQuery', cart?: { __typename?: 'Cart', isEmpty?: boolean | null | undefined, total?: string | null | undefined, subtotal?: string | null | undefined, contentsTotal?: string | null | undefined, discountTotal?: string | null | undefined, appliedCoupons?: Array<{ __typename?: 'AppliedCoupon', code: string, discountAmount: string, discountTax: string } | null | undefined> | null | undefined, contents?: { __typename?: 'CartToCartItemConnection', itemCount?: number | null | undefined, productCount?: number | null | undefined, nodes?: Array<{ __typename?: 'CartItem', key: string, total?: string | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'CartItemToProductConnectionEdge', node?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined };
+
+export type GetCustomerQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']>;
+}>;
+
+
+export type GetCustomerQuery = { __typename?: 'RootQuery', customer?: { __typename?: 'Customer', id: string, databaseId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined, orderCount?: number | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, phone?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined } | null | undefined, orders?: { __typename?: 'CustomerToOrderConnection', nodes?: Array<{ __typename?: 'Order', id: string, databaseId?: number | null | undefined, status?: OrderStatusEnum | null | undefined, total?: string | null | undefined, discountTotal?: string | null | undefined, hasBillingAddress?: boolean | null | undefined, needsPayment?: boolean | null | undefined, needsProcessing?: boolean | null | undefined, paymentMethod?: string | null | undefined, paymentMethodTitle?: string | null | undefined, date?: string | null | undefined, dateCompleted?: string | null | undefined, datePaid?: string | null | undefined, isDownloadPermitted?: boolean | null | undefined, hasDownloadableItem?: boolean | null | undefined, downloadableItems?: { __typename?: 'OrderToDownloadableItemConnection', nodes?: Array<{ __typename?: 'DownloadableItem', name?: string | null | undefined, accessExpires?: string | null | undefined, url?: string | null | undefined, download?: { __typename?: 'ProductDownload', fileExt?: string | null | undefined, fileExists?: boolean | null | undefined, fileType?: string | null | undefined, downloadId: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, lineItems?: { __typename?: 'OrderToLineItemConnection', nodes?: Array<{ __typename?: 'LineItem', orderId?: number | null | undefined, databaseId?: number | null | undefined, productId?: number | null | undefined, quantity?: number | null | undefined, product?: { __typename?: 'ExternalProduct' } | { __typename?: 'GroupProduct' } | { __typename?: 'SimpleProduct', id: string, databaseId: number, name?: string | null | undefined, slug?: string | null | undefined, price?: string | null | undefined, regularPrice?: string | null | undefined, salePrice?: string | null | undefined, shortDescription?: string | null | undefined, image?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined, galleryImages?: { __typename?: 'ProductToMediaItemConnection', nodes?: Array<{ __typename?: 'MediaItem', sourceUrl?: string | null | undefined, fileSize?: number | null | undefined, mimeType?: string | null | undefined, altText?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productAdditional?: { __typename?: 'Product_Productadditional', mail?: string | null | undefined, broadcastDate?: string | null | undefined, programm?: { __typename?: 'MediaItem', mediaItemUrl?: string | null | undefined } | null | undefined, content?: Array<{ __typename?: 'Product_Productadditional_Content_SectionText', title?: string | null | undefined, text?: string | null | undefined, fieldGroupName?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined, productCategories?: { __typename?: 'ProductToProductCategoryConnection', nodes?: Array<{ __typename?: 'ProductCategory', slug?: string | null | undefined, name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename?: 'VariableProduct' } | null | undefined } | null | undefined> | null | undefined } | null | undefined, billing?: { __typename?: 'CustomerAddress', firstName?: string | null | undefined, lastName?: string | null | undefined, company?: string | null | undefined, city?: string | null | undefined, email?: string | null | undefined, phone?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined };
 
 export type GetDocumentQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -25599,11 +25606,6 @@ export type GetStocksQueryVariables = Exact<{
 
 
 export type GetStocksQuery = { __typename?: 'RootQuery', stocks?: { __typename?: 'RootQueryToStockConnection', nodes?: Array<{ __typename?: 'Stock', id: string, slug?: string | null | undefined, title?: string | null | undefined, content?: string | null | undefined, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node?: { __typename?: 'MediaItem', sourceUrl?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
-
-export type GetViewerQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetViewerQuery = { __typename?: 'RootQuery', viewer?: { __typename?: 'User', id: string, userId?: number | null | undefined, username?: string | null | undefined, firstName?: string | null | undefined, lastName?: string | null | undefined, email?: string | null | undefined } | null | undefined };
 
 export const AppliedCouponFragmentDoc = gql`
     fragment AppliedCoupon on AppliedCoupon {
@@ -25697,25 +25699,6 @@ export const CartFragmentDoc = gql`
 }
     ${AppliedCouponFragmentDoc}
 ${CartContentItemFragmentDoc}`;
-export const MediaItemFragmentDoc = gql`
-    fragment MediaItem on MediaItem {
-  title
-  fileSize
-  mimeType
-}
-    `;
-export const DocumentFragmentDoc = gql`
-    fragment Document on Document {
-  slug
-  title
-  excerpt
-  documentMain {
-    file {
-      ...MediaItem
-    }
-  }
-}
-    ${MediaItemFragmentDoc}`;
 export const ProductDownloadFragmentDoc = gql`
     fragment ProductDownload on ProductDownload {
   fileExt
@@ -25778,6 +25761,48 @@ export const OrderFragmentDoc = gql`
 }
     ${DownloadableItemFragmentDoc}
 ${SimpleProductFragmentDoc}`;
+export const CustomerFragmentDoc = gql`
+    fragment Customer on Customer {
+  id
+  databaseId
+  username
+  firstName
+  lastName
+  email
+  billing {
+    firstName
+    lastName
+    phone
+    company
+    city
+  }
+  orderCount
+  orders {
+    nodes {
+      ...Order
+    }
+  }
+}
+    ${OrderFragmentDoc}`;
+export const MediaItemFragmentDoc = gql`
+    fragment MediaItem on MediaItem {
+  title
+  fileSize
+  mimeType
+}
+    `;
+export const DocumentFragmentDoc = gql`
+    fragment Document on Document {
+  slug
+  title
+  excerpt
+  documentMain {
+    file {
+      ...MediaItem
+    }
+  }
+}
+    ${MediaItemFragmentDoc}`;
 export const PartnerFragmentDoc = gql`
     fragment Partner on Partner {
   slug
@@ -25872,16 +25897,6 @@ export const StockFragmentDoc = gql`
     }
   }
   content
-}
-    `;
-export const ViewerFragmentDoc = gql`
-    fragment Viewer on User {
-  id
-  userId
-  username
-  firstName
-  lastName
-  email
 }
     `;
 export const AddToCartDocument = gql`
@@ -26029,12 +26044,12 @@ export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
     authToken
-    user {
-      ...Viewer
+    customer {
+      ...Customer
     }
   }
 }
-    ${ViewerFragmentDoc}`;
+    ${CustomerFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
@@ -26061,42 +26076,42 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export const RegisterUserDocument = gql`
-    mutation RegisterUser($input: RegisterUserInput!) {
-  registerUser(input: $input) {
-    user {
-      ...Viewer
+export const RegisterCustomerDocument = gql`
+    mutation RegisterCustomer($input: RegisterCustomerInput!) {
+  registerCustomer(input: $input) {
+    customer {
+      ...Customer
       jwtAuthToken
     }
   }
 }
-    ${ViewerFragmentDoc}`;
-export type RegisterUserMutationFn = Apollo.MutationFunction<RegisterUserMutation, RegisterUserMutationVariables>;
+    ${CustomerFragmentDoc}`;
+export type RegisterCustomerMutationFn = Apollo.MutationFunction<RegisterCustomerMutation, RegisterCustomerMutationVariables>;
 
 /**
- * __useRegisterUserMutation__
+ * __useRegisterCustomerMutation__
  *
- * To run a mutation, you first call `useRegisterUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRegisterUserMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useRegisterCustomerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterCustomerMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [registerUserMutation, { data, loading, error }] = useRegisterUserMutation({
+ * const [registerCustomerMutation, { data, loading, error }] = useRegisterCustomerMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useRegisterUserMutation(baseOptions?: Apollo.MutationHookOptions<RegisterUserMutation, RegisterUserMutationVariables>) {
+export function useRegisterCustomerMutation(baseOptions?: Apollo.MutationHookOptions<RegisterCustomerMutation, RegisterCustomerMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RegisterUserMutation, RegisterUserMutationVariables>(RegisterUserDocument, options);
+        return Apollo.useMutation<RegisterCustomerMutation, RegisterCustomerMutationVariables>(RegisterCustomerDocument, options);
       }
-export type RegisterUserMutationHookResult = ReturnType<typeof useRegisterUserMutation>;
-export type RegisterUserMutationResult = Apollo.MutationResult<RegisterUserMutation>;
-export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUserMutation, RegisterUserMutationVariables>;
+export type RegisterCustomerMutationHookResult = ReturnType<typeof useRegisterCustomerMutation>;
+export type RegisterCustomerMutationResult = Apollo.MutationResult<RegisterCustomerMutation>;
+export type RegisterCustomerMutationOptions = Apollo.BaseMutationOptions<RegisterCustomerMutation, RegisterCustomerMutationVariables>;
 export const RemoveCouponsDocument = gql`
     mutation RemoveCoupons($input: RemoveCouponsInput!) {
   removeCoupons(input: $input) {
@@ -26279,6 +26294,41 @@ export function useSubmitGfFormMutation(baseOptions?: Apollo.MutationHookOptions
 export type SubmitGfFormMutationHookResult = ReturnType<typeof useSubmitGfFormMutation>;
 export type SubmitGfFormMutationResult = Apollo.MutationResult<SubmitGfFormMutation>;
 export type SubmitGfFormMutationOptions = Apollo.BaseMutationOptions<SubmitGfFormMutation, SubmitGfFormMutationVariables>;
+export const UpdateCustomerDocument = gql`
+    mutation UpdateCustomer($input: UpdateCustomerInput!) {
+  updateCustomer(input: $input) {
+    customer {
+      ...Customer
+    }
+  }
+}
+    ${CustomerFragmentDoc}`;
+export type UpdateCustomerMutationFn = Apollo.MutationFunction<UpdateCustomerMutation, UpdateCustomerMutationVariables>;
+
+/**
+ * __useUpdateCustomerMutation__
+ *
+ * To run a mutation, you first call `useUpdateCustomerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCustomerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCustomerMutation, { data, loading, error }] = useUpdateCustomerMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCustomerMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomerMutation, UpdateCustomerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCustomerMutation, UpdateCustomerMutationVariables>(UpdateCustomerDocument, options);
+      }
+export type UpdateCustomerMutationHookResult = ReturnType<typeof useUpdateCustomerMutation>;
+export type UpdateCustomerMutationResult = Apollo.MutationResult<UpdateCustomerMutation>;
+export type UpdateCustomerMutationOptions = Apollo.BaseMutationOptions<UpdateCustomerMutation, UpdateCustomerMutationVariables>;
 export const UpdateItemQuantitiesDocument = gql`
     mutation UpdateItemQuantities($input: UpdateItemQuantitiesInput!) {
   updateItemQuantities(input: $input) {
@@ -26314,41 +26364,6 @@ export function useUpdateItemQuantitiesMutation(baseOptions?: Apollo.MutationHoo
 export type UpdateItemQuantitiesMutationHookResult = ReturnType<typeof useUpdateItemQuantitiesMutation>;
 export type UpdateItemQuantitiesMutationResult = Apollo.MutationResult<UpdateItemQuantitiesMutation>;
 export type UpdateItemQuantitiesMutationOptions = Apollo.BaseMutationOptions<UpdateItemQuantitiesMutation, UpdateItemQuantitiesMutationVariables>;
-export const UpdateUserDocument = gql`
-    mutation updateUser($input: UpdateUserInput!) {
-  updateUser(input: $input) {
-    user {
-      ...Viewer
-    }
-  }
-}
-    ${ViewerFragmentDoc}`;
-export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
-
-/**
- * __useUpdateUserMutation__
- *
- * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
-      }
-export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
-export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
-export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
 export const GetCartDocument = gql`
     query GetCart {
   cart {
@@ -26383,6 +26398,41 @@ export function useGetCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetCartQueryHookResult = ReturnType<typeof useGetCartQuery>;
 export type GetCartLazyQueryHookResult = ReturnType<typeof useGetCartLazyQuery>;
 export type GetCartQueryResult = Apollo.QueryResult<GetCartQuery, GetCartQueryVariables>;
+export const GetCustomerDocument = gql`
+    query GetCustomer($id: ID) {
+  customer(id: $id) {
+    ...Customer
+  }
+}
+    ${CustomerFragmentDoc}`;
+
+/**
+ * __useGetCustomerQuery__
+ *
+ * To run a query within a React component, call `useGetCustomerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomerQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCustomerQuery(baseOptions?: Apollo.QueryHookOptions<GetCustomerQuery, GetCustomerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCustomerQuery, GetCustomerQueryVariables>(GetCustomerDocument, options);
+      }
+export function useGetCustomerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCustomerQuery, GetCustomerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCustomerQuery, GetCustomerQueryVariables>(GetCustomerDocument, options);
+        }
+export type GetCustomerQueryHookResult = ReturnType<typeof useGetCustomerQuery>;
+export type GetCustomerLazyQueryHookResult = ReturnType<typeof useGetCustomerLazyQuery>;
+export type GetCustomerQueryResult = Apollo.QueryResult<GetCustomerQuery, GetCustomerQueryVariables>;
 export const GetDocumentDocument = gql`
     query GetDocument($id: ID!, $idType: DocumentIdType = SLUG) {
   document(id: $id, idType: $idType) {
@@ -26869,37 +26919,3 @@ export function useGetStocksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetStocksQueryHookResult = ReturnType<typeof useGetStocksQuery>;
 export type GetStocksLazyQueryHookResult = ReturnType<typeof useGetStocksLazyQuery>;
 export type GetStocksQueryResult = Apollo.QueryResult<GetStocksQuery, GetStocksQueryVariables>;
-export const GetViewerDocument = gql`
-    query GetViewer {
-  viewer {
-    ...Viewer
-  }
-}
-    ${ViewerFragmentDoc}`;
-
-/**
- * __useGetViewerQuery__
- *
- * To run a query within a React component, call `useGetViewerQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetViewerQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetViewerQuery(baseOptions?: Apollo.QueryHookOptions<GetViewerQuery, GetViewerQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetViewerQuery, GetViewerQueryVariables>(GetViewerDocument, options);
-      }
-export function useGetViewerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetViewerQuery, GetViewerQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetViewerQuery, GetViewerQueryVariables>(GetViewerDocument, options);
-        }
-export type GetViewerQueryHookResult = ReturnType<typeof useGetViewerQuery>;
-export type GetViewerLazyQueryHookResult = ReturnType<typeof useGetViewerLazyQuery>;
-export type GetViewerQueryResult = Apollo.QueryResult<GetViewerQuery, GetViewerQueryVariables>;

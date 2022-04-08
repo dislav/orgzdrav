@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+import { textFieldClasses } from '@mui/material';
 
-import InputComponent from '@components/Input/Input';
 import ButtonComponent from '@components/Button/Button';
 
 export const Container = styled.form`
@@ -9,10 +9,8 @@ export const Container = styled.form`
     background: ${({ theme }) => theme.colors.white};
     border-radius: 8px;
     padding: 20px;
-`;
 
-export const Input = styled(InputComponent)`
-    && {
+    .${textFieldClasses.root} {
         margin-bottom: 20px;
     }
 `;
