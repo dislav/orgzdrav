@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { OrderFragment, SimpleProductFragment } from '@graphql';
+import {
+    OrderFragment,
+    OrderStatusEnum,
+    SimpleProductFragment,
+} from '@graphql';
 
 import {
     Container,
@@ -26,6 +30,8 @@ const OrderCard: React.FC<OrderFragment> = ({
     downloadableItems,
     lineItems,
 }) => {
+    const isCompleted = status === OrderStatusEnum.Completed;
+
     return (
         <Container>
             <Header>
@@ -52,33 +58,38 @@ const OrderCard: React.FC<OrderFragment> = ({
                 </Group>
             )}
 
-            {downloadableItems?.nodes && downloadableItems.nodes.length > 0 && (
-                <Group>
-                    <Accordion
-                        summary={
-                            <AccordionSummary>
-                                Доступные материалы
-                            </AccordionSummary>
-                        }
-                        details={
-                            <AccordionDetails>
-                                <GroupDescription>
-                                    Некоторые пакеты документов могут иметь
-                                    ограничения на количество загрузок и срок
-                                    действия
-                                </GroupDescription>
-                                <Documents>
-                                    {downloadableItems.nodes.map(
-                                        (file, index) => (
-                                            <Document key={index} {...file} />
-                                        )
-                                    )}
-                                </Documents>
-                            </AccordionDetails>
-                        }
-                    />
-                </Group>
-            )}
+            {isCompleted &&
+                downloadableItems?.nodes &&
+                downloadableItems.nodes.length > 0 && (
+                    <Group>
+                        <Accordion
+                            summary={
+                                <AccordionSummary>
+                                    Доступные материалы
+                                </AccordionSummary>
+                            }
+                            details={
+                                <AccordionDetails>
+                                    <GroupDescription>
+                                        Некоторые пакеты документов могут иметь
+                                        ограничения на количество загрузок и
+                                        срок действия
+                                    </GroupDescription>
+                                    <Documents>
+                                        {downloadableItems.nodes.map(
+                                            (file, index) => (
+                                                <Document
+                                                    key={index}
+                                                    {...file}
+                                                />
+                                            )
+                                        )}
+                                    </Documents>
+                                </AccordionDetails>
+                            }
+                        />
+                    </Group>
+                )}
         </Container>
     );
 };
