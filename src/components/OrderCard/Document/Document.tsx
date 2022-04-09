@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { Tooltip } from '@mui/material';
 import dayjs from 'dayjs';
 
 import { DownloadableItemFragment } from '@graphql';
 
 import {
     Container,
+    Icon,
     Ext,
-    TooltipContent,
     VideoModal,
+    Content,
+    Availability,
 } from './Document.styled';
 import Modal from '@components/Modal/Modal';
 import Video from '@components/Video/Video';
 
 import { ArchiveFile, DefaultFile, ImageFile, MediaFile } from '@icons/icons';
+import Button from '@components/Button/Button';
 
 interface IDocument extends DownloadableItemFragment {
     className?: string;
@@ -23,6 +25,7 @@ const Document: React.FC<IDocument> = ({
     className,
     name,
     accessExpires,
+    downloadsRemaining,
     download,
     url,
 }) => {
@@ -51,36 +54,43 @@ const Document: React.FC<IDocument> = ({
 
     return (
         <>
-            <Tooltip
-                placement="top"
-                title={
-                    <TooltipContent>
-                        {name && (
-                            <span>
-                                {name.length > 16
-                                    ? `Файл: ${name.slice(0, 16)}...${
-                                          download?.fileExt || ''
-                                      }`
-                                    : name}
-                            </span>
-                        )}
-                        <span>
-                            Доступен до{' '}
-                            {dayjs(accessExpires)
-                                .utc(false)
-                                .format('DD.MM.YYYY')}
-                        </span>
-                    </TooltipContent>
-                }
-            >
-                <Container className={className} onClick={onClickHandler}>
+            <Container className={className}>
+                <Icon>
                     {Array.from(iconsMap.entries()).find(([keys]) =>
                         keys.includes(fileExt)
                     )?.[1] || <DefaultFile />}
 
                     {download?.fileExt && <Ext>{download.fileExt}</Ext>}
-                </Container>
-            </Tooltip>
+                </Icon>
+
+                <Content>
+                    {name && <span>{name}</span>}
+                    {(accessExpires || downloadsRemaining) && (
+                        <Availability limit={!downloadsRemaining}>
+                            {!!accessExpires && !!downloadsRemaining && (
+                                <span>
+                                    Доступен до{' '}
+                                    {dayjs(accessExpires)
+                                        .utc(false)
+                                        .format('DD.MM.YYYY')}
+                                </span>
+                            )}
+                            {downloadsRemaining !== undefined &&
+                                downloadsRemaining !== null && (
+                                    <span>
+                                        {downloadsRemaining > 0
+                                            ? `Доступно скачиваний: ${downloadsRemaining}`
+                                            : 'Достигнут лимит загрузкок'}
+                                    </span>
+                                )}
+                        </Availability>
+                    )}
+                </Content>
+
+                <Button onClick={onClickHandler} disabled={!downloadsRemaining}>
+                    Скачать
+                </Button>
+            </Container>
 
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                 <VideoModal>

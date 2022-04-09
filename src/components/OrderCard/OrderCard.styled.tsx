@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import { Container as StyledProduct } from '@components/OrderCard/Product/Product.styled';
-import { Container as StyledDocument } from '@components/OrderCard/Document/Document.styled';
 
 export const Container = styled.div`
     background-color: ${({ theme }) => theme.colors.white};
@@ -30,12 +29,33 @@ export const Group = styled.div`
     &:last-child {
         border-bottom: none;
     }
+`;
 
-    > span {
-        font-size: 18px;
-        font-weight: 500;
-        margin-bottom: 20px;
-    }
+export const GroupTitle = styled.div`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+`;
+
+export const GroupDescription = styled.div`
+    display: block;
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 20px;
+    margin-bottom: 20px;
+`;
+
+export const AccordionSummary = styled.span`
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+`;
+
+export const AccordionDetails = styled.div`
+    padding-top: 8px;
 `;
 
 export const Products = styled.div`
@@ -53,10 +73,5 @@ export const Products = styled.div`
 
 export const Documents = styled.div`
     display: flex;
-    flex-wrap: wrap;
-
-    ${StyledDocument} {
-        width: 80px;
-        margin-right: 12px;
-    }
+    flex-direction: column;
 `;

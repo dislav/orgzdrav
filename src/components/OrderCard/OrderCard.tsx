@@ -7,12 +7,17 @@ import {
     Header,
     Number,
     Group,
+    GroupTitle,
+    GroupDescription,
+    AccordionSummary,
+    AccordionDetails,
     Products,
     Documents,
 } from './OrderCard.styled';
 import Document from '@components/OrderCard/Document/Document';
 import Product from '@components/OrderCard/Product/Product';
 import Status from '@components/OrderCard/Status/Status';
+import Accordion from '@layouts/CatalogLayout/Accordion/Accordion';
 
 const OrderCard: React.FC<OrderFragment> = ({
     databaseId,
@@ -35,7 +40,7 @@ const OrderCard: React.FC<OrderFragment> = ({
 
             {lineItems?.nodes && lineItems.nodes.length > 0 && (
                 <Group>
-                    <span>Товары в заказе</span>
+                    <GroupTitle>Товары в заказе</GroupTitle>
                     <Products>
                         {lineItems.nodes.map((product, index) => (
                             <Product
@@ -49,12 +54,29 @@ const OrderCard: React.FC<OrderFragment> = ({
 
             {downloadableItems?.nodes && downloadableItems.nodes.length > 0 && (
                 <Group>
-                    <span>Доступные материалы</span>
-                    <Documents>
-                        {downloadableItems.nodes.map((file, index) => (
-                            <Document key={index} {...file} />
-                        ))}
-                    </Documents>
+                    <Accordion
+                        summary={
+                            <AccordionSummary>
+                                Доступные материалы
+                            </AccordionSummary>
+                        }
+                        details={
+                            <AccordionDetails>
+                                <GroupDescription>
+                                    Некоторые пакеты документов могут иметь
+                                    ограничения на количество загрузок и срок
+                                    действия
+                                </GroupDescription>
+                                <Documents>
+                                    {downloadableItems.nodes.map(
+                                        (file, index) => (
+                                            <Document key={index} {...file} />
+                                        )
+                                    )}
+                                </Documents>
+                            </AccordionDetails>
+                        }
+                    />
                 </Group>
             )}
         </Container>
