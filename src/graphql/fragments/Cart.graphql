@@ -10,7 +10,7 @@ fragment Cart on Cart {
     appliedCoupons {
         ...AppliedCoupon
     }
-    contents {
+    contents(first: 200) {
         ...CartContentItem
     }
 }

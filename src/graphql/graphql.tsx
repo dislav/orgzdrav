@@ -25693,7 +25693,7 @@ export const CartFragmentDoc = gql`
   appliedCoupons {
     ...AppliedCoupon
   }
-  contents {
+  contents(first: 200) {
     ...CartContentItem
   }
 }
@@ -25735,12 +25735,12 @@ export const OrderFragmentDoc = gql`
   datePaid
   isDownloadPermitted
   hasDownloadableItem
-  downloadableItems {
+  downloadableItems(first: 200) {
     nodes {
       ...DownloadableItem
     }
   }
-  lineItems {
+  lineItems(first: 200) {
     nodes {
       orderId
       databaseId

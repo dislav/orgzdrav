@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-import { Container as StyledProduct } from '@components/OrderCard/Product/Product.styled';
+import { up } from 'styled-breakpoints';
 
 export const Container = styled.div`
     background-color: ${({ theme }) => theme.colors.white};
@@ -31,13 +30,6 @@ export const Group = styled.div`
     }
 `;
 
-export const GroupTitle = styled.div`
-    color: ${({ theme }) => theme.colors.black};
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 20px;
-`;
-
 export const GroupDescription = styled.div`
     display: block;
     color: ${({ theme }) => theme.colors.black};
@@ -59,15 +51,18 @@ export const AccordionDetails = styled.div`
 `;
 
 export const Products = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 20px;
+    
+    ${up('md')} {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 20px;
+    }
 
-    ${StyledProduct} {
-        margin-right: 13px;
-
-        &:nth-child(7n) {
-            margin-right: 0;
-        }
+    ${up('xl')} {
+        grid-template-columns: repeat(10, 1fr);
     }
 `;
 

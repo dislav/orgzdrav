@@ -11,7 +11,6 @@ import {
     Header,
     Number,
     Group,
-    GroupTitle,
     GroupDescription,
     AccordionSummary,
     AccordionDetails,
@@ -46,15 +45,23 @@ const OrderCard: React.FC<OrderFragment> = ({
 
             {lineItems?.nodes && lineItems.nodes.length > 0 && (
                 <Group>
-                    <GroupTitle>Товары в заказе</GroupTitle>
-                    <Products>
-                        {lineItems.nodes.map((product, index) => (
-                            <Product
-                                key={index}
-                                {...(product?.product as SimpleProductFragment)}
-                            />
-                        ))}
-                    </Products>
+                    <Accordion
+                        summary={
+                            <AccordionSummary>
+                                Товары в заказе ({lineItems.nodes.length})
+                            </AccordionSummary>
+                        }
+                        details={
+                            <Products>
+                                {lineItems.nodes.map((product, index) => (
+                                    <Product
+                                        key={index}
+                                        {...(product?.product as SimpleProductFragment)}
+                                    />
+                                ))}
+                            </Products>
+                        }
+                    />
                 </Group>
             )}
 

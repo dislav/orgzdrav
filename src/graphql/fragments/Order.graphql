@@ -17,12 +17,12 @@ fragment Order on Order {
     datePaid
     isDownloadPermitted
     hasDownloadableItem
-    downloadableItems {
+    downloadableItems(first: 200) {
         nodes {
             ...DownloadableItem
         }
     }
-    lineItems {
+    lineItems(first: 200) {
         nodes {
             orderId
             databaseId

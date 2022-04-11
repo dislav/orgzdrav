@@ -5,8 +5,7 @@ export const Container = styled.a`
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100px;
-    height: 100px;
+    padding-top: 100%;
     border-radius: 4px;
     overflow: hidden;
 
