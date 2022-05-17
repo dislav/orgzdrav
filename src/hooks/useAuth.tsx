@@ -51,6 +51,8 @@ export const useAuth = () => {
                     ({ message }) => message
                 );
 
+                localStorage.removeItem('authToken');
+
                 if (errors)
                     return {
                         errors,
@@ -96,6 +98,8 @@ export const useAuth = () => {
                 const errors = (e as ApolloError)?.graphQLErrors.map(
                     ({ message }) => message
                 );
+
+                localStorage.removeItem('authToken');
 
                 if (errors)
                     return {
