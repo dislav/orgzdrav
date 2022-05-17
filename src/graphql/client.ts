@@ -4,14 +4,18 @@ import {
     ApolloLink,
     createHttpLink,
 } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+
+const AUTH_TOKEN = 'authToken';
+const WOO_SESSION = 'woo-session';
 
 export const middleware = new ApolloLink((operation, forward) => {
     const isBrowser = typeof window !== 'undefined';
 
     let wooHeaders = {};
 
-    const token = isBrowser ? localStorage.getItem('authToken') : null;
-    const session = isBrowser ? localStorage.getItem('woo-session') : null;
+    const token = isBrowser ? localStorage.getItem(AUTH_TOKEN) : null;
+    const session = isBrowser ? localStorage.getItem(WOO_SESSION) : null;
     const hasSession = token || session;
 
     if (token) {
@@ -47,10 +51,10 @@ export const afterware = new ApolloLink((operation, forward) => {
 
         if (session) {
             if (session === 'false') {
-                localStorage.removeItem('woo-session');
-            } else if (localStorage.getItem('woo-session') !== session) {
+                localStorage.removeItem(WOO_SESSION);
+            } else if (localStorage.getItem(WOO_SESSION) !== session) {
                 localStorage.setItem(
-                    'woo-session',
+                    WOO_SESSION,
                     headers.get('woocommerce-session')
                 );
             }
@@ -60,13 +64,32 @@ export const afterware = new ApolloLink((operation, forward) => {
     });
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+        graphQLErrors.forEach(({ message, locations, path }) => {
+            console.error(`[GraphQL Error]: Message: ${message}`);
+
+            if (
+                (path?.includes('customer') || path?.includes('cart')) &&
+                message === 'Internal server error'
+            ) {
+                localStorage.removeItem(WOO_SESSION);
+                localStorage.removeItem(AUTH_TOKEN);
+            }
+        });
+
+    if (networkError) console.log(`[Network Error]: ${networkError}`);
+});
+
 export default new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: middleware.concat(
-        afterware.concat(
-            createHttpLink({
-                uri: 'https://api.orgzdrav2019.ru/graphql',
-            })
+    link: errorLink.concat(
+        middleware.concat(
+            afterware.concat(
+                createHttpLink({
+                    uri: 'https://api.orgzdrav2019.ru/graphql',
+                })
+            )
         )
     ),
     cache: new InMemoryCache(),
