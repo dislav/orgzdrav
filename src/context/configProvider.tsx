@@ -11,6 +11,7 @@ interface IConfig {
             href: string;
             color?: 'default' | 'primary';
             isNewTab?: boolean;
+            ymID?: string;
         }[];
     };
     order: {
@@ -69,7 +70,8 @@ const defaultConfig: IConfig = {
                 title: 'Курс',
                 href: 'https://kurs.orgzdrav.org/',
                 color: 'primary',
-                isNewTab: true
+                isNewTab: true,
+                ymID: 'KURS'
             }
         ],
     },

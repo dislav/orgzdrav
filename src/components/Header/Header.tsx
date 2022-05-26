@@ -23,11 +23,19 @@ import { useTogglable } from '@hooks/useTogglable';
 const Header: React.FC = () => {
     const router = useRouter();
 
+    const { ymCode } = useConfig().global;
     const links = useConfig().header.links;
 
     const isLoggedIn = useSelector(getIsLoggedIn);
 
     const { isOpen, onOpen, onClose } = useTogglable();
+
+    const onClickLink = (id?: string) => () => {
+        if (id) {
+            // @ts-ignore
+            ym(ymCode, 'reachGoal', id);
+        }
+    };
 
     const renderLinks = useMemo(
         () =>
@@ -36,6 +44,7 @@ const Header: React.FC = () => {
                     <Link
                         color={link.color}
                         target={link.isNewTab ? '_blank' : '_self'}
+                        onClick={onClickLink(link.ymID)}
                     >
                         {link.title}
                     </Link>
