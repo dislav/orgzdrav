@@ -7,11 +7,13 @@ import {
     Icon,
     Wrapper,
 } from './ButtonLink.styled';
+import { useConfig } from "@context/configProvider"
 
 interface IButtonLink extends LinkProps {
     className?: string;
     icon?: React.ReactNode;
     options?: IStyledButtonLink;
+    ymID?: string;
     target?: string;
 }
 
@@ -21,11 +23,26 @@ const ButtonLink: React.FC<IButtonLink> = ({
     children,
     options,
     target,
+    ymID,
     ...props
 }) => {
+    const { ymCode } = useConfig().global;
+
+    const onClick = () => {
+        if (ymID) {
+            // @ts-ignore
+            ym(ymCode, 'reachGoal', ymID);
+        }
+    };
+
     return (
         <Link {...props} passHref>
-            <Container className={className} target={target} {...options}>
+            <Container
+                className={className}
+                target={target}
+                onClick={onClick}
+                {...options}
+            >
                 {icon && <Icon>{icon}</Icon>}
                 {children && <Wrapper>{children}</Wrapper>}
             </Container>

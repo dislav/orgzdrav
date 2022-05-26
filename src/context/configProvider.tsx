@@ -68,7 +68,7 @@ const defaultConfig: IConfig = {
             },
             {
                 title: 'Курс',
-                href: 'https://kurs.orgzdrav.org/',
+                href: 'https://kurs.orgzdrav.org/?utm_source=base_site&utm_medium=post&utm_campaign=kurs_anons',
                 color: 'primary',
                 isNewTab: true,
                 ymID: 'KURS'

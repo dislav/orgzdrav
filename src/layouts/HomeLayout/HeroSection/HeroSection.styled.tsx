@@ -1,8 +1,22 @@
-import styled from 'styled-components';
-import { down } from 'styled-breakpoints';
+import styled, { keyframes } from 'styled-components';
+import { down, up } from 'styled-breakpoints';
 import { a } from 'react-spring';
 
 import ButtonLink from '@components/ButtonLink/ButtonLink';
+
+const highlight = keyframes`
+    0% {
+      left: -50%;
+    }
+    
+    94% {
+      left: -50%
+    }
+    
+    100% {
+        left: 150%;
+    }
+`;
 
 export const Container = styled.div`
     position: relative;
@@ -26,7 +40,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 63%;
 
     p {
         font-size: 18px;
@@ -67,20 +81,50 @@ export const List = styled.ul`
 
 export const Buttons = styled.div`
     display: flex;
-    align-items: center;
+    flex-direction: column;
 
     > div {
         flex: 1;
-        margin-right: 10px;
+        height: 100%;
+        margin-bottom: 10px;
 
         &:last-child {
             margin-right: 0;
+            margin-bottom: 0;
         }
+
+        ${up('md')} {
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+    }
+
+    ${up('md')} {
+        flex-direction: row;
+        align-items: center;
     }
 `;
 
-export const Button = styled(ButtonLink)`
+export const Button = styled(ButtonLink)<{ color?: string }>`
+    position: relative;
     font-size: 14px;
+    height: 100%;
+    background: ${({ theme, color }) =>
+        color === 'primary' ? theme.colors.instagram : null};
+    padding: 14px 10px;
+
+    &:before {
+        display: ${({ color }) => (color === 'primary' ? 'block' : 'none')};
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 20px;
+        height: 60px;
+        transform: translateY(-50%) rotate(30deg);
+        background: ${({ theme }) => theme.colors.white};
+        animation: ${highlight} 10s ease-in infinite;
+        z-index: 10;
+    }
 `;
 
 export const Title = styled(a.h1)`

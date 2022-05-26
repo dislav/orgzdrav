@@ -26,6 +26,13 @@ const list: string[] = [
 
 const controls = [
     {
+        title: 'Курс',
+        href: 'https://kurs.orgzdrav.org/?utm_source=base_site&utm_medium=post&utm_campaign=kurs_anons',
+        color: 'primary',
+        ymID: 'KURS',
+        isNewTab: true,
+    },
+    {
         title: 'Получить документы',
         href: '/catalog',
     },
@@ -88,7 +95,16 @@ const HeroSection: React.FC<IHeroSection> = ({ className }) => {
                                     ),
                                 }}
                             >
-                                <Button href={controls[index].href}>
+                                <Button
+                                    href={controls[index].href}
+                                    ymID={controls[index].ymID}
+                                    color={controls[index].color}
+                                    target={
+                                        controls[index].isNewTab
+                                            ? '_blank'
+                                            : '_self'
+                                    }
+                                >
                                     {controls[index].title}
                                 </Button>
                             </a.div>
