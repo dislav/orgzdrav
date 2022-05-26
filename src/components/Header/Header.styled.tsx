@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { up } from 'styled-breakpoints';
 import { buttonClasses } from '@mui/material';
 
@@ -9,6 +9,20 @@ import {
     Close as StyledModalClose,
     Content as StyledModalContent,
 } from '@components/Modal/Modal.styled';
+
+const highlight = keyframes`
+    0% {
+      left: -50%;
+    }
+    
+    94% {
+      left: -50%
+    }
+    
+    100% {
+        left: 150%;
+    }
+`;
 
 export const Container = styled.header`
     position: sticky;
@@ -37,6 +51,34 @@ export const Logo = styled.a`
     }
 `;
 
+export const Link = styled.a<{ color?: 'default' | 'primary' }>`
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: ${({ theme }) => theme.colors.white};
+    font-weight: 500;
+    background: ${({ theme, color }) =>
+        color === 'primary' ? theme.colors.instagram : null};
+    border-radius: 6px;
+    padding: ${({ color }) => (color === 'primary' ? '6px 14px' : null)};
+    overflow: hidden;
+
+    &:before {
+        display: ${({ color }) => (color === 'primary' ? 'block' : 'none')};
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 20px;
+        height: 60px;
+        transform: translateY(-50%) rotate(30deg);
+        background: ${({ theme }) => theme.colors.white};
+        animation: ${highlight} 10s ease-in infinite;
+        z-index: 10;
+    }
+`;
+
 export const Links = styled.div`
     display: flex;
     align-items: center;
@@ -48,11 +90,8 @@ export const Links = styled.div`
         margin-right: 26px;
     }
 
-    > a {
+    ${Link} {
         display: none;
-        font-size: 16px;
-        color: ${({ theme }) => theme.colors.white};
-        font-weight: 500;
         margin-right: 36px;
         cursor: pointer;
 

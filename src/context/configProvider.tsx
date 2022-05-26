@@ -9,6 +9,8 @@ interface IConfig {
         links: {
             title: string;
             href: string;
+            color?: 'default' | 'primary';
+            isNewTab?: boolean;
         }[];
     };
     order: {
@@ -63,6 +65,12 @@ const defaultConfig: IConfig = {
                 title: 'Контакты',
                 href: '/contacts',
             },
+            {
+                title: 'Курс',
+                href: 'https://kurs.orgzdrav.org/',
+                color: 'primary',
+                isNewTab: true
+            }
         ],
     },
     order: {

@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 import {
     Container,
@@ -10,6 +10,7 @@ import {
     SandwichIcon,
     SandwichModal,
     Login,
+    Link,
 } from './Header.styled';
 import Profile from '@components/Profile/Profile';
 import MobileMenu from '@components/MobileMenu/MobileMenu';
@@ -28,12 +29,17 @@ const Header: React.FC = () => {
 
     const { isOpen, onOpen, onClose } = useTogglable();
 
-    const renderLinks = useCallback(
+    const renderLinks = useMemo(
         () =>
             links.map((link, index) => (
-                <Link key={index} href={link.href}>
-                    {link.title}
-                </Link>
+                <NextLink key={index} href={link.href} passHref>
+                    <Link
+                        color={link.color}
+                        target={link.isNewTab ? '_blank' : '_self'}
+                    >
+                        {link.title}
+                    </Link>
+                </NextLink>
             )),
         [links]
     );
@@ -41,13 +47,13 @@ const Header: React.FC = () => {
     return (
         <Container>
             <Links>
-                <Link href="/" passHref>
+                <NextLink href="/" passHref>
                     <Logo>
                         <img src="/images/logo.jpg" alt="" />
                     </Logo>
-                </Link>
+                </NextLink>
 
-                {renderLinks()}
+                {renderLinks}
 
                 <ClientOnly>
                     {isLoggedIn ? (
@@ -63,7 +69,7 @@ const Header: React.FC = () => {
             </SandwichIcon>
 
             <SandwichModal isOpen={isOpen} onClose={onClose}>
-                <MobileMenu>{renderLinks()}</MobileMenu>
+                <MobileMenu>{renderLinks}</MobileMenu>
             </SandwichModal>
         </Container>
     );
